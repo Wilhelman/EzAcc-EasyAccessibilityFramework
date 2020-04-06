@@ -162,7 +162,6 @@
     <ClInclude Include="EzAcc_InputModule.h" />
     <ClInclude Include="EzAcc_Log.h" />
     <ClInclude Include="EzAcc_Module.h" />
-    <ClInclude Include="EzAcc_Test.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="pugiconfig.hpp" />
@@ -170,11 +169,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="EzAcc.cpp" />
     <ClCompile Include="EzAcc_Core.cpp" />
     <ClCompile Include="EzAcc_Input.cpp" />
     <ClCompile Include="EzAcc_InputModule.cpp" />
     <ClCompile Include="EzAcc_Log.cpp" />
-    <ClCompile Include="EzAcc_Test.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

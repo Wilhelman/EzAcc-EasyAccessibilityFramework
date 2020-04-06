@@ -9,6 +9,7 @@
 // Constructor
 EzAcc_Core::EzAcc_Core()
 {
+	LOG("EzAcc: Generating EzAcc_InputModule ...");
 	input = new EzAcc_InputModule();
 
 	// Ordered for awake / Start / Update

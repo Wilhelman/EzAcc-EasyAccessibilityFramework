@@ -36,9 +36,6 @@
     <ClInclude Include="EzAcc.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="EzAcc_Test.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="EzAcc_Defines.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -71,9 +68,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="EzAcc_Test.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="EzAcc_Input.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -88,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="pugixml.cpp">
       <Filter>Archivos de encabezado\Tools\PuguiXML</Filter>
+    </ClCompile>
+    <ClCompile Include="EzAcc.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

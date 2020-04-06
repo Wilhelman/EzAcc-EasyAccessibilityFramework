@@ -26,8 +26,16 @@
 #define _EZACC_H_
 
 #include "EzAcc_Defines.h"
-#include "EzAcc_Test.h"
 #include "EzAcc_Input.h"
 #include "EzAcc_Log.h"
+#include "EzAcc_Core.h"
+#include "EzAcc_Module.h"
+
+
+extern "C"
+{
+	DECLDIR bool EzAcc_Init();
+	DECLDIR void Function(void);
+}
 
 #endif
