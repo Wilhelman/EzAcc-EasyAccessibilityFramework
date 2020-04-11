@@ -29,12 +29,56 @@
 #include "EzAcc_Input.h"
 #include "EzAcc_Log.h"
 #include "EzAcc_Core.h"
-#include "EzAcc_Module.h"
 
+// Modules
+#include "EzAcc_Module.h"
+#include "EzAcc_InputModule.h"
+
+
+static EzAcc_Core* core;
 
 extern "C"
 {
+	/*EzAcc Init
+	Initialise TODOG .....
+	*/
 	DECLDIR bool EzAcc_Init();
+	/*EzAcc Awake
+	TODOG
+	*/
+	DECLDIR bool EzAcc_Awake();
+	/*EzAcc Start
+	TODOG
+	*/
+	DECLDIR bool EzAcc_Start();
+	/*EzAcc PreUpdate
+	TODOG
+	*/
+	DECLDIR bool EzAcc_PreUpdate();
+	/*EzAcc Update
+	TODOG
+	*/
+	DECLDIR bool EzAcc_Update();
+	/*EzAcc AllUpdate
+	TODOG
+	*/
+	DECLDIR bool EzAcc_AllUpdate();
+	/*EzAcc PostUpdate
+	TODOG
+	*/
+	DECLDIR bool EzAcc_PostUpdate();
+	/*EzAcc CleanUp
+	TODOG
+	*/
+	DECLDIR bool EzAcc_CleanUp();
+
+	// -- INPUT MODULE -- //
+	/*
+	EzAcc_InputModule GetKey
+	TODOG
+	*/
+	DECLDIR EzAcc_KeyState EzAcc_GetKey(int id);
+
 	DECLDIR void Function(void);
 }
 

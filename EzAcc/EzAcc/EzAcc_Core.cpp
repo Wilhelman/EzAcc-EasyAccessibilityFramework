@@ -113,7 +113,7 @@ bool EzAcc_Core::Update()
 	bool ret = true;
 	PrepareUpdate();
 
-	if (input->GetWindowEvent(WE_QUIT) == true)
+	if (input->GetWindowEvent(EZACC_WE_QUIT) == true)
 		ret = false;
 
 	if (ret == true)

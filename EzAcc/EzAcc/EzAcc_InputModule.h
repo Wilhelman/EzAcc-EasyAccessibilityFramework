@@ -32,31 +32,31 @@
 
 enum EzAcc_EventWindow
 {
-	WE_QUIT = 0,
-	WE_HIDE = 1,
-	WE_SHOW = 2,
-	WE_COUNT
+	EZACC_WE_QUIT = 0,
+	EZACC_WE_HIDE = 1,
+	EZACC_WE_SHOW = 2,
+	EZACC_WE_COUNT
 };
 
 enum EzAcc_KeyState
 {
-	KEY_IDLE = 0,
-	KEY_DOWN,
-	KEY_REPEAT,
-	KEY_UP
+	EZACC_KEY_IDLE = 0,
+	EZACC_KEY_DOWN,
+	EZACC_KEY_REPEAT,
+	EZACC_KEY_UP
 };
 
 enum EzAcc_GamepadState
 {
-	PAD_BUTTON_IDLE = 0,
-	PAD_BUTTON_DOWN,
-	PAD_BUTTON_REPEAT,
-	PAD_BUTTON_KEY_UP
+	EZACC_PAD_BUTTON_IDLE = 0,
+	EZACC_PAD_BUTTON_DOWN,
+	EZACC_PAD_BUTTON_REPEAT,
+	EZACC_PAD_BUTTON_KEY_UP
 };
 
 struct EzAcc_Gamepad {
 
-	EzAcc_GamepadState A = PAD_BUTTON_IDLE;
+	EzAcc_GamepadState A = EZACC_PAD_BUTTON_IDLE;
 	EzAcc_GamepadState B;
 	EzAcc_GamepadState Y;
 	EzAcc_GamepadState X;
@@ -113,7 +113,7 @@ public:
 	void buttonForGamepad();
 
 private:
-	bool			windowEvents[WE_COUNT];
+	bool			windowEvents[EZACC_WE_COUNT];
 	EzAcc_KeyState* keyboard = nullptr;
 	EzAcc_KeyState	mouse_buttons[EZACC_NUM_MOUSE_BUTTONS];
 	int				mouse_motion_x = 0;

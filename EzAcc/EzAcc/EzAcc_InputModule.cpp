@@ -8,8 +8,8 @@
 EzAcc_InputModule::EzAcc_InputModule()
 {
 	keyboard = new EzAcc_KeyState[EZACC_MAX_KEYS];
-	memset(keyboard, KEY_IDLE, sizeof(EzAcc_KeyState) * EZACC_MAX_KEYS);
-	memset(mouse_buttons, KEY_IDLE, sizeof(EzAcc_KeyState) * EZACC_NUM_MOUSE_BUTTONS);
+	memset(keyboard, EZACC_KEY_IDLE, sizeof(EzAcc_KeyState) * EZACC_MAX_KEYS);
+	memset(mouse_buttons, EZACC_KEY_IDLE, sizeof(EzAcc_KeyState) * EZACC_NUM_MOUSE_BUTTONS);
 }
 
 // Destructor
@@ -54,36 +54,247 @@ EzAcc_InputModule::~EzAcc_InputModule()
 
  bool EzAcc_InputModule::Start()
  {
-	 return false;
+	 SDL_StopTextInput();
+	 return true;
  }
 
  bool EzAcc_InputModule::PreUpdate()
  {
-	 return false;
+	 static SDL_Event event;
+
+	 const Uint8* keys = SDL_GetKeyboardState(NULL);
+
+	 for (int i = 0; i < EZACC_MAX_KEYS; ++i)
+	 {
+		 if (keys[i] == 1)
+		 {
+			 if (keyboard[i] == EZACC_KEY_IDLE)
+				 keyboard[i] = EZACC_KEY_DOWN;
+			 else
+				 keyboard[i] = EZACC_KEY_REPEAT;
+		 }
+		 else
+		 {
+			 if (keyboard[i] == EZACC_KEY_REPEAT || keyboard[i] == EZACC_KEY_DOWN)
+				 keyboard[i] = EZACC_KEY_UP;
+			 else
+				 keyboard[i] = EZACC_KEY_IDLE;
+		 }
+	 }
+
+	 for (int i = 0; i < EZACC_NUM_MOUSE_BUTTONS; ++i)
+	 {
+		 if (mouse_buttons[i] == EZACC_KEY_DOWN)
+			 mouse_buttons[i] = EZACC_KEY_REPEAT;
+
+		 if (mouse_buttons[i] == EZACC_KEY_UP)
+			 mouse_buttons[i] = EZACC_KEY_IDLE;
+	 }
+
+	 buttonForGamepad();
+
+	 while (SDL_PollEvent(&event) != 0)
+	 {
+		 switch (event.type)
+		 {
+		 case SDL_QUIT:
+			 windowEvents[EZACC_WE_QUIT] = true;
+			 break;
+
+		 case SDL_WINDOWEVENT:
+			 switch (event.window.event)
+			 {
+				 //case SDL_WINDOWEVENT_LEAVE:
+			 case SDL_WINDOWEVENT_HIDDEN:
+			 case SDL_WINDOWEVENT_MINIMIZED:
+			 case SDL_WINDOWEVENT_FOCUS_LOST:
+				 windowEvents[EZACC_WE_HIDE] = true;
+				 break;
+
+				 //case SDL_WINDOWEVENT_ENTER:
+			 case SDL_WINDOWEVENT_SHOWN:
+			 case SDL_WINDOWEVENT_FOCUS_GAINED:
+			 case SDL_WINDOWEVENT_MAXIMIZED:
+			 case SDL_WINDOWEVENT_RESTORED:
+				 windowEvents[EZACC_WE_SHOW] = true;
+				 break;
+			 }
+			 break;
+
+		 case SDL_MOUSEBUTTONDOWN:
+			 mouse_buttons[event.button.button - 1] = EZACC_KEY_DOWN;
+			 //LOG("Mouse button %d down", event.button.button-1);
+			 break;
+
+		 case SDL_MOUSEBUTTONUP:
+			 mouse_buttons[event.button.button - 1] = EZACC_KEY_UP;
+			 //LOG("Mouse button %d up", event.button.button-1);
+			 break;
+
+		 /*case SDL_MOUSEMOTION: // TODOG cannot access to the window for now
+			 int scale = App->win->GetScale();
+			 mouse_motion_x = event.motion.xrel / scale;
+			 mouse_motion_y = event.motion.yrel / scale;
+			 mouse_x = event.motion.x / scale;
+			 mouse_y = event.motion.y / scale;
+			 //LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
+			 break;*/
+		 }
+	 }
+
+	 return true;
  }
 
  bool EzAcc_InputModule::CleanUp()
  {
-	 return false;
+	 LOG("EzAcc: Quitting SDL event subsystem");
+	 SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	 return true;
  }
 
  bool EzAcc_InputModule::GetWindowEvent(EzAcc_EventWindow ev)
  {
-	 return false;
+	 return windowEvents[ev];
  }
 
  void EzAcc_InputModule::GetMousePosition(int& x, int& y)
  {
+	 x = mouse_x;
+	 y = mouse_y;
  }
 
  void EzAcc_InputModule::GetWorldMousePosition(int& x, int& y)
  {
+	 x = mouse_motion_x;
+	 y = mouse_motion_y;
  }
 
  void EzAcc_InputModule::GetMouseMotion(int& x, int& y)
  {
+	 // TODOG I can't do this for now ...
+	 /*x = App->render->ScreenToWorld(mouse_x, mouse_y).x;
+	 y = App->render->ScreenToWorld(mouse_x, mouse_y).y;*/
  }
 
  void EzAcc_InputModule::buttonForGamepad()
  {
+	 //BUTTON A
+	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A) == 1) {
+		 if (gamepad.A == EZACC_PAD_BUTTON_IDLE)
+			 gamepad.A = EZACC_PAD_BUTTON_DOWN;
+		 else
+			 gamepad.A = EZACC_PAD_BUTTON_REPEAT;
+	 }
+	 else
+	 {
+		 if (gamepad.A == EZACC_PAD_BUTTON_REPEAT || (gamepad.A == EZACC_PAD_BUTTON_DOWN))
+			 gamepad.A = EZACC_PAD_BUTTON_KEY_UP;
+		 else
+			 gamepad.A = EZACC_PAD_BUTTON_IDLE;
+	 }
+
+	 //BUTTON B
+	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_B) == 1) {
+		 if (gamepad.B == EZACC_PAD_BUTTON_IDLE)
+			 gamepad.B = EZACC_PAD_BUTTON_DOWN;
+		 else
+			 gamepad.B = EZACC_PAD_BUTTON_REPEAT;
+	 }
+	 else
+	 {
+		 if (gamepad.B == EZACC_PAD_BUTTON_REPEAT || (gamepad.B == EZACC_PAD_BUTTON_DOWN))
+			 gamepad.B = EZACC_PAD_BUTTON_KEY_UP;
+		 else
+			 gamepad.B = EZACC_PAD_BUTTON_IDLE;
+	 }
+
+	 //BUTTON X
+	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_X) == 1) {
+		 if (gamepad.X == EZACC_PAD_BUTTON_IDLE)
+			 gamepad.X = EZACC_PAD_BUTTON_DOWN;
+		 else
+			 gamepad.X = EZACC_PAD_BUTTON_REPEAT;
+	 }
+	 else
+	 {
+		 if (gamepad.X == EZACC_PAD_BUTTON_REPEAT || (gamepad.X == EZACC_PAD_BUTTON_DOWN))
+			 gamepad.X = EZACC_PAD_BUTTON_KEY_UP;
+		 else
+			 gamepad.X = EZACC_PAD_BUTTON_IDLE;
+	 }
+
+	 //BUTTON Y
+	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_Y) == 1) {
+		 if (gamepad.Y == EZACC_PAD_BUTTON_IDLE)
+			 gamepad.Y = EZACC_PAD_BUTTON_DOWN;
+		 else
+			 gamepad.Y = EZACC_PAD_BUTTON_REPEAT;
+	 }
+	 else
+	 {
+		 if (gamepad.Y == EZACC_PAD_BUTTON_REPEAT || (gamepad.Y == EZACC_PAD_BUTTON_DOWN))
+			 gamepad.Y = EZACC_PAD_BUTTON_KEY_UP;
+		 else
+			 gamepad.Y = EZACC_PAD_BUTTON_IDLE;
+	 }
+
+	 //BUTTON DPAD UP
+	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_UP) == 1) {
+		 if (gamepad.CROSS_UP == EZACC_PAD_BUTTON_IDLE)
+			 gamepad.CROSS_UP = EZACC_PAD_BUTTON_DOWN;
+		 else
+			 gamepad.CROSS_UP = EZACC_PAD_BUTTON_REPEAT;
+	 }
+	 else
+	 {
+		 if (gamepad.CROSS_UP == EZACC_PAD_BUTTON_REPEAT || (gamepad.CROSS_UP == EZACC_PAD_BUTTON_DOWN))
+			 gamepad.CROSS_UP = EZACC_PAD_BUTTON_KEY_UP;
+		 else
+			 gamepad.CROSS_UP = EZACC_PAD_BUTTON_IDLE;
+	 }
+
+	 //BUTTON DPAD DOWN
+	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == 1) {
+		 if (gamepad.CROSS_DOWN == EZACC_PAD_BUTTON_IDLE)
+			 gamepad.CROSS_DOWN = EZACC_PAD_BUTTON_DOWN;
+		 else
+			 gamepad.CROSS_DOWN = EZACC_PAD_BUTTON_REPEAT;
+	 }
+	 else
+	 {
+		 if (gamepad.CROSS_DOWN == EZACC_PAD_BUTTON_REPEAT || (gamepad.CROSS_DOWN == EZACC_PAD_BUTTON_DOWN))
+			 gamepad.CROSS_DOWN = EZACC_PAD_BUTTON_KEY_UP;
+		 else
+			 gamepad.CROSS_DOWN = EZACC_PAD_BUTTON_IDLE;
+	 }
+
+	 //BUTTON DPAD LEFT
+	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == 1) {
+		 if (gamepad.CROSS_LEFT == EZACC_PAD_BUTTON_IDLE)
+			 gamepad.CROSS_LEFT = EZACC_PAD_BUTTON_DOWN;
+		 else
+			 gamepad.CROSS_LEFT = EZACC_PAD_BUTTON_REPEAT;
+	 }
+	 else
+	 {
+		 if (gamepad.CROSS_LEFT == EZACC_PAD_BUTTON_REPEAT || (gamepad.CROSS_LEFT == EZACC_PAD_BUTTON_DOWN))
+			 gamepad.CROSS_LEFT = EZACC_PAD_BUTTON_KEY_UP;
+		 else
+			 gamepad.CROSS_LEFT = EZACC_PAD_BUTTON_IDLE;
+	 }
+
+	 //BUTTON DPAD UP
+	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == 1) {
+		 if (gamepad.CROSS_RIGHT == EZACC_PAD_BUTTON_IDLE)
+			 gamepad.CROSS_RIGHT = EZACC_PAD_BUTTON_DOWN;
+		 else
+			 gamepad.CROSS_RIGHT = EZACC_PAD_BUTTON_REPEAT;
+	 }
+	 else
+	 {
+		 if (gamepad.CROSS_RIGHT == EZACC_PAD_BUTTON_REPEAT || (gamepad.CROSS_RIGHT == EZACC_PAD_BUTTON_DOWN))
+			 gamepad.CROSS_RIGHT = EZACC_PAD_BUTTON_KEY_UP;
+		 else
+			 gamepad.CROSS_RIGHT = EZACC_PAD_BUTTON_IDLE;
+	 }
  }
