@@ -24,24 +24,22 @@ DECLDIR bool EzAcc_Start()
 
 DECLDIR bool EzAcc_PreUpdate()
 {
-	return true; // TODOG
-	return core->Awake();
+	return core->PreUpdate();
 }
 
 DECLDIR bool EzAcc_Update()
 {
-	return true;// TODOG
+	return core->Update();
 }
 
 DECLDIR bool EzAcc_AllUpdate()
 {
-	return core->Update();
+	return core->AllUpdate();
 }
 
 DECLDIR bool EzAcc_PostUpdate()
 {
-	return true; // TODOG
-	//return core->PostUp();
+	return core->PostUpdate();
 }
 
 DECLDIR bool EzAcc_CleanUp()
@@ -49,19 +47,39 @@ DECLDIR bool EzAcc_CleanUp()
 	return core->CleanUp();
 }
 
-DECLDIR bool EzAcc_GetKeyIntentoUno()
-{
-	return false;
-}
-
-DECLDIR bool EzAcc_GetKeyIntentoDos(int a)
-{
-	return true;
-}
-
 DECLDIR EzAcc_KeyState EzAcc_GetKey(int id)
 {
 	return core->input->GetKey(id);
+}
+
+DECLDIR void EzAcc_SetTimeBetweenInputs(unsigned int new_time)
+{
+	if (core->input && core->input != NULL) {
+		core->input->time_between_inputs = new_time;
+	}
+	else {
+		LOG("EzAcc: ERROR using input module, did you used \"EzAcc_Init\" to initialise the module?");
+	}
+}
+
+DECLDIR unsigned int EzAcc_GetTimeBetweenInputs()
+{
+	if (core->input && core->input != NULL) {
+		return core->input->time_between_inputs;
+	}
+	else {
+		LOG("EzAcc: ERROR using input module, did you used \"EzAcc_Init\" to initialise the module?");
+	}
+}
+
+DECLDIR int EzAcc_BindKey()
+{
+	if (core->input && core->input != NULL) {
+		return core->input->BindKey();
+	}
+	else {
+		LOG("EzAcc: ERROR using input module, did you used \"EzAcc_Init\" to initialise the module?");
+	}
 }
 
 DECLDIR void Function(void)

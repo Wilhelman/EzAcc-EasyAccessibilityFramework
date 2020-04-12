@@ -44,6 +44,18 @@ EzAcc_InputModule::~EzAcc_InputModule()
 		if (SDL_IsGameController(i)) {
 			controller = SDL_GameControllerOpen(i);
 			if (controller) {
+				controllerHaptic = SDL_HapticOpen(i);
+				if (controllerHaptic == NULL)
+				{
+					LOG("EzAcc: WARNING - Controller does not support haptics! SDL Error: %s\n", SDL_GetError());
+				}
+				else
+				{
+					if (SDL_HapticRumbleInit(controllerHaptic) < 0)
+					{
+						LOG("EzAcc: WARNING - Unable to initialize rumble! SDL Error: %s\n", SDL_GetError());
+					}
+				}
 				break;
 			}
 		}
@@ -60,6 +72,8 @@ EzAcc_InputModule::~EzAcc_InputModule()
 
  bool EzAcc_InputModule::PreUpdate()
  {
+	 current_time = SDL_GetTicks();
+
 	 static SDL_Event event;
 
 	 const Uint8* keys = SDL_GetKeyboardState(NULL);
@@ -148,6 +162,7 @@ EzAcc_InputModule::~EzAcc_InputModule()
  bool EzAcc_InputModule::CleanUp()
  {
 	 LOG("EzAcc: Quitting SDL event subsystem");
+	 SDL_HapticClose(controllerHaptic);
 	 SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	 return true;
  }
@@ -155,6 +170,30 @@ EzAcc_InputModule::~EzAcc_InputModule()
  bool EzAcc_InputModule::GetWindowEvent(EzAcc_EventWindow ev)
  {
 	 return windowEvents[ev];
+ }
+
+ int KeyBind(SDL_Event& Event)
+ {
+	 while (1) // keep running till user taps a button ...
+	 {
+		 while (SDL_PollEvent(&Event))
+		 {
+			 switch (Event.type)
+			 {
+			 case SDL_KEYDOWN:
+				 LOG("Keybound to num: %i", Event.key.keysym.sym);
+				 return Event.key.keysym.sym;
+				 break;
+			 };
+		 }
+	 }
+	 return 0;
+ }
+
+ int EzAcc_InputModule::BindKey()
+ {
+	 SDL_Event Event;
+	 return KeyBind(Event);
  }
 
  void EzAcc_InputModule::GetMousePosition(int& x, int& y)
@@ -178,6 +217,12 @@ EzAcc_InputModule::~EzAcc_InputModule()
 
  void EzAcc_InputModule::buttonForGamepad()
  {
+	 //Play rumble at 75% strenght for 500 milliseconds
+	 if (SDL_HapticRumblePlay(controllerHaptic, 0.75, 500) != 0)
+	 {
+		 printf("Warning: Unable to play rumble! %s\n", SDL_GetError());
+	 }
+
 	 //BUTTON A
 	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A) == 1) {
 		 if (gamepad.A == EZACC_PAD_BUTTON_IDLE)
@@ -297,4 +342,14 @@ EzAcc_InputModule::~EzAcc_InputModule()
 		 else
 			 gamepad.CROSS_RIGHT = EZACC_PAD_BUTTON_IDLE;
 	 }
+ }
+
+ void EzAcc_InputModule::SetMacroForKey(int key, int key_value1, int key_value2)
+ {
+	 EzAcc_Macro* tmp_macro = new EzAcc_Macro();
+	 tmp_macro->key = key;
+	 tmp_macro->key_effects.push_back(key_value1);
+	 tmp_macro->key_effects.push_back(key_value2);
+	 
+	 macros.push_back(tmp_macro);
  }

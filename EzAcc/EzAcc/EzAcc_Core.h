@@ -49,7 +49,7 @@ public:
 	bool Start();
 
 	// Called each loop iteration
-	bool Update();
+	bool AllUpdate();
 
 	// Called before quitting
 	bool CleanUp();
@@ -60,6 +60,15 @@ public:
 	// Load config file
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 
+	// Call modules before each loop iteration
+	bool PreUpdate();
+
+	// Call modules on each loop iteration
+	bool Update();
+
+	// Call modules after each loop iteration
+	bool PostUpdate();
+
 private:
 
 	// Call modules before each loop iteration
@@ -68,14 +77,7 @@ private:
 	// Call modules before each loop iteration
 	void FinishUpdate();
 
-	// Call modules before each loop iteration
-	bool PreUpdate();
-
-	// Call modules on each loop iteration
-	bool DoUpdate();
-
-	// Call modules after each loop iteration
-	bool PostUpdate();
+	
 
 public:
 

@@ -39,6 +39,7 @@ static EzAcc_Core* core;
 
 extern "C"
 {
+	// ---------------- CORE ---------------- //
 	/*EzAcc Init
 	Initialise TODOG .....
 	*/
@@ -72,12 +73,34 @@ extern "C"
 	*/
 	DECLDIR bool EzAcc_CleanUp();
 
-	// -- INPUT MODULE -- //
+
+	// ---------------- INPUT MODULE ---------------- //
+
 	/*
 	EzAcc_InputModule GetKey
+	EzAcc_KeyState Inaccesible if that ...
 	TODOG
 	*/
 	DECLDIR EzAcc_KeyState EzAcc_GetKey(int id);
+
+	/*
+	EzAcc_InputModule SetTimeBetweenInputs
+	TODOG
+	*/
+	DECLDIR void EzAcc_SetTimeBetweenInputs(unsigned int new_time);
+
+	/*
+	EzAcc_InputModule GetTimeBetweenInputs
+	TODOG
+	*/
+	DECLDIR unsigned int EzAcc_GetTimeBetweenInputs();
+
+	/*
+	EzAcc_InputModule BindKey
+	int = SDL_KeyCode
+	TODOG
+	*/
+	DECLDIR int EzAcc_BindKey();
 
 	DECLDIR void Function(void);
 }

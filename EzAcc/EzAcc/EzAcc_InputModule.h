@@ -27,8 +27,10 @@
 
 #include "EzAcc_Defines.h"
 #include "EzAcc_Module.h"
+#include <vector>
 
 #include "SDL/include/SDL_gamecontroller.h"
+#include "SDL/include/SDL_haptic.h"
 
 enum EzAcc_EventWindow
 {
@@ -43,7 +45,8 @@ enum EzAcc_KeyState
 	EZACC_KEY_IDLE = 0,
 	EZACC_KEY_DOWN,
 	EZACC_KEY_REPEAT,
-	EZACC_KEY_UP
+	EZACC_KEY_UP,
+	EZACC_KEY_INACCESIBLE
 };
 
 enum EzAcc_GamepadState
@@ -52,6 +55,12 @@ enum EzAcc_GamepadState
 	EZACC_PAD_BUTTON_DOWN,
 	EZACC_PAD_BUTTON_REPEAT,
 	EZACC_PAD_BUTTON_KEY_UP
+};
+
+struct EzAcc_Macro
+{
+	int key = 0;
+	std::vector<int> key_effects;
 };
 
 struct EzAcc_Gamepad {
@@ -93,9 +102,20 @@ public:
 	// Gather relevant win events
 	bool GetWindowEvent(EzAcc_EventWindow ev);
 
+	int BindKey();
+
 	// Check key states (includes mouse and joy buttons)
-	EzAcc_KeyState GetKey(int id) const
+	EzAcc_KeyState GetKey(int id)
 	{
+		if (time_between_inputs > 0){
+			if (current_time >= input_timer + time_between_inputs) {
+				input_timer = current_time;
+				return keyboard[id];
+			}
+			else
+				return EzAcc_KeyState::EZACC_KEY_INACCESIBLE;
+		}
+		
 		return keyboard[id];
 	}
 
@@ -112,6 +132,8 @@ public:
 	EzAcc_Gamepad gamepad;
 	void buttonForGamepad();
 
+	void SetMacroForKey(int key, int key_value1, int key_value2);
+
 private:
 	bool			windowEvents[EZACC_WE_COUNT];
 	EzAcc_KeyState* keyboard = nullptr;
@@ -122,7 +144,15 @@ private:
 	int				mouse_y = 0;
 
 	SDL_GameController* controller;
+	SDL_Haptic* controllerHaptic;
 
+	unsigned int	current_time = 0u;
+	unsigned int	input_timer = 0u;
+
+	std::vector<EzAcc_Macro*> macros;
+
+public:
+	unsigned int	time_between_inputs = 0u;
 };
 
 #endif

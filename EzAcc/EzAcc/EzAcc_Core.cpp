@@ -108,7 +108,7 @@ bool EzAcc_Core::Start()
 }
 
 // Called each loop iteration
-bool EzAcc_Core::Update()
+bool EzAcc_Core::AllUpdate()
 {
 	bool ret = true;
 	PrepareUpdate();
@@ -120,7 +120,7 @@ bool EzAcc_Core::Update()
 		ret = PreUpdate();
 
 	if (ret == true)
-		ret = DoUpdate();
+		ret = Update();
 
 	if (ret == true)
 		ret = PostUpdate();
@@ -164,7 +164,7 @@ bool EzAcc_Core::PreUpdate()
 }
 
 // Call modules on each loop iteration
-bool EzAcc_Core::DoUpdate()
+bool EzAcc_Core::Update()
 {
 	bool ret = true;
 
