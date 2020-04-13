@@ -82,6 +82,11 @@ DECLDIR int EzAcc_BindKey()
 	}
 }
 
+DECLDIR int EzAcc_GenerateNewMacro(EzAcc_Macro new_macro)
+{
+	return DECLDIR int();
+}
+
 DECLDIR void Function(void)
 {
 

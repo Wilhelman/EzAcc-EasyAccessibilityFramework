@@ -102,6 +102,13 @@ extern "C"
 	*/
 	DECLDIR int EzAcc_BindKey();
 
+	/*
+	EzAcc_InputModule GenerateNewMacro
+	int = index macro
+	TODOG
+	*/
+	DECLDIR int EzAcc_GenerateNewMacro(EzAcc_Macro new_macro);
+
 	DECLDIR void Function(void);
 }
 

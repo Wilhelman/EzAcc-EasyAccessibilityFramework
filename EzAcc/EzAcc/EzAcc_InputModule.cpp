@@ -37,14 +37,16 @@ EzAcc_InputModule::~EzAcc_InputModule()
 		ret = false;
 	}
 
-	LOG("Init the controller (search and asign)");
+	LOG("EzAcc: Init the controller (search and asign)");
 	controller = nullptr;
 	for (int i = 0; i < SDL_NumJoysticks(); i++)
 	{
 		if (SDL_IsGameController(i)) {
 			controller = SDL_GameControllerOpen(i);
+			/*SDL_Joystick* gGameController = SDL_JoystickOpen(0);
+			//controllerHaptic = SDL_HapticOpenFromJoystick(gGameController);
 			if (controller) {
-				controllerHaptic = SDL_HapticOpen(i);
+				//controllerHaptic = SDL_HapticOpen(i);
 				if (controllerHaptic == NULL)
 				{
 					LOG("EzAcc: WARNING - Controller does not support haptics! SDL Error: %s\n", SDL_GetError());
@@ -57,9 +59,39 @@ EzAcc_InputModule::~EzAcc_InputModule()
 					}
 				}
 				break;
-			}
+			}*/
 		}
 	}
+
+	// test
+		//Load joystick
+	SDL_Joystick* gGameController = SDL_JoystickOpen(0);
+	LOG("EzAcc : 01");
+	if (gGameController == NULL)
+	{
+		LOG("EzAcc - Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
+	}
+	else
+	{
+		LOG("EzAcc : 02");
+		//Get controller haptic device
+		controllerHaptic = SDL_HapticOpenFromJoystick(gGameController);
+		if (controllerHaptic == NULL)
+		{
+			LOG("EzAcc - Warning: Controller does not support haptics! SDL Error: %s\n", SDL_GetError());
+		}
+		else
+		{
+			//Get initialize rumble
+			int haptic_init_state = SDL_HapticRumbleInit(controllerHaptic);
+			if (haptic_init_state < 0)
+			{
+				LOG("EzAcc - Warning: Unable to initialize rumble! SDL Error: %s\n", SDL_GetError());
+			}
+			LOG("EzAcc : haptic_init_state %i", haptic_init_state);
+		}
+	}
+	LOG("EzAcc : 04");
 
 	return ret;
 }
@@ -76,12 +108,24 @@ EzAcc_InputModule::~EzAcc_InputModule()
 
 	 static SDL_Event event;
 
-	 const Uint8* keys = SDL_GetKeyboardState(NULL);
+	 Uint8* keys = (Uint8*)SDL_GetKeyboardState(NULL);
+
+	 for (int i = 0; i < macros.size(); i++)
+	 {
+		 EzAcc_Macro* tmp_macro = macros.at(i);
+		 if (tmp_macro->key == keys[i]) {
+			 for (int j = 0; j < tmp_macro->key_effects.size(); j++)
+			 {
+				 keys[tmp_macro->key_effects[j]] = 1;
+			 }
+		 }
+	 }
 
 	 for (int i = 0; i < EZACC_MAX_KEYS; ++i)
 	 {
 		 if (keys[i] == 1)
 		 {
+			 
 			 if (keyboard[i] == EZACC_KEY_IDLE)
 				 keyboard[i] = EZACC_KEY_DOWN;
 			 else
@@ -217,16 +261,21 @@ EzAcc_InputModule::~EzAcc_InputModule()
 
  void EzAcc_InputModule::buttonForGamepad()
  {
-	 //Play rumble at 75% strenght for 500 milliseconds
-	 if (SDL_HapticRumblePlay(controllerHaptic, 0.75, 500) != 0)
-	 {
-		 printf("Warning: Unable to play rumble! %s\n", SDL_GetError());
-	 }
+	 
 
 	 //BUTTON A
 	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A) == 1) {
-		 if (gamepad.A == EZACC_PAD_BUTTON_IDLE)
+
+		 if (gamepad.A == EZACC_PAD_BUTTON_IDLE) {
+			 int haptic_state = SDL_HapticRumblePlay(controllerHaptic, 0.75, 500);
+			 //Play rumble at 75% strenght for 500 milliseconds
+			 if (haptic_state != 0)
+			 {
+				 printf("Warning: Unable to play rumble! %s\n", SDL_GetError());
+			 }
+			 LOG("EzAcc : Despues de clicar esta es la cosa: %i", haptic_state);
 			 gamepad.A = EZACC_PAD_BUTTON_DOWN;
+		 }
 		 else
 			 gamepad.A = EZACC_PAD_BUTTON_REPEAT;
 	 }
@@ -344,12 +393,14 @@ EzAcc_InputModule::~EzAcc_InputModule()
 	 }
  }
 
- void EzAcc_InputModule::SetMacroForKey(int key, int key_value1, int key_value2)
+ int EzAcc_InputModule::SetMacroForKey(EzAcc_Macro new_macro)
  {
 	 EzAcc_Macro* tmp_macro = new EzAcc_Macro();
-	 tmp_macro->key = key;
-	 tmp_macro->key_effects.push_back(key_value1);
-	 tmp_macro->key_effects.push_back(key_value2);
+	 tmp_macro->key = new_macro.key;
+	 tmp_macro->key_effects = new_macro.key_effects;
 	 
 	 macros.push_back(tmp_macro);
+	 int index_to_return = macros.size() - 1;
+	 LOG("EzAcc: SetMacroForKey - Returning index: %i", index_to_return);
+	 return index_to_return;
  }

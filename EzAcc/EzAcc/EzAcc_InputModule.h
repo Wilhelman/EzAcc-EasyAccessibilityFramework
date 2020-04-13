@@ -132,7 +132,7 @@ public:
 	EzAcc_Gamepad gamepad;
 	void buttonForGamepad();
 
-	void SetMacroForKey(int key, int key_value1, int key_value2);
+	int SetMacroForKey(EzAcc_Macro new_macro);
 
 private:
 	bool			windowEvents[EZACC_WE_COUNT];
