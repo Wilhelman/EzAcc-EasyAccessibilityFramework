@@ -156,6 +156,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EzAcc.h" />
+    <ClInclude Include="EzAccPerfTimer.h" />
+    <ClInclude Include="EzAccTimer.h" />
     <ClInclude Include="EzAcc_Core.h" />
     <ClInclude Include="EzAcc_Defines.h" />
     <ClInclude Include="EzAcc_Input.h" />
@@ -170,6 +172,8 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="EzAcc.cpp" />
+    <ClCompile Include="EzAccPerfTimer.cpp" />
+    <ClCompile Include="EzAccTimer.cpp" />
     <ClCompile Include="EzAcc_Core.cpp" />
     <ClCompile Include="EzAcc_Input.cpp" />
     <ClCompile Include="EzAcc_InputModule.cpp" />

@@ -84,7 +84,7 @@ DECLDIR int EzAcc_BindKey()
 
 DECLDIR int EzAcc_GenerateNewMacro(EzAcc_Macro new_macro)
 {
-	return DECLDIR int();
+	return core->input->SetMacroForKey(new_macro);
 }
 
 DECLDIR void Function(void)

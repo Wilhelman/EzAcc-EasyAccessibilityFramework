@@ -60,6 +60,12 @@
     <ClInclude Include="pugixml.hpp">
       <Filter>Archivos de encabezado\Tools\PuguiXML</Filter>
     </ClInclude>
+    <ClInclude Include="EzAccPerfTimer.h">
+      <Filter>Archivos de encabezado\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="EzAccTimer.h">
+      <Filter>Archivos de encabezado\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -85,6 +91,12 @@
     </ClCompile>
     <ClCompile Include="EzAcc.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="EzAccPerfTimer.cpp">
+      <Filter>Archivos de encabezado\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="EzAccTimer.cpp">
+      <Filter>Archivos de encabezado\Tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
