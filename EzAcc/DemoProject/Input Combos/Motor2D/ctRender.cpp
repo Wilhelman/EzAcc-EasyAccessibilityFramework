@@ -19,9 +19,10 @@
 #include "ImGui/imgui.h"
 //#include "ImGui/imgui_impl_opengl3.h"
 #include "SDL/include/SDL.h"
-#include "SDL/include/SDL_opengl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 #include "ImGui/imgui_impl_sdl.h"
+
+#include "EzAcc/include/EzAcc.h"
 
 #define VSYNC true
 
@@ -41,6 +42,7 @@ ctRender::~ctRender()
 // Called before render is available
 bool ctRender::Awake(pugi::xml_node& config)
 {
+	debug = false;
 	GLenum err = glewInit();
 	LOG("Create SDL rendering context");
 
@@ -129,17 +131,29 @@ bool ctRender::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui::StyleColorsDark();
+	ImGui_ImplSDL2_InitForOpenGL(App->win->window, App->render->context);
+	ImGui_ImplOpenGL3_Init();
+	GLenum err = glewInit();
 	return true;
 }
 
 // Called each loop iteration
 bool ctRender::PreUpdate()
 {
-	SDL_RenderClear(renderer);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(App->win->window);
-	ImGui::NewFrame();
+	if(!debug)
+		SDL_RenderClear(renderer);
+	if (debug) {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplSDL2_NewFrame(App->win->window);
+		ImGui::NewFrame();
+	}
+	
 	return true;
 }
 
@@ -166,21 +180,34 @@ bool ctRender::Update(float dt)
 		camera.x -= speed;*/
 
 	//LOG("Camera pos x: %i pos y: %i", camera.x, camera.y);
-	ImGui::Text("Hello, world %d", 123);
+
+	if (debug) {
+		ImGui::Text("Hello, world %d", 123);
+	}
+	
 
 	return true;
 }
 
 bool ctRender::PostUpdate()
 {
-	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
-	SDL_RenderPresent(renderer);
+	if (!debug) {
+		SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
+		SDL_RenderPresent(renderer);
+	}
+	
+	if (debug) {
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		//SWAP BUFFERS
+		SDL_GL_SwapWindow(App->win->window);
+	}
 
-	//SWAP BUFFERS
-	SDL_GL_SwapWindow(App->win->window);
+	
+	if (EzAcc_GetKey(SDL_SCANCODE_F1) == EzAcc_KeyState::EZACC_KEY_DOWN) {
+		debug = !debug;
+	}
 	return true;
 }
 

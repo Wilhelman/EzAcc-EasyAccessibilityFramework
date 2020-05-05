@@ -47,7 +47,7 @@ public:
 	iPoint ScreenToWorld(int x, int y) const;
 
 public:
-
+	bool debug = false;
 	SDL_Renderer*	renderer = nullptr;
 	SDL_GLContext context;
 	SDL_Rect		camera = { 0, 0, 0, 0 };

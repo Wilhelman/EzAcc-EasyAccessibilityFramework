@@ -118,18 +118,7 @@ bool ctKenStageScene::Start()
 
 
 		// setup Dear ImGui context
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-	// setup Dear ImGui style
-	ImGui::StyleColorsDark();
-
 	
-	ImGui_ImplSDL2_InitForOpenGL(App->win->window, App->render->context);
-	ImGui_ImplOpenGL3_Init();
-
-	GLenum err = glewInit();
 	return ret;
 }
 
