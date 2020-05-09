@@ -259,6 +259,19 @@ bool ctRender::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 
 	//SDL_SetTextureColorMod(texture, 255, 64, 64); //TODOG OJO
 
+	if (section != NULL)
+	{
+		rect.w = section->w;
+		rect.h = section->h;
+	}
+	else
+	{
+		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+	}
+
+	rect.w *= scale;
+	rect.h *= scale;
+	
 	void* mPixels;
 	int mPitch;
 	if (App->ken_stage_scene->atlas_tex == texture) {
@@ -277,41 +290,32 @@ bool ctRender::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		//Allocate format from window
 		Uint32 format = SDL_GetWindowPixelFormat(App->win->window);
 		SDL_PixelFormat* mappingFormat = SDL_AllocFormat(format);
-
+		
 		//Get pixel data
 		Uint32* pixels = (Uint32*)mPixels;
-		int pixelCount = (mPitch / 4) * App->ken_stage_scene->backgroundSurface->h; //TODOG puede que rect.h
+		int pixelCount = (mPitch / 4) * /*App->ken_stage_scene->backgroundSurface->h*/ rect.h; //TODOG puede que rect.h
 
-		Uint32 colorKey = SDL_MapRGB(mappingFormat, 0, 0xFF, 0xFF);
-		Uint32 transparent = SDL_MapRGBA(mappingFormat, 0xFF, 0xFF, 0xFF, 0x00);
+		Uint32 colorKey = SDL_MapRGB(mappingFormat,136, 204, 255);
+		Uint32 transparent = SDL_MapRGBA(mappingFormat, 255, 0, 0, 255);
 
 		//Color key pixels
-		for (int i = 0; i < pixelCount; ++i)
+		/*for (int i = 0; i < pixelCount; ++i)
 		{
 			if (pixels[i] == colorKey)
 			{
 				pixels[i] = transparent;
 			}
-		}
+
+		}*/
 
 
 		//Unlock texture to update
 		SDL_UnlockTexture(texture);
 		mPixels = NULL;
+		SDL_FreeFormat(mappingFormat);
 	}
 
-	if (section != NULL)
-	{
-		rect.w = section->w;
-		rect.h = section->h;
-	}
-	else
-	{
-		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
-	}
-
-	rect.w *= scale;
-	rect.h *= scale;
+	
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
