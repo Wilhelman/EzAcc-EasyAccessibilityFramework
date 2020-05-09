@@ -5,6 +5,7 @@
 #include "ctAnimation.h"
 #include <vector>
 #include <string>
+struct SDL_Surface;
 
 enum ComboType;
 
@@ -41,7 +42,7 @@ public:
 	Player* GetPlayer()const;
 
 	bool SpawnEntity(int x, int y, EntityType type);
-
+	SDL_Surface* ryuSurface;
 private:
 
 	std::vector<Entity*> entities;

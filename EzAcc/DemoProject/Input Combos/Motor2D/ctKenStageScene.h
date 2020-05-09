@@ -4,6 +4,7 @@
 #include "ctModule.h"
 #include "ctAnimation.h"
 #include "ctGui.h"
+struct SDL_Surface;
 
 class ctKenStageScene : public ctModule
 {
@@ -38,6 +39,9 @@ public:
 
 	void OnUITrigger(UIElement* elementTriggered, UI_State ui_state);
 
+	SDL_Surface* backgroundSurface;
+	SDL_Texture* atlas_tex = nullptr;
+
 private:
 	void LoadAnimation(pugi::xml_node animation_node, ctAnimation* animation);
 	void LoadRect(pugi::xml_node rect_node, SDL_Rect* rect);
@@ -53,7 +57,7 @@ private:
 	bool forward_foreground = false;
 
 	std::string atlas_name;
-	SDL_Texture* atlas_tex = nullptr;
+	
 
 	SDL_Rect ground = { 0,0,0,0 };
 	SDL_Rect foreground = { 0,0,0,0 };

@@ -37,7 +37,7 @@ bool ctEntities::Start()
 {
 	bool ret = true;
 
-	entity_sprites = App->tex->Load(spritesheetName.data());
+	entity_sprites = App->tex->Load(spritesheetName.data(), &ryuSurface);
 
 	if (entity_sprites == NULL) {
 		LOG("Error loading entities spritesheet!!");

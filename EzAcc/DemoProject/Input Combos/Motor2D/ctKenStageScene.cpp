@@ -105,7 +105,7 @@ bool ctKenStageScene::Start()
 		LOG("Error playing music in ctKenStageScene Start");
 	}
 
-	atlas_tex = App->tex->Load(atlas_name.c_str());
+	atlas_tex = App->tex->Load(atlas_name.c_str(), &backgroundSurface);
 	if (atlas_tex == nullptr)
 		ret = false;
 

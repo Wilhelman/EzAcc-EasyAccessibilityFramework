@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "ctEntities.h"
 #include "ctInput.h"
+#include "ctKenStageScene.h"
 
 #include "Glew\include\GL\glew.h"
 #include "SDL\include\SDL_opengl.h"
@@ -252,10 +253,52 @@ bool ctRender::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
-
 	SDL_Rect rect;
 	rect.x = (int)(camera.x * speed) + x * scale;
 	rect.y = (int)(camera.y * speed) + y * scale;
+
+	//SDL_SetTextureColorMod(texture, 255, 64, 64); //TODOG OJO
+
+	void* mPixels;
+	int mPitch;
+	if (App->ken_stage_scene->atlas_tex == texture) {
+		//Lock texture for manipulation
+		//Texture is already locked
+	
+			if (SDL_LockTexture(texture, NULL, &mPixels, &mPitch) != 0)
+			{
+				LOG("Unable to lock texture! %s\n", SDL_GetError());
+			}
+		
+
+		//Copy loaded/formatted surface pixels
+		memcpy(mPixels, App->ken_stage_scene->backgroundSurface->pixels, App->ken_stage_scene->backgroundSurface->pitch * App->ken_stage_scene->backgroundSurface->h);
+
+		//Allocate format from window
+		Uint32 format = SDL_GetWindowPixelFormat(App->win->window);
+		SDL_PixelFormat* mappingFormat = SDL_AllocFormat(format);
+
+		//Get pixel data
+		Uint32* pixels = (Uint32*)mPixels;
+		int pixelCount = (mPitch / 4) * App->ken_stage_scene->backgroundSurface->h; //TODOG puede que rect.h
+
+		Uint32 colorKey = SDL_MapRGB(mappingFormat, 0, 0xFF, 0xFF);
+		Uint32 transparent = SDL_MapRGBA(mappingFormat, 0xFF, 0xFF, 0xFF, 0x00);
+
+		//Color key pixels
+		for (int i = 0; i < pixelCount; ++i)
+		{
+			if (pixels[i] == colorKey)
+			{
+				pixels[i] = transparent;
+			}
+		}
+
+
+		//Unlock texture to update
+		SDL_UnlockTexture(texture);
+		mPixels = NULL;
+	}
 
 	if (section != NULL)
 	{

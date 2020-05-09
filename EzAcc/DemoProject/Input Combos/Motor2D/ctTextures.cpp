@@ -3,6 +3,7 @@
 #include "ctApp.h"
 #include "ctRender.h"
 #include "ctTextures.h"
+#include "ctWindow.h"
 
 #include "SDL_image/include/SDL_image.h"
 #pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
@@ -58,19 +59,25 @@ bool ctTextures::CleanUp()
 }
 
 // Load new texture from file path
-SDL_Texture* const ctTextures::Load(const char* path)
+SDL_Texture* const ctTextures::Load(const char* path, SDL_Surface** formattedSurface)
 {
 	SDL_Texture* texture = nullptr;
 	SDL_Surface* surface = IMG_Load(path);
-
+	*formattedSurface = SDL_ConvertSurfaceFormat(surface, SDL_GetWindowPixelFormat(App->win->window),0);
+	if (formattedSurface == NULL)
+	{
+		printf("Unable to convert loaded surface to display format! SDL Error: %s\n", SDL_GetError());
+	}
 	if (surface == NULL)
 	{
 		LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
 	}
 	else
 	{
-		texture = LoadSurface(surface);
-		SDL_FreeSurface(surface);
+		//texture = SDL_CreateTexture(App->render->renderer, SDL_GetWindowPixelFormat(App->win->window), SDL_TEXTUREACCESS_STREAMING, formattedSurface->w, formattedSurface->h);
+		texture = LoadSurface(*formattedSurface);
+		
+		//SDL_FreeSurface(surface);
 	}
 
 	return texture;
@@ -96,7 +103,8 @@ bool ctTextures::UnLoad(SDL_Texture* texture)
 // Translate a surface into a texture
 SDL_Texture* const ctTextures::LoadSurface(SDL_Surface* surface)
 {
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
+	SDL_Texture* texture = SDL_CreateTexture(App->render->renderer, SDL_GetWindowPixelFormat(App->win->window), SDL_TEXTUREACCESS_STREAMING, surface->w, surface->h);
+	//SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
 
 	if (texture == NULL)
 	{
