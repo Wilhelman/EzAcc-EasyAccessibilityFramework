@@ -193,7 +193,7 @@ bool ctRender::Update(float dt)
 bool ctRender::PostUpdate()
 {
 	if (!debug) {
-		SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
+		//SDL_SetRenderDrawColor(renderer, 255, background.g, background.g, background.a);
 		SDL_RenderPresent(renderer);
 	}
 	
@@ -249,7 +249,7 @@ void ctRender::ResetViewPort()
 }
 
 // Blit to screen
-bool ctRender::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
+bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -258,6 +258,22 @@ bool ctRender::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	rect.y = (int)(camera.y * speed) + y * scale;
 
 	//SDL_SetTextureColorMod(texture, 255, 64, 64); //TODOG OJO
+	if (blendMode != SDL_BLENDMODE_INVALID) {
+		SDL_SetTextureBlendMode(texture, blendMode);
+		SDL_SetSurfaceBlendMode(App->ken_stage_scene->backgroundSurface, blendMode);
+		SDL_SetRenderDrawBlendMode(renderer, blendMode);
+	}
+	/*SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+	SDL_SetSurfaceBlendMode(App->ken_stage_scene->backgroundSurface, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);*/
+	//SDL_SetTextureAlphaMod(texture, 255);
+	/*SDL_Rect blur;
+	blur.x = 600;
+	blur.y = 0;
+	blur.w = 100;
+	blur.h = 100;
+	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 80);
+	SDL_RenderFillRect(renderer, &blur);*/
 
 	if (section != NULL)
 	{
@@ -288,15 +304,15 @@ bool ctRender::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		memcpy(mPixels, App->ken_stage_scene->backgroundSurface->pixels, App->ken_stage_scene->backgroundSurface->pitch * App->ken_stage_scene->backgroundSurface->h);
 
 		//Allocate format from window
-		Uint32 format = SDL_GetWindowPixelFormat(App->win->window);
+		Uint32 format = SDL_PIXELFORMAT_RGBA8888; // SDL_GetWindowPixelFormat(App->win->window);
 		SDL_PixelFormat* mappingFormat = SDL_AllocFormat(format);
-		
+
 		//Get pixel data
 		Uint32* pixels = (Uint32*)mPixels;
-		int pixelCount = (mPitch / 4) * /*App->ken_stage_scene->backgroundSurface->h*/ rect.h; //TODOG puede que rect.h
+		int pixelCount = (mPitch / 4) *  rect.h; //TODOG puede que App->ken_stage_scene->backgroundSurface->h
 
-		Uint32 colorKey = SDL_MapRGB(mappingFormat,136, 204, 255);
-		Uint32 transparent = SDL_MapRGBA(mappingFormat, 255, 0, 0, 255);
+		Uint32 colorKey = SDL_MapRGBA(mappingFormat,0, 0, 0,255);
+		Uint32 transparent = SDL_MapRGBA(mappingFormat, 0, 0, 255, 50);
 
 		//Color key pixels
 		/*for (int i = 0; i < pixelCount; ++i)
@@ -326,7 +342,7 @@ bool ctRender::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		pivot.y = pivot_y;
 		p = &pivot;
 	}
-
+	//if (SDL_RenderCopy(renderer, texture, section, &rect) != 0)
 	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());

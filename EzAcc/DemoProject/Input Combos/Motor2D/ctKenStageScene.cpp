@@ -106,6 +106,7 @@ bool ctKenStageScene::Start()
 	}
 
 	atlas_tex = App->tex->Load(atlas_name.c_str(), &backgroundSurface);
+	
 	if (atlas_tex == nullptr)
 		ret = false;
 
@@ -169,9 +170,9 @@ bool ctKenStageScene::Update(float dt)
 		foreground_pos += 0.02f;
 	
 	// Draw everything --------------------------------------
-	App->render->Blit(atlas_tex, 0, 0, &background, 0.75f); // sea and sky
-	App->render->Blit(atlas_tex, 560, 8, &(flag.GetCurrentFrame()), 0.75f); // flag animation
-	//App->render->Blit(atlas_tex, 0, (int)foreground_pos, &foreground, 0.92f);// ship
+	App->render->Blit(SDL_BLENDMODE_NONE, atlas_tex, 0, 0, &background, 0.75f); // sea and sky
+	//App->render->Blit(atlas_tex, 560, 8, &(flag.GetCurrentFrame()), 0.75f); // flag animation
+	App->render->Blit(SDL_BLENDMODE_BLEND, atlas_tex, 0, (int)foreground_pos, &foreground, 0.92f);// ship
 	/*App->render->Blit(atlas_tex, 192, 104 + (int)foreground_pos, &(girl.GetCurrentFrame()), 0.92f); // girl animation
 	App->render->Blit(atlas_tex, 128, 96 + (int)foreground_pos, &(two_guys.GetCurrentFrame()), 0.92f); // two_guys animation
 	App->render->Blit(atlas_tex, 224, 104 + (int)foreground_pos, &(green_guy.GetCurrentFrame()), 0.92f); // green_guy animation

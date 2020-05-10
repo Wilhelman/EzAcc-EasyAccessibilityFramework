@@ -109,10 +109,10 @@ void UIElement::Draw(SDL_Texture* sprites)
 		{
 		case IMAGE:
 		case BUTTON:
-			App->render->Blit(sprites, screen_position.x, screen_position.y, &current_rect);
+			App->render->Blit(SDL_BLENDMODE_INVALID, sprites, screen_position.x, screen_position.y, &current_rect);
 				break;
 		case LABEL:
-			App->render->Blit(texture, screen_position.x, screen_position.y, &current_rect);
+			App->render->Blit(SDL_BLENDMODE_INVALID, texture, screen_position.x, screen_position.y, &current_rect);
 			break;
 		default:
 			break;
