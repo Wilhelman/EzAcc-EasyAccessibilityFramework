@@ -311,18 +311,22 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Texture* texture, int x, int y,
 		Uint32* pixels = (Uint32*)mPixels;
 		int pixelCount = (mPitch / 4) *  rect.h; //TODOG puede que App->ken_stage_scene->backgroundSurface->h
 
-		Uint32 colorKey = SDL_MapRGBA(mappingFormat,0, 0, 0,255);
+		Uint32 colorKey = SDL_MapRGBA(mappingFormat,128, 5, 50,255);
 		Uint32 transparent = SDL_MapRGBA(mappingFormat, 0, 0, 255, 50);
 
 		//Color key pixels
-		/*for (int i = 0; i < pixelCount; ++i)
+		for (int i = 0; i < pixelCount; ++i)
 		{
+			Uint32 pixel = pixels[i];
+			SDL_Color rgb;
+			SDL_GetRGBA(pixels[i], mappingFormat, &rgb.r, &rgb.g, &rgb.b, &rgb.a);
+			
 			if (pixels[i] == colorKey)
 			{
 				pixels[i] = transparent;
 			}
 
-		}*/
+		}
 
 
 		//Unlock texture to update
