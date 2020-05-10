@@ -181,7 +181,7 @@ bool ctApp::Update()
 		ret = PostUpdate();
 		EzAcc_PostUpdate();
 	}
-	
+	float asd = EzAcc_GetDT();
 
 	FinishUpdate();
 	return ret;
@@ -254,8 +254,9 @@ void ctApp::FinishUpdate()
 
 	double framerate = 1000.0f / perf_timer.ReadMs();
 
-	dt = 1.0f / framerate;
-
+	// TODOG if EzAcc init
+	//dt = 1.0f / framerate;
+	dt = EzAcc_GetDT();
 
 	static char title[256];
 	sprintf_s(title, 256, "%s - FPS: %.2f Av.FPS: %.2f Last Frame Ms: %u (Cap: %s  Vsync: %s)",

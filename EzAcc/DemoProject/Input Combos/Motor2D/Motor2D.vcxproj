@@ -74,6 +74,8 @@
     <ClInclude Include="ctTimer.h" />
     <ClInclude Include="ctWindow.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EzAcc\include\EzAccPerfTimer.h" />
+    <ClInclude Include="EzAcc\include\EzAccTimer.h" />
     <ClInclude Include="Glew\include\GL\eglew.h" />
     <ClInclude Include="Glew\include\GL\glew.h" />
     <ClInclude Include="Glew\include\GL\glxew.h" />

@@ -28,6 +28,8 @@
 #include <list>
 #include "EzAcc_Module.h"
 #include "pugixml.hpp"
+#include "EzAccTimer.h"
+#include "EzAccPerfTimer.h"
 
 // Modules
 class EzAcc_InputModule;
@@ -69,13 +71,19 @@ public:
 	// Call modules after each loop iteration
 	bool PostUpdate();
 
+	// Call modules before each loop iteration
+	void FinishUpdate();
+
+	void SetTimeScale(float new_time_scale);
+
+	float GetDT();
+
 private:
 
 	// Call modules before each loop iteration
 	void PrepareUpdate();
 
-	// Call modules before each loop iteration
-	void FinishUpdate();
+	
 
 	
 
@@ -99,7 +107,17 @@ private:
 	ctTimer				startup_time;
 	float				dt = 0.0f;
 	*/
+	EzAccPerfTimer			perf_timer;
+	EzAccTimer				simple_timer;
+
+	EzAccPerfTimer			ptimer;
+	uint64				frame_count = 0;
+	uint				cap = 0u;
+	EzAccTimer				startup_time;
+	float				dt = 0.0f;
+	int					capped_ms = -1;
 	
+	float time_scale = 1.0f;
 
 };
 

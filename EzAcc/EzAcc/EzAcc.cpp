@@ -87,6 +87,16 @@ DECLDIR int EzAcc_GenerateNewMacro(EzAcc_Macro new_macro)
 	return core->input->SetMacroForKey(new_macro);
 }
 
+DECLDIR void EzAcc_SetDTTimeScale(float timescale)
+{
+	core->SetTimeScale(timescale);
+}
+
+DECLDIR float EzAcc_GetDT()
+{
+	return core->GetDT();
+}
+
 DECLDIR void Function(void)
 {
 

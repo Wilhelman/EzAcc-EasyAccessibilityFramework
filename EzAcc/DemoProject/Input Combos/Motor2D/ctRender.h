@@ -49,6 +49,7 @@ public:
 	iPoint ScreenToWorld(int x, int y) const;
 	void DrawInput();
 	void DrawAbout();
+	void DrawCognitive();
 public:
 	bool debug = false;
 	SDL_Renderer*	renderer = nullptr;
@@ -63,6 +64,7 @@ private:
 	bool show_demo_window = false;
 	bool show_about = false;
 	bool show_input = false;
+	bool show_cognitive = false;
 	bool change_debug = false;
 
 	char tmp_name[100];

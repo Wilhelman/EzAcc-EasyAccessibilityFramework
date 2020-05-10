@@ -266,7 +266,7 @@ bool ctRender::Update(float dt)
 					show_input = !show_input;
 
 				if (ImGui::MenuItem("Cognitive (Memory/Information Processing)", "2"))
-					show_input = !show_input;
+					show_cognitive = !show_cognitive;
 
 				if (ImGui::MenuItem("Vision", "3"))
 					show_input = !show_input;
@@ -307,6 +307,9 @@ bool ctRender::Update(float dt)
 		if (show_input) {
 			DrawInput();
 		}
+		if (show_cognitive) {
+			DrawCognitive();
+		}
 		if (show_about) {
 			DrawAbout();
 		}
@@ -315,6 +318,30 @@ bool ctRender::Update(float dt)
 	
 
 	return true;
+}
+
+void ctRender::DrawCognitive() // TODOG
+{
+	ImGui::Begin("Cognitive (Memory/Information Processing) Settings", &show_cognitive, ImGuiWindowFlags_AlwaysAutoResize);
+
+	ImGui::Text("Read EzAcc_Core settings in the readme to learn more about all the function calls");
+	ImGui::SameLine();
+	if (ImGui::Button("Readme##READMEInput"))
+		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
+	
+	ImGui::Separator();
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "Current DT from EzAcc");
+	ImGui::Text("Current DT value: %.2f",App->dt);
+
+	ImGui::Separator();
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "Set time scale for DT");
+	ImGui::Text("Time scale:");
+	ImGui::SameLine();
+	static float dt_scale = 1.0f;
+	if (ImGui::SliderFloat("##TIMEBETWEENINPUTS", &dt_scale, 0.0f, 1.0f))
+		EzAcc_SetDTTimeScale(dt_scale);
+
+	ImGui::End();
 }
 
 void ctRender::DrawInput() // TODOG

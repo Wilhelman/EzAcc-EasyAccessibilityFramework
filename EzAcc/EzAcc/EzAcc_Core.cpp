@@ -125,7 +125,7 @@ bool EzAcc_Core::AllUpdate()
 	if (ret == true)
 		ret = PostUpdate();
 
-	FinishUpdate();
+	//FinishUpdate();
 	return ret;
 }
 
@@ -138,25 +138,7 @@ void EzAcc_Core::PrepareUpdate()
 // ---------------------------------------------
 void EzAcc_Core::FinishUpdate()
 {
-	frame_count++;
-
-	float avg_fps = float(frame_count) / startup_time.ReadSec();
-
-	float seconds_since_startup = simple_timer.Read();
-
-	uint32 current_ms_frame = perf_timer.ReadMs();
-	uint32 last_frame_ms = current_ms_frame;
-	uint32 frames_on_last_update = 0;
-
-	double framerate = 1000.0f / perf_timer.ReadMs();
-
-	dt = 1.0f / framerate;
-
-	// TODOG
-	/*
-		Modify DT ...
-	*/
-	dt *= time_scale;
+	
 
 	if (!all_modules_loaded)
 		all_modules_loaded = true;
@@ -165,6 +147,11 @@ void EzAcc_Core::FinishUpdate()
 void EzAcc_Core::SetTimeScale(float new_time_scale)
 {
 	time_scale = new_time_scale;
+}
+
+float EzAcc_Core::GetDT()
+{
+	return dt;
 }
 
 // Call modules before each loop iteration
@@ -226,6 +213,26 @@ bool EzAcc_Core::PostUpdate()
 
 		ret = (*it)->PostUpdate();
 	}
+
+	frame_count++;
+
+	float avg_fps = float(frame_count) / startup_time.ReadSec();
+
+	float seconds_since_startup = simple_timer.Read();
+
+	uint32 current_ms_frame = perf_timer.ReadMs();
+	uint32 last_frame_ms = current_ms_frame;
+	uint32 frames_on_last_update = 0;
+
+	double framerate = 1000.0f / perf_timer.ReadMs();
+
+	dt = 1.0f / framerate;
+
+	// TODOG
+	/*
+		Modify DT ...
+	*/
+	dt *= time_scale;
 
 	//PERF_PEEK(ptimer);
 	return ret;

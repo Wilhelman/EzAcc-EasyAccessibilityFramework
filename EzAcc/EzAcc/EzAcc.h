@@ -111,8 +111,19 @@ extern "C"
 
 
 	// ---------------- Cognitive (Memory/Information Processing) ---------------- //
+	/*
+	EzAcc_Core SetDTTimeScale
+	int = index macro
+	TODOG
+	*/
+	DECLDIR void EzAcc_SetDTTimeScale(float timescale);
 
-
+	/*
+	EzAcc_Core GetDT
+	int = index macro
+	TODOG
+	*/
+	DECLDIR float EzAcc_GetDT();
 
 	DECLDIR void Function(void);
 }

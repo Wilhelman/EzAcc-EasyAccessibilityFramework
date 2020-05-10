@@ -54,7 +54,7 @@ public:
 	void RequestBrowser(const char* url)const;
 	// Load config file
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
-
+	float				dt = 0.0f;
 private:
 
 	// Call modules before each loop iteration
@@ -107,7 +107,7 @@ private:
 	uint64				frame_count = 0;
 	uint				cap = 0u;
 	ctTimer				startup_time;
-	float				dt = 0.0f;
+	
 	int					capped_ms = -1;
 	bool				all_modules_loaded = false;
 
