@@ -5,6 +5,8 @@
 #include "ctPoint.h"
 #include "ctModule.h"
 #include <string>
+#include "EzAcc/include/EzAcc.h"
+
 class ctRender : public ctModule
 {
 public:
@@ -65,6 +67,16 @@ private:
 
 	char tmp_name[100];
 	std::string name;
+
+
+	bool binding = false;
+	int lastBindedKey = -1;
+
+	EzAcc_Macro macroTest;
+	int macroTestIndex = -1;
+	bool bindingMacroKey = false;
+	bool bindingMacroKeyValue1 = false;
+	bool bindingMacroKeyValue2 = false;
 };
 
 #endif // __j1RENDER_H__

@@ -198,6 +198,9 @@ bool ctRender::Start()
 	}
 	debug = true;
 	show_about = true;
+
+	macroTest.key = -1;
+
 	return true;
 }
 
@@ -223,6 +226,7 @@ bool ctRender::Update(float dt)
 
 	App->win->GetWindowSize(winWidth, winHeight);
 
+	
 	/*
 	int speed = 3;
 
@@ -317,36 +321,127 @@ void ctRender::DrawInput() // TODOG
 {
 	ImGui::Begin("Motor (Mobility/Control) Settings", &show_about, ImGuiWindowFlags_AlwaysAutoResize);
 
-	ImGui::Text("Read EzAcc_InputModule settings info in the readme to learn more about all the functions call info");
+	ImGui::Text("Read EzAcc_InputModule settings in the readme to learn more about all the function calls");
 	ImGui::SameLine();
 	if (ImGui::Button("Readme##READMEInput"))
 		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
 	ImGui::Separator();
 
-	if (ImGui::CollapsingHeader("Get Key"))
-	{
-		ImGui::Text("TODOG : GET KEY INFO WHAT RETURNS ETC ETC");
-		ImGui::Separator();
-		ImGui::Text("Last Key Pressed: (TODO)");
-		// TODOG HACER EN EZACC UNA FUNCION DE LAST PRESSED
+	ImGuiIO& io = ImGui::GetIO();
+	ImGui::Text("TODOG : GET KEY INFO WHAT RETURNS ETC ETC");
+	ImGui::Separator();
 
-		ImGui::Separator();
-		ImGui::Text("Set time between inputs");
-		ImGui::Text("Time:");
-		
-		static float time_between_inputs= 0.0f;
-		if (ImGui::DragFloat("##time_between_inputs", (float*)&time_between_inputs, 0.1f))
-			int a = 1; // TODOG UPTADE
-		ImGui::SameLine(); 
-		ImGui::Text("ms");
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "Basic input info");
+	if (ImGui::IsMousePosValid())
+		ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
+	else
+		ImGui::Text("Mouse pos: <INVALID>");
+	ImGui::Text("Mouse delta: (%g, %g)", io.MouseDelta.x, io.MouseDelta.y);
+	ImGui::Text("Mouse down:");     for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) if (io.MouseDownDuration[i] >= 0.0f) { ImGui::SameLine(); ImGui::Text("b%d (%.02f secs)", i, io.MouseDownDuration[i]); }
+	ImGui::Text("Mouse clicked:");  for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) if (ImGui::IsMouseClicked(i)) { ImGui::SameLine(); ImGui::Text("b%d", i); }
+	ImGui::Text("Mouse dbl-clicked:"); for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) if (ImGui::IsMouseDoubleClicked(i)) { ImGui::SameLine(); ImGui::Text("b%d", i); }
+	ImGui::Text("Mouse released:"); for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) if (ImGui::IsMouseReleased(i)) { ImGui::SameLine(); ImGui::Text("b%d", i); }
+	ImGui::Text("Mouse wheel: %.1f", io.MouseWheel);
 
-		
-		strcpy_s(tmp_name, 100, name.c_str());
-		if (ImGui::InputText("##GO_NAME", tmp_name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
-			name = tmp_name;
-		
+	ImGui::Text("Keys down:");      for (int i = 0; i < IM_ARRAYSIZE(io.KeysDown); i++) if (io.KeysDownDuration[i] >= 0.0f) { ImGui::SameLine(); ImGui::Text("%d (%.02f secs)", i, io.KeysDownDuration[i]); }
 
-		ImGui::Separator();
+
+	ImGui::Separator();
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "Set time between inputs");
+	ImGui::Text("Time between inputs:");
+	ImGui::SameLine();
+	static int time_between_inputs = 0;
+	if (ImGui::SliderInt("##TIMEBETWEENINPUTS", &time_between_inputs, 0, 5000))
+		EzAcc_SetTimeBetweenInputs(time_between_inputs);
+	ImGui::SameLine();
+	ImGui::Text("ms");
+
+	ImGui::Separator();
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "Bind new key");
+	if (!binding) {
+		if (lastBindedKey != -1) {
+			ImGui::Text("Last binded key ID was: %i", lastBindedKey);
+			ImGui::SameLine();
+		}
+		if (ImGui::Button("Press to bind new key##Bind")) {
+			binding = true;
+		}
+	}
+	else {
+		ImGui::Text("Press any key to return the binding code...");
+		lastBindedKey = EzAcc_BindKey();
+		binding = false;
+	}
+
+	ImGui::Separator();
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "Generate Macros");
+	if (!bindingMacroKey) {
+		if (macroTest.key == -1) {
+			ImGui::Text("Choose the key for the new macro");
+			ImGui::SameLine();
+			if (ImGui::Button("New Key##Bw")) {
+				bindingMacroKey = true;
+			}
+		}
+		else {
+			ImGui::Text("Key ID choosed: %i",macroTest.key);
+			ImGui::SameLine();
+			if (ImGui::Button("Choose another##Be")) {
+				bindingMacroKey = true;
+			}
+		}
+		
+	}
+	else {
+		ImGui::Text("Choose the key for the new macro");
+		ImGui::SameLine();
+		ImGui::Text("Press any key to return the binding code...");
+		macroTest.key = EzAcc_BindKey();
+		bindingMacroKey = false;
+	}
+
+	if (macroTest.key != -1 && macroTest.key_effects.size() == 0) {
+		if (!bindingMacroKeyValue1) {
+			ImGui::Text("Choose first key VALUE for the new macro");
+			ImGui::SameLine();
+			if (ImGui::Button("New Key##B2w")) {
+				bindingMacroKeyValue1 = true;
+			}
+		}
+		else {
+			ImGui::Text("Choose the key for the first value");
+			ImGui::SameLine();
+			ImGui::Text("Press any key to return the binding code...");
+			macroTest.key_effects.push_back(EzAcc_BindKey());
+			bindingMacroKeyValue1 = false;
+		}
+	}
+	else if (macroTest.key != -1) {
+		ImGui::Text("Effect key ID choosed: %i", macroTest.key_effects[0]);
+	}
+
+	if (macroTest.key != -1 && macroTest.key_effects.size() == 1) {
+		if (!bindingMacroKeyValue2) {
+			ImGui::Text("Choose second key VALUE for the new macro");
+			ImGui::SameLine();
+			if (ImGui::Button("New Key##B32w")) {
+				bindingMacroKeyValue2 = true;
+			}
+		}
+		else {
+			ImGui::Text("Choose the key for the second value");
+			ImGui::SameLine();
+			ImGui::Text("Press any key to return the binding code...");
+			macroTest.key_effects.push_back(EzAcc_BindKey());
+			bindingMacroKeyValue2 = false;
+		}
+	}
+	else if (macroTest.key != -1 && macroTest.key_effects.size() > 1){
+		ImGui::Text("Effect key ID choosed: %i", macroTest.key_effects[1]);
+	}
+	if (ImGui::Button("Reset macro##qweqwe")) {
+		macroTest.key = -1;
+		macroTest.key_effects.clear();
 	}
 
 	ImGui::End();

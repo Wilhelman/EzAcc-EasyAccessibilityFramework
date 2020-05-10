@@ -7,8 +7,6 @@
 #include "SDL/include/SDL.h"
 
 #include "ImGui/imgui.h"
-//#include "ImGui/imgui_impl_opengl3.h"
-#include "ImGui/imgui_impl_opengl3.h"
 #include "ImGui/imgui_impl_sdl.h"
 
 #define MAX_KEYS 300
@@ -33,7 +31,12 @@ bool ctInput::Awake(pugi::xml_node& config)
 {
 	LOG("Init SDL input event system");
 	bool ret = true;
-	SDL_Init(0);
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
+	const char* glsl_version = "#version 130";
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
@@ -72,9 +75,12 @@ bool ctInput::Start()
 // Called each loop iteration
 bool ctInput::PreUpdate()
 {
+	SDL_PumpEvents();
 	static SDL_Event event;
 
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
+
+
 
 	for (int i = 0; i < MAX_KEYS; ++i)
 	{
@@ -107,8 +113,11 @@ bool ctInput::PreUpdate()
 
 	buttonForGamepad();
 
-	while (SDL_PollEvent(&event) != 0)
+
+	while (SDL_PollEvent(&event))
 	{
+		ImGui_ImplSDL2_ProcessEvent(&event);
+
 		switch (event.type)
 		{
 		
@@ -155,12 +164,6 @@ bool ctInput::PreUpdate()
 			//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
 		}
-		ImGuiIO& io = ImGui::GetIO();
-		unsigned int c = event.text.text[0];
-		if (c > 0 && c < 0x10000)
-			io.AddInputCharacter((unsigned short)c);
-		io.AddInputCharactersUTF8(event.text.text);
-		break;
 	}
 
 	return true;
