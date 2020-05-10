@@ -45,7 +45,7 @@ public:
 
 	//Utils
 	iPoint ScreenToWorld(int x, int y) const;
-
+	void DrawAbout();
 public:
 	bool debug = false;
 	SDL_Renderer*	renderer = nullptr;
@@ -55,6 +55,12 @@ public:
 	SDL_Rect		viewport = { 0, 0, 0, 0 };
 	SDL_Color		background = { 0, 0, 0, 0 };
 	bool			vsync_state = false;
+
+private:
+	bool show_demo_window = false;
+	bool show_about = false;
+	bool show_input = false;
+	bool change_debug = false;
 };
 
 #endif // __j1RENDER_H__

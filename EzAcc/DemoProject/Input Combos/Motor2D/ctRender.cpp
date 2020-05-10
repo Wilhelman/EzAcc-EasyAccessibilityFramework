@@ -140,6 +140,63 @@ bool ctRender::Start()
 	ImGui_ImplSDL2_InitForOpenGL(App->win->window, App->render->context);
 	ImGui_ImplOpenGL3_Init();
 	GLenum err = glewInit();
+
+	{
+		ImGuiStyle& style = ImGui::GetStyle();
+
+		style.ChildRounding = 3.f;
+		style.GrabRounding = 0.f;
+		style.WindowRounding = 4.f;
+		style.ScrollbarRounding = 3.f;
+		style.FrameRounding = 3.f;
+		style.WindowTitleAlign = ImVec2(0.5f, 0.5f);
+
+		style.Colors[ImGuiCol_Text] = ImVec4(0.73f, 0.73f, 0.73f, 1.00f);
+		style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
+		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.26f, 0.26f, 0.26f, 0.95f);
+		style.Colors[ImGuiCol_ChildWindowBg] = ImVec4(0.28f, 0.28f, 0.28f, 1.00f);
+		style.Colors[ImGuiCol_PopupBg] = ImVec4(0.26f, 0.26f, 0.26f, 1.00f);
+		style.Colors[ImGuiCol_Border] = ImVec4(0.26f, 0.26f, 0.26f, 1.00f);
+		style.Colors[ImGuiCol_BorderShadow] = ImVec4(0.26f, 0.26f, 0.26f, 1.00f);
+		style.Colors[ImGuiCol_FrameBg] = ImVec4(0.16f, 0.16f, 0.16f, 1.00f);
+		style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.16f, 0.16f, 0.16f, 1.00f);
+		style.Colors[ImGuiCol_FrameBgActive] = ImVec4(0.16f, 0.16f, 0.16f, 1.00f);
+		style.Colors[ImGuiCol_TitleBg] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.26f, 0.26f, 0.26f, 1.00f);
+		style.Colors[ImGuiCol_ScrollbarBg] = ImVec4(0.21f, 0.21f, 0.21f, 1.00f);
+		style.Colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_PopupBg] = ImVec4(0.32f, 0.32f, 0.32f, 1.00f);
+		style.Colors[ImGuiCol_CheckMark] = ImVec4(0.78f, 0.78f, 0.78f, 1.00f);
+		style.Colors[ImGuiCol_SliderGrab] = ImVec4(0.74f, 0.74f, 0.74f, 1.00f);
+		style.Colors[ImGuiCol_SliderGrabActive] = ImVec4(0.74f, 0.74f, 0.74f, 1.00f);
+		style.Colors[ImGuiCol_Button] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.43f, 0.43f, 0.43f, 1.00f);
+		style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.11f, 0.11f, 0.11f, 1.00f);
+		style.Colors[ImGuiCol_Header] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_HeaderHovered] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_HeaderActive] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_Column] = ImVec4(0.39f, 0.39f, 0.39f, 1.00f);
+		style.Colors[ImGuiCol_ColumnHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+		style.Colors[ImGuiCol_ColumnActive] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+		style.Colors[ImGuiCol_ResizeGrip] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+		style.Colors[ImGuiCol_ResizeGripActive] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+		style.Colors[ImGuiCol_Button] = ImVec4(0.59f, 0.59f, 0.59f, 1.00f);
+		style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.98f, 0.39f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.98f, 0.39f, 0.36f, 1.00f);
+		style.Colors[ImGuiCol_PlotLines] = ImVec4(0.39f, 0.39f, 0.39f, 1.00f);
+		style.Colors[ImGuiCol_PlotLinesHovered] = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);
+		style.Colors[ImGuiCol_PlotHistogram] = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
+		style.Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(1.00f, 0.60f, 0.00f, 1.00f);
+		style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.32f, 0.52f, 0.65f, 1.00f);
+		style.Colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.20f, 0.20f, 0.20f, 0.50f);
+	}
+	debug = true;
+	show_about = true;
 	return true;
 }
 
@@ -183,11 +240,156 @@ bool ctRender::Update(float dt)
 	//LOG("Camera pos x: %i pos y: %i", camera.x, camera.y);
 
 	if (debug) {
-		ImGui::Text("Hello, world %d", 123);
-	}
+		//ImGui::Text("Hello, world %d", 123);
+		if (ImGui::BeginMainMenuBar())
+		{
+			if (ImGui::BeginMenu("File"))
+			{
+				if (ImGui::MenuItem("Save Settings"))
+					return true; //App->Save();
+				if (ImGui::MenuItem("Load Settings"))
+					return true; //App->Load();
+				if (ImGui::MenuItem("Quit", "Alt+F4"))
+					return false;
+
+				ImGui::EndMenu();
+			}
+		
+			if (ImGui::BeginMenu("View"))
+			{
+				if (ImGui::MenuItem("Motor (Mobility/Control)", "1"))
+					show_input = !show_input;
+
+				if (ImGui::MenuItem("Cognitive (Memory/Information Processing)", "2"))
+					show_input = !show_input;
+
+				if (ImGui::MenuItem("Vision", "3"))
+					show_input = !show_input;
+
+				if (ImGui::MenuItem("Hearing", "4"))
+					show_input = !show_input;
+			
+				if (ImGui::MenuItem("Show/Hide UI Configuration", "F1"))
+					change_debug = true;
+
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Help"))
+			{
+				if (ImGui::MenuItem("Gui Demo"))
+					show_demo_window = true;
+
+				if (ImGui::MenuItem("Documentation"))
+					App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/");
+
+				if (ImGui::MenuItem("Download latest"))
+					App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/releases");
+			
+				if (ImGui::MenuItem("Report a bug"))
+					App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/issues");
+
+				if (ImGui::MenuItem("About"))
+					show_about = !show_about;
+
+				ImGui::EndMenu();
+			}
+			ImGui::EndMainMenuBar();
+		}
+
+		if (show_demo_window)
+			ImGui::ShowDemoWindow(&show_demo_window);
+
+		if (show_about) {
+			DrawAbout();
+		}
+	} // end debug
+
 	
 
 	return true;
+}
+
+void ctRender::DrawAbout() // TODOG
+{
+	ImGui::Begin("About Easy Accessibility Framework - EzAcc", &show_about, ImGuiWindowFlags_AlwaysAutoResize);
+
+	ImGui::Text("Version 1.0");
+	ImGui::SameLine();
+	if (ImGui::Button("Github##EZACC"))
+		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/");
+	ImGui::Separator();
+	ImGui::Text("By Guillermo Garcia Subirana");
+
+	if (ImGui::CollapsingHeader("Tools and libraries"))
+	{
+		ImGui::Text("Programming language: C++");
+
+		ImGui::Text("IDE: Microsoft Visual Studio 2017");
+		ImGui::SameLine();
+		if (ImGui::Button("Web page"))
+			App->RequestBrowser("https://visualstudio.microsoft.com/?rr=https%3A%2F%2Fwww.google.es%2F");
+
+		ImGui::Text("Input and audio: SDL v2.0");
+		ImGui::SameLine();
+		if (ImGui::Button("Web page##Second"))
+			App->RequestBrowser("https://www.libsdl.org/index.php");
+
+		ImGui::Text("Graphics: OpenGL version supported: %s", glGetString(GL_VERSION));
+		ImGui::SameLine();
+		if (ImGui::Button("Web page##Third"))
+			App->RequestBrowser("https://www.opengl.org/");
+
+		ImGui::Text("Extension loading library: Glew v%s", (char*)glewGetString(GLEW_VERSION));
+		ImGui::SameLine();
+		if (ImGui::Button("Web page##Fourth"))
+			App->RequestBrowser("http://glew.sourceforge.net/");
+
+		ImGui::Text("GUI: Dear ImGui v%s", ImGui::GetVersion());
+		ImGui::SameLine();
+		if (ImGui::Button("Github##Second"))
+			App->RequestBrowser("https://github.com/ocornut/imgui");
+
+		ImGui::Text("Image loader: Developer's Image Library (DevIL) v%i.%i.%i", 1, 8, 0);
+		ImGui::SameLine();
+		if (ImGui::Button("Web page##Seventh"))
+			App->RequestBrowser("http://openil.sourceforge.net/");
+
+		ImGui::Text("JSON parser: Parson v2017");
+		ImGui::SameLine();
+		if (ImGui::Button("Github##Third"))
+			App->RequestBrowser("https://github.com/kgabis/parson");
+
+		ImGui::Text("Profiler: Brofiler v1.1.2");
+		ImGui::SameLine();
+		if (ImGui::Button("Web page##Eigth"))
+			App->RequestBrowser("http://www.brofiler.com/");
+
+	}
+
+	if (ImGui::CollapsingHeader("License"))
+	{
+		ImGui::Text("MIT License");
+		ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy");
+		ImGui::Text("of this software and associated documentation files(the ""Software""), to deal");
+		ImGui::Text("in the Software without restriction, including without limitation the rights");
+		ImGui::Text("to use, copy, modify, merge, publish, distribute, sublicense, and/or sell");
+		ImGui::Text("copies of the Software, and to permit persons to whom the Software is");
+		ImGui::Text("furnished to do so, subject to the following conditions :\n\n");
+
+		ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "The above copyright notice and this permission notice shall be included in all");
+		ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "copies or substantial portions of the Software.\n\n");
+
+		ImGui::Text("THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR");
+		ImGui::Text("IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, ");
+		ImGui::Text("FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE");
+		ImGui::Text("AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER");
+		ImGui::Text("LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,");
+		ImGui::Text("OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE");
+		ImGui::Text("SOFTWARE.");
+	}
+
+	ImGui::End();
 }
 
 bool ctRender::PostUpdate()
@@ -206,7 +408,8 @@ bool ctRender::PostUpdate()
 	}
 
 	
-	if (EzAcc_GetKey(SDL_SCANCODE_F1) == EzAcc_KeyState::EZACC_KEY_DOWN) {
+	if (EzAcc_GetKey(SDL_SCANCODE_F1) == EzAcc_KeyState::EZACC_KEY_DOWN || change_debug) {
+		change_debug = false;
 		debug = !debug;
 	}
 	return true;

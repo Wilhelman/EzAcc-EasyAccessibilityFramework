@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config>
 	<app framerate_cap="60">
-		<title>Input Combos Guide</title>
+		<title>EzAcc - EasyAccessibilityFramework (DEMO)</title>
 		<organization>Guillermo García Subirana</organization>
 	</app>
 	<renderer>

@@ -187,6 +187,11 @@ bool ctApp::Update()
 	return ret;
 }
 
+void ctApp::RequestBrowser(const char* url) const
+{
+	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
+
 // ---------------------------------------------
 pugi::xml_node ctApp::LoadConfig(pugi::xml_document& config_file) const
 {
