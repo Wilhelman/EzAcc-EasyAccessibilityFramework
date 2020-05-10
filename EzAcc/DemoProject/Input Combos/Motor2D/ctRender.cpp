@@ -141,6 +141,7 @@ bool ctRender::Start()
 	ImGui_ImplOpenGL3_Init();
 	GLenum err = glewInit();
 
+
 	{
 		ImGuiStyle& style = ImGui::GetStyle();
 
@@ -299,7 +300,9 @@ bool ctRender::Update(float dt)
 
 		if (show_demo_window)
 			ImGui::ShowDemoWindow(&show_demo_window);
-
+		if (show_input) {
+			DrawInput();
+		}
 		if (show_about) {
 			DrawAbout();
 		}
@@ -308,6 +311,45 @@ bool ctRender::Update(float dt)
 	
 
 	return true;
+}
+
+void ctRender::DrawInput() // TODOG
+{
+	ImGui::Begin("Motor (Mobility/Control) Settings", &show_about, ImGuiWindowFlags_AlwaysAutoResize);
+
+	ImGui::Text("Read EzAcc_InputModule settings info in the readme to learn more about all the functions call info");
+	ImGui::SameLine();
+	if (ImGui::Button("Readme##READMEInput"))
+		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
+	ImGui::Separator();
+
+	if (ImGui::CollapsingHeader("Get Key"))
+	{
+		ImGui::Text("TODOG : GET KEY INFO WHAT RETURNS ETC ETC");
+		ImGui::Separator();
+		ImGui::Text("Last Key Pressed: (TODO)");
+		// TODOG HACER EN EZACC UNA FUNCION DE LAST PRESSED
+
+		ImGui::Separator();
+		ImGui::Text("Set time between inputs");
+		ImGui::Text("Time:");
+		
+		static float time_between_inputs= 0.0f;
+		if (ImGui::DragFloat("##time_between_inputs", (float*)&time_between_inputs, 0.1f))
+			int a = 1; // TODOG UPTADE
+		ImGui::SameLine(); 
+		ImGui::Text("ms");
+
+		
+		strcpy_s(tmp_name, 100, name.c_str());
+		if (ImGui::InputText("##GO_NAME", tmp_name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+			name = tmp_name;
+		
+
+		ImGui::Separator();
+	}
+
+	ImGui::End();
 }
 
 void ctRender::DrawAbout() // TODOG

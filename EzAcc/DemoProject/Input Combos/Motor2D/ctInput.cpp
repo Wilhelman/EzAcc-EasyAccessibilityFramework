@@ -6,6 +6,11 @@
 #include "ctRender.h"
 #include "SDL/include/SDL.h"
 
+#include "ImGui/imgui.h"
+//#include "ImGui/imgui_impl_opengl3.h"
+#include "ImGui/imgui_impl_opengl3.h"
+#include "ImGui/imgui_impl_sdl.h"
+
 #define MAX_KEYS 300
 
 ctInput::ctInput() : ctModule()
@@ -79,6 +84,7 @@ bool ctInput::PreUpdate()
 				keyboard[i] = KEY_DOWN;
 			else
 				keyboard[i] = KEY_REPEAT;
+			
 		}
 		else
 		{
@@ -87,6 +93,7 @@ bool ctInput::PreUpdate()
 			else
 				keyboard[i] = KEY_IDLE;
 		}
+
 	}
 
 	for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
@@ -104,6 +111,7 @@ bool ctInput::PreUpdate()
 	{
 		switch (event.type)
 		{
+		
 		case SDL_QUIT:
 			windowEvents[WE_QUIT] = true;
 			break;
@@ -147,6 +155,12 @@ bool ctInput::PreUpdate()
 			//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
 		}
+		ImGuiIO& io = ImGui::GetIO();
+		unsigned int c = event.text.text[0];
+		if (c > 0 && c < 0x10000)
+			io.AddInputCharacter((unsigned short)c);
+		io.AddInputCharactersUTF8(event.text.text);
+		break;
 	}
 
 	return true;

@@ -4,7 +4,7 @@
 #include "SDL/include/SDL.h"
 #include "ctPoint.h"
 #include "ctModule.h"
-
+#include <string>
 class ctRender : public ctModule
 {
 public:
@@ -45,6 +45,7 @@ public:
 
 	//Utils
 	iPoint ScreenToWorld(int x, int y) const;
+	void DrawInput();
 	void DrawAbout();
 public:
 	bool debug = false;
@@ -61,6 +62,9 @@ private:
 	bool show_about = false;
 	bool show_input = false;
 	bool change_debug = false;
+
+	char tmp_name[100];
+	std::string name;
 };
 
 #endif // __j1RENDER_H__

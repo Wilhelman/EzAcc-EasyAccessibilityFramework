@@ -74,7 +74,7 @@ extern "C"
 	DECLDIR bool EzAcc_CleanUp();
 
 
-	// ---------------- INPUT MODULE ---------------- //
+	// ---------------- Motor (Mobility/Control) ---------------- //
 
 	/*
 	EzAcc_InputModule GetKey
@@ -108,6 +108,11 @@ extern "C"
 	TODOG
 	*/
 	DECLDIR int EzAcc_GenerateNewMacro(EzAcc_Macro new_macro);
+
+
+	// ---------------- Cognitive (Memory/Information Processing) ---------------- //
+
+
 
 	DECLDIR void Function(void);
 }
