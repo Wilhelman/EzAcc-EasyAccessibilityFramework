@@ -33,7 +33,7 @@
 // Modules
 #include "EzAcc_Module.h"
 #include "EzAcc_InputModule.h"
-
+#include "EzAcc_TimeModule.h"
 
 static EzAcc_Core* core;
 
@@ -124,6 +124,34 @@ extern "C"
 	TODOG
 	*/
 	DECLDIR float EzAcc_GetDT();
+
+	/*
+	EzAcc_Core GetGameTime
+	int = index macro
+	TODOG
+	*/
+	DECLDIR float EzAcc_GetGameTime();
+
+	/*
+	EzAcc_Core GetGameTimeHourFormat
+	int = index macro
+	TODOG
+	*/
+	DECLDIR EzAcc_FormatHour EzAcc_GetGameTimeHourFormat();
+
+	/*
+	EzAcc_Core GetRealtime
+	int = index macro
+	TODOG
+	*/
+	DECLDIR float EzAcc_GetRealtime();
+
+	/*
+	EzAcc_Core GetRealtimeHourFormat
+	int = index macro
+	TODOG
+	*/
+	DECLDIR EzAcc_FormatHour EzAcc_GetRealtimeHourFormat();
 
 	DECLDIR void Function(void);
 }

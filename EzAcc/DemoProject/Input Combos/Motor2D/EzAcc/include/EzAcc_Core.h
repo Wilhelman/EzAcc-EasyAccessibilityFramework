@@ -28,11 +28,10 @@
 #include <list>
 #include "EzAcc_Module.h"
 #include "pugixml.hpp"
-#include "EzAccTimer.h"
-#include "EzAccPerfTimer.h"
 
 // Modules
 class EzAcc_InputModule;
+class EzAcc_TimeModule;
 
 class EzAcc_Core
 {
@@ -91,33 +90,14 @@ public:
 
 	// Modules
 	EzAcc_InputModule* input = nullptr;
+	EzAcc_TimeModule* time = nullptr;
 
 private:
 
 	std::list<EzAcc_Module*>	modules;
 	bool				all_modules_loaded = false;
 
-	// TODOG : Time dt stuff ...
-	/*
-	ctPerfTimer			perf_timer;
-	ctTimer				simple_timer;
-	ctPerfTimer			ptimer;
-	uint64				frame_count = 0;
-	uint				cap = 0u;
-	ctTimer				startup_time;
-	float				dt = 0.0f;
-	*/
-	EzAccPerfTimer			perf_timer;
-	EzAccTimer				simple_timer;
-
-	EzAccPerfTimer			ptimer;
-	uint64				frame_count = 0;
-	uint				cap = 0u;
-	EzAccTimer				startup_time;
-	float				dt = 0.0f;
-	int					capped_ms = -1;
 	
-	float time_scale = 1.0f;
 
 };
 

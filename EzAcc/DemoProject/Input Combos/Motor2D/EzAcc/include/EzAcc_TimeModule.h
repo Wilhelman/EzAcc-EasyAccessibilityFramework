@@ -22,85 +22,72 @@
 */
 
 
-#ifndef _EZACC_CORE_H_
-#define _EZACC_CORE_H_
+#ifndef _EZACC_TIMEMODULE_H_
+#define _EZACC_TIMEMODULE_H_
 
-#include <list>
+#include "EzAcc_Defines.h"
 #include "EzAcc_Module.h"
-#include "pugixml.hpp"
+#include "EzAccTimer.h"
+#include "EzAccPerfTimer.h"
 
-// Modules
-class EzAcc_InputModule;
-class EzAcc_TimeModule;
 
-class EzAcc_Core
+struct EzAcc_FormatHour
 {
+	unsigned int hours = 0;
+	unsigned int min = 0;
+	unsigned int sec = 0;
+};
+
+class EzAcc_TimeModule : public EzAcc_Module
+{
+
 public:
 
-	// Constructor
-	EzAcc_Core();
+	EzAcc_TimeModule();
 
 	// Destructor
-	virtual ~EzAcc_Core();
+	virtual ~EzAcc_TimeModule();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();
 
 	// Called each loop iteration
-	bool AllUpdate();
+	bool PreUpdate();
+
+	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
-
-	// Add a new module to handle
-	void AddModule(EzAcc_Module* module);
-
-	// Load config file
-	pugi::xml_node LoadConfig(pugi::xml_document&) const;
-
-	// Call modules before each loop iteration
-	bool PreUpdate();
-
-	// Call modules on each loop iteration
-	bool Update();
-
-	// Call modules after each loop iteration
-	bool PostUpdate();
-
-	// Call modules before each loop iteration
-	void FinishUpdate();
 
 	void SetTimeScale(float new_time_scale);
 
 	float GetDT();
 
-private:
+	float GetRealTime();
 
-	// Call modules before each loop iteration
-	void PrepareUpdate();
+	float GetGameTime();
 
-	
+	EzAcc_FormatHour GetGameTimeFormatHour();
 
-	
-
-public:
-
-	// Modules
-	EzAcc_InputModule* input = nullptr;
-	EzAcc_TimeModule* time = nullptr;
+	EzAcc_FormatHour GetRealTimeFormatHour();
 
 private:
+	EzAccPerfTimer			perf_timer;
+	EzAccTimer				simple_timer;
 
-	std::list<EzAcc_Module*>	modules;
-	bool				all_modules_loaded = false;
+	EzAccPerfTimer			ptimer;
+	uint64					frame_count = 0;
+	EzAccTimer				startup_time;
+	float					dt = 0.0f;
+	float					real_time = 0.0f;
+	float					game_time = 0.0f;
+	float					real_time_secs = 0.0f;
+	float					game_time_secs = 0.0f;
 
-	
-
+	float time_scale = 1.0f;
 };
-
-extern EzAcc_Core* Core;
 
 #endif

@@ -66,6 +66,9 @@
     <ClInclude Include="EzAccTimer.h">
       <Filter>Archivos de encabezado\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="EzAcc_TimeModule.h">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -97,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="EzAccTimer.cpp">
       <Filter>Archivos de encabezado\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="EzAcc_TimeModule.cpp">
+      <Filter>Archivos de origen\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

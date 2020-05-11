@@ -89,12 +89,32 @@ DECLDIR int EzAcc_GenerateNewMacro(EzAcc_Macro new_macro)
 
 DECLDIR void EzAcc_SetDTTimeScale(float timescale)
 {
-	core->SetTimeScale(timescale);
+	core->time->SetTimeScale(timescale);
 }
 
 DECLDIR float EzAcc_GetDT()
 {
-	return core->GetDT();
+	return core->time->GetDT();
+}
+
+DECLDIR float EzAcc_GetGameTime()
+{
+	return core->time->GetGameTime();
+}
+
+DECLDIR EzAcc_FormatHour EzAcc_GetGameTimeHourFormat()
+{
+	return core->time->GetGameTimeFormatHour();
+}
+
+DECLDIR float EzAcc_GetRealtime()
+{
+	return core->time->GetRealTime();
+}
+
+DECLDIR EzAcc_FormatHour EzAcc_GetRealtimeHourFormat()
+{
+	return core->time->GetRealTimeFormatHour();
 }
 
 DECLDIR void Function(void)

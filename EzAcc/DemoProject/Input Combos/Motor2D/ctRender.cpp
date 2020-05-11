@@ -329,16 +329,29 @@ void ctRender::DrawCognitive() // TODOG
 	if (ImGui::Button("Readme##READMEInput"))
 		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
 	
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc framework clocks");
+	ImGui::Text("Current DT value: %.2f", EzAcc_GetDT());
 	ImGui::Separator();
-	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "Current DT from EzAcc");
-	ImGui::Text("Current DT value: %.2f",App->dt);
+	ImGui::Text("Real time clock: %.2f sec", EzAcc_GetRealtime());
+	ImGui::Text("Real time clock (hour format): %02d : %02d : %02d",
+		EzAcc_GetRealtimeHourFormat().hours,
+		EzAcc_GetRealtimeHourFormat().min,
+		EzAcc_GetRealtimeHourFormat().sec);
 
 	ImGui::Separator();
-	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "Set time scale for DT");
+
+	ImGui::Text("Game clock: %.2f sec", EzAcc_GetGameTime());
+	ImGui::Text("Game clock (hour format): %02d : %02d : %02d",
+		EzAcc_GetGameTimeHourFormat().hours,
+		EzAcc_GetGameTimeHourFormat().min,
+		EzAcc_GetGameTimeHourFormat().sec);
+
+	ImGui::Separator();
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "Set time scale for game clock DT");
 	ImGui::Text("Time scale:");
 	ImGui::SameLine();
 	static float dt_scale = 1.0f;
-	if (ImGui::SliderFloat("##TIMEBETWEENINPUTS", &dt_scale, 0.0f, 1.0f))
+	if (ImGui::SliderFloat("##TIMEBETWEENINPUTS", &dt_scale, 0.0f, 2.0f))
 		EzAcc_SetDTTimeScale(dt_scale);
 
 	ImGui::End();

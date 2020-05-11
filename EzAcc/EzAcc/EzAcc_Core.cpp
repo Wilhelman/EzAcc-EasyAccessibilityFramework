@@ -4,6 +4,7 @@
 #include <iostream> 
 
 #include "EzAcc_InputModule.h"
+#include "EzAcc_TimeModule.h"
 #include "EzAcc_Log.h"
 
 // Constructor
@@ -11,22 +12,13 @@ EzAcc_Core::EzAcc_Core()
 {
 	LOG("EzAcc: Generating EzAcc_InputModule ...");
 	input = new EzAcc_InputModule();
+	time = new EzAcc_TimeModule();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
-	/*AddModule(win);
-	AddModule(tex);
-	AddModule(audio);
-	AddModule(input_combo);
-	AddModule(ken_stage_scene);
-	AddModule(entities);
-	AddModule(gui);
-	AddModule(fonts);
-	AddModule(fadeToBlack);*/
+	AddModule(time);
 
-	// render last to swap buffer
-	//AddModule(render);
 
 }
 
@@ -144,16 +136,6 @@ void EzAcc_Core::FinishUpdate()
 		all_modules_loaded = true;
 }
 
-void EzAcc_Core::SetTimeScale(float new_time_scale)
-{
-	time_scale = new_time_scale;
-}
-
-float EzAcc_Core::GetDT()
-{
-	return dt;
-}
-
 // Call modules before each loop iteration
 bool EzAcc_Core::PreUpdate()
 {
@@ -189,8 +171,7 @@ bool EzAcc_Core::Update()
 		if (pModule->active == false) {
 			continue;
 		}
-		// TODOG : Do dt thing
-		//(all_modules_loaded) ? ret = (*it)->Update(dt) : ret = (*it)->Update(0);
+
 	}
 
 	return ret;
@@ -214,27 +195,8 @@ bool EzAcc_Core::PostUpdate()
 		ret = (*it)->PostUpdate();
 	}
 
-	frame_count++;
+	
 
-	float avg_fps = float(frame_count) / startup_time.ReadSec();
-
-	float seconds_since_startup = simple_timer.Read();
-
-	uint32 current_ms_frame = perf_timer.ReadMs();
-	uint32 last_frame_ms = current_ms_frame;
-	uint32 frames_on_last_update = 0;
-
-	double framerate = 1000.0f / perf_timer.ReadMs();
-
-	dt = 1.0f / framerate;
-
-	// TODOG
-	/*
-		Modify DT ...
-	*/
-	dt *= time_scale;
-
-	//PERF_PEEK(ptimer);
 	return ret;
 }
 
