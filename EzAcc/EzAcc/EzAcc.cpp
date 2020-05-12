@@ -87,6 +87,16 @@ DECLDIR int EzAcc_GenerateNewMacro(EzAcc_Macro new_macro)
 	return core->input->SetMacroForKey(new_macro);
 }
 
+DECLDIR bool EzAcc_RemoveMacro(int index)
+{
+	return core->input->RemoveMacro(index);
+}
+
+DECLDIR bool EzAcc_PerformRumble(float rumble_power, int rumble_time)
+{
+	return core->input->PerformRumble(rumble_power, rumble_time);
+}
+
 DECLDIR void EzAcc_SetDTTimeScale(float timescale)
 {
 	core->time->SetTimeScale(timescale);

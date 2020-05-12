@@ -73,10 +73,6 @@ public:
 	// Call modules before each loop iteration
 	void FinishUpdate();
 
-	void SetTimeScale(float new_time_scale);
-
-	float GetDT();
-
 private:
 
 	// Call modules before each loop iteration

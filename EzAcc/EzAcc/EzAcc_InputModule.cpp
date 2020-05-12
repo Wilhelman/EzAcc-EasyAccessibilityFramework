@@ -240,6 +240,23 @@ EzAcc_InputModule::~EzAcc_InputModule()
 	 return KeyBind(Event);
  }
 
+ bool EzAcc_InputModule::PerformRumble(float rumble_power, int rumble_time)
+ {
+	 /*
+	 RumblePlay info:
+	 0.0f-1.0f % of power
+	 time: ms p.e. 500 = 0.5 sec of rumble
+	 */
+	 int haptic_state = SDL_HapticRumblePlay(controllerHaptic, rumble_power, rumble_time);
+	 
+	 if (haptic_state != 0)
+	 {
+		 LOG("EzAcc Warning: Unable to play rumble! %s\n", SDL_GetError());
+		 return false;
+	 }
+	 return true;
+ }
+
  void EzAcc_InputModule::GetMousePosition(int& x, int& y)
  {
 	 x = mouse_x;
@@ -258,22 +275,22 @@ EzAcc_InputModule::~EzAcc_InputModule()
 	 /*x = App->render->ScreenToWorld(mouse_x, mouse_y).x;
 	 y = App->render->ScreenToWorld(mouse_x, mouse_y).y;*/
  }
-
- void EzAcc_InputModule::buttonForGamepad()
- {
-	 
-
-	 //BUTTON A
-	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A) == 1) {
-
-		 if (gamepad.A == EZACC_PAD_BUTTON_IDLE) {
-			 int haptic_state = SDL_HapticRumblePlay(controllerHaptic, 0.75, 500);
+ /*
+ int haptic_state = SDL_HapticRumblePlay(controllerHaptic, 0.75, 500);
 			 //Play rumble at 75% strenght for 500 milliseconds
 			 if (haptic_state != 0)
 			 {
 				 printf("Warning: Unable to play rumble! %s\n", SDL_GetError());
 			 }
 			 LOG("EzAcc : Despues de clicar esta es la cosa: %i", haptic_state);
+ */
+ void EzAcc_InputModule::buttonForGamepad()
+ {
+	 //BUTTON A
+	 if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A) == 1) {
+
+		 if (gamepad.A == EZACC_PAD_BUTTON_IDLE) {
+			 
 			 gamepad.A = EZACC_PAD_BUTTON_DOWN;
 		 }
 		 else
@@ -403,4 +420,13 @@ EzAcc_InputModule::~EzAcc_InputModule()
 	 int index_to_return = macros.size() - 1;
 	 LOG("EzAcc: SetMacroForKey - Returning index: %i", index_to_return);
 	 return index_to_return;
+ }
+
+ bool EzAcc_InputModule::RemoveMacro(int index_to_remove)
+ {
+	 if (macros.size() > index_to_remove) {
+		 macros.erase(macros.begin() + index_to_remove);
+		 return true;
+	 }
+	 return false;
  }

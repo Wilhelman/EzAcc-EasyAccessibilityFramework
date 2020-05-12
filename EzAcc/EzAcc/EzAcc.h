@@ -109,6 +109,22 @@ extern "C"
 	*/
 	DECLDIR int EzAcc_GenerateNewMacro(EzAcc_Macro new_macro);
 
+	/*
+	EzAcc_InputModule RemoveMacro
+	int = index macro
+	TODOG
+	*/
+	DECLDIR bool EzAcc_RemoveMacro(int index);
+
+	/*
+	EzAcc_InputModule RemoveMacro
+	RumblePlay info :0.0f - 1.0f % of power | time : ms p.e. 500 = 0.5 sec of rumble
+	*/
+	DECLDIR bool EzAcc_PerformRumble(float rumble_power, int rumble_time);
+
+	
+	//TODOG VIBRACION
+
 
 	// ---------------- Cognitive (Memory/Information Processing) ---------------- //
 	/*

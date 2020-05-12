@@ -269,10 +269,10 @@ bool ctRender::Update(float dt)
 					show_cognitive = !show_cognitive;
 
 				if (ImGui::MenuItem("Vision", "3"))
-					show_input = !show_input;
+					show_vision = !show_vision;
 
 				if (ImGui::MenuItem("Hearing", "4"))
-					show_input = !show_input;
+					show_hearing = !show_hearing;
 			
 				if (ImGui::MenuItem("Show/Hide UI Configuration", "F1"))
 					change_debug = true;
@@ -304,11 +304,18 @@ bool ctRender::Update(float dt)
 
 		if (show_demo_window)
 			ImGui::ShowDemoWindow(&show_demo_window);
+
 		if (show_input) {
 			DrawInput();
 		}
 		if (show_cognitive) {
 			DrawCognitive();
+		}
+		if (show_vision) {
+			DrawVision();
+		}
+		if (show_hearing) {
+			DrawHearing();
 		}
 		if (show_about) {
 			DrawAbout();
@@ -318,6 +325,20 @@ bool ctRender::Update(float dt)
 	
 
 	return true;
+}
+
+void ctRender::DrawHearing() // TODOG
+{
+	ImGui::Begin("Hearing Settings", &show_hearing, ImGuiWindowFlags_AlwaysAutoResize);
+
+	ImGui::End();
+}
+
+void ctRender::DrawVision() // TODOG
+{
+	ImGui::Begin("Vision Settings", &show_vision, ImGuiWindowFlags_AlwaysAutoResize);
+
+	ImGui::End();
 }
 
 void ctRender::DrawCognitive() // TODOG
@@ -359,7 +380,7 @@ void ctRender::DrawCognitive() // TODOG
 
 void ctRender::DrawInput() // TODOG
 {
-	ImGui::Begin("Motor (Mobility/Control) Settings", &show_about, ImGuiWindowFlags_AlwaysAutoResize);
+	ImGui::Begin("Motor (Mobility/Control) Settings", &show_input, ImGuiWindowFlags_AlwaysAutoResize);
 
 	ImGui::Text("Read EzAcc_InputModule settings in the readme to learn more about all the function calls");
 	ImGui::SameLine();
@@ -829,3 +850,4 @@ iPoint ctRender::ScreenToWorld(int x, int y) const
 
 	return ret;
 }
+
