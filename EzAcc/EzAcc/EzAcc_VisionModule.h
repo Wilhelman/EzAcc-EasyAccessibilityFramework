@@ -22,85 +22,40 @@
 */
 
 
-#ifndef _EZACC_CORE_H_
-#define _EZACC_CORE_H_
+#ifndef _EZACC_VISIONMODULE_H_
+#define _EZACC_VISIONMODULE_H_
 
-#include <list>
+#include "EzAcc_Defines.h"
 #include "EzAcc_Module.h"
-#include "pugixml.hpp"
 
-// Modules
-class EzAcc_InputModule;
-class EzAcc_TimeModule;
-class EzAcc_VisionModule;
-class EzAcc_AudioModule;
 
-class EzAcc_Core
+class EzAcc_VisionModule : public EzAcc_Module
 {
+
 public:
 
-	// Constructor
-	EzAcc_Core();
+	EzAcc_VisionModule();
 
 	// Destructor
-	virtual ~EzAcc_Core();
+	virtual ~EzAcc_VisionModule();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();
 
 	// Called each loop iteration
-	bool AllUpdate();
+	bool PreUpdate();
+
+	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
 
-	// Add a new module to handle
-	void AddModule(EzAcc_Module* module);
-
-	// Load config file
-	pugi::xml_node LoadConfig(pugi::xml_document&) const;
-
-	// Call modules before each loop iteration
-	bool PreUpdate();
-
-	// Call modules on each loop iteration
-	bool Update();
-
-	// Call modules after each loop iteration
-	bool PostUpdate();
-
-	// Call modules before each loop iteration
-	void FinishUpdate();
 
 private:
-
-	// Call modules before each loop iteration
-	void PrepareUpdate();
-
-	
-
-	
-
-public:
-
-	// Modules
-	EzAcc_InputModule* input = nullptr;
-	EzAcc_TimeModule* time = nullptr;
-	EzAcc_VisionModule* vision = nullptr;
-	EzAcc_AudioModule* audio = nullptr;
-
-private:
-
-	std::list<EzAcc_Module*>	modules;
-	bool				all_modules_loaded = false;
-
-	
 
 };
-
-extern EzAcc_Core* Core;
 
 #endif

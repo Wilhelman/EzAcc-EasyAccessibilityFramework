@@ -7,6 +7,7 @@
 
 EzAcc_InputModule::EzAcc_InputModule()
 {
+	LOG("EzAcc: Generating EzAcc_InputModule ...");
 	keyboard = new EzAcc_KeyState[EZACC_MAX_KEYS];
 	memset(keyboard, EZACC_KEY_IDLE, sizeof(EzAcc_KeyState) * EZACC_MAX_KEYS);
 	memset(mouse_buttons, EZACC_KEY_IDLE, sizeof(EzAcc_KeyState) * EZACC_NUM_MOUSE_BUTTONS);

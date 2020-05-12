@@ -5,21 +5,24 @@
 
 #include "EzAcc_InputModule.h"
 #include "EzAcc_TimeModule.h"
+#include "EzAcc_VisionModule.h"
+#include "EzAcc_AudioModule.h"
 #include "EzAcc_Log.h"
 
 // Constructor
 EzAcc_Core::EzAcc_Core()
 {
-	LOG("EzAcc: Generating EzAcc_InputModule ...");
+	
 	input = new EzAcc_InputModule();
 	time = new EzAcc_TimeModule();
-
+	vision = new EzAcc_VisionModule();
+	audio = new EzAcc_AudioModule();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
 	AddModule(time);
-
-
+	AddModule(vision);
+	AddModule(audio);
 }
 
 // Destructor

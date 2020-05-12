@@ -45,9 +45,6 @@
     <ClInclude Include="EzAcc_Log.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="EzAcc_Module.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    </ClInclude>
     <ClInclude Include="EzAcc_InputModule.h">
       <Filter>Archivos de encabezado\Core</Filter>
     </ClInclude>
@@ -69,15 +66,21 @@
     <ClInclude Include="EzAcc_TimeModule.h">
       <Filter>Archivos de encabezado\Core</Filter>
     </ClInclude>
+    <ClInclude Include="EzAcc_AudioModule.h">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EzAcc_VisionModule.h">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EzAcc_Module.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="EzAcc_Input.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="EzAcc_Log.cpp">
@@ -102,6 +105,12 @@
       <Filter>Archivos de encabezado\Tools</Filter>
     </ClCompile>
     <ClCompile Include="EzAcc_TimeModule.cpp">
+      <Filter>Archivos de origen\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="EzAcc_AudioModule.cpp">
+      <Filter>Archivos de origen\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="EzAcc_VisionModule.cpp">
       <Filter>Archivos de origen\Core</Filter>
     </ClCompile>
   </ItemGroup>

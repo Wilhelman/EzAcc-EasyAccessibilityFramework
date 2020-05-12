@@ -158,6 +158,7 @@
     <ClInclude Include="EzAcc.h" />
     <ClInclude Include="EzAccPerfTimer.h" />
     <ClInclude Include="EzAccTimer.h" />
+    <ClInclude Include="EzAcc_AudioModule.h" />
     <ClInclude Include="EzAcc_Core.h" />
     <ClInclude Include="EzAcc_Defines.h" />
     <ClInclude Include="EzAcc_Input.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="EzAcc_Log.h" />
     <ClInclude Include="EzAcc_Module.h" />
     <ClInclude Include="EzAcc_TimeModule.h" />
+    <ClInclude Include="EzAcc_VisionModule.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="pugiconfig.hpp" />
@@ -175,11 +177,12 @@
     <ClCompile Include="EzAcc.cpp" />
     <ClCompile Include="EzAccPerfTimer.cpp" />
     <ClCompile Include="EzAccTimer.cpp" />
+    <ClCompile Include="EzAcc_AudioModule.cpp" />
     <ClCompile Include="EzAcc_Core.cpp" />
-    <ClCompile Include="EzAcc_Input.cpp" />
     <ClCompile Include="EzAcc_InputModule.cpp" />
     <ClCompile Include="EzAcc_Log.cpp" />
     <ClCompile Include="EzAcc_TimeModule.cpp" />
+    <ClCompile Include="EzAcc_VisionModule.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

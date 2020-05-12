@@ -34,6 +34,8 @@
 #include "EzAcc_Module.h"
 #include "EzAcc_InputModule.h"
 #include "EzAcc_TimeModule.h"
+#include "EzAcc_VisionModule.h"
+#include "EzAcc_AudioModule.h"
 
 static EzAcc_Core* core;
 

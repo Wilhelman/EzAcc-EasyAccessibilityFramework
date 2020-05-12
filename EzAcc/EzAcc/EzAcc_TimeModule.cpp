@@ -6,6 +6,7 @@
 
 EzAcc_TimeModule::EzAcc_TimeModule()
 {
+	LOG("EzAcc: Generating EzAcc_TimeModule ...");
 }
 
 // Destructor
@@ -17,7 +18,6 @@ EzAcc_TimeModule::~EzAcc_TimeModule()
 // Called before render is available
 bool EzAcc_TimeModule::Awake(pugi::xml_node&)
 {
-	LOG("Init SDL input event system");
 	bool ret = true;
 	
 
