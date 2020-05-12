@@ -255,8 +255,8 @@ void ctApp::FinishUpdate()
 	double framerate = 1000.0f / perf_timer.ReadMs();
 
 	// TODOG if EzAcc init
-	//dt = 1.0f / framerate;
-	dt = EzAcc_GetDT();
+	dt = 1.0f / framerate;
+	//dt = EzAcc_GetDT();
 
 	static char title[256];
 	sprintf_s(title, 256, "%s - FPS: %.2f Av.FPS: %.2f Last Frame Ms: %u (Cap: %s  Vsync: %s)",

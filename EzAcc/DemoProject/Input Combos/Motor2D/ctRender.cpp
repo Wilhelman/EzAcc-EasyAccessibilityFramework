@@ -710,7 +710,7 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Texture* texture, int x, int y,
 
 		//Get pixel data
 		Uint32* pixels = (Uint32*)mPixels;
-		int pixelCount = (mPitch / 4) *  rect.h; //TODOG puede que App->ken_stage_scene->backgroundSurface->h
+		int pixelCount = (mPitch / 4) * App->ken_stage_scene->backgroundSurface->h; //TODOG puede que App->ken_stage_scene->backgroundSurface->h
 
 		Uint32 colorKey = SDL_MapRGBA(mappingFormat,128, 5, 50,255);
 		Uint32 transparent = SDL_MapRGBA(mappingFormat, 0, 0, 255, 50);
