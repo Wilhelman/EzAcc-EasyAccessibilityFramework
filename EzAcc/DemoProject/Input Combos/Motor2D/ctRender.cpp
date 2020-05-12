@@ -337,8 +337,42 @@ void ctRender::DrawHearing() // TODOG
 void ctRender::DrawVision() // TODOG
 {
 	ImGui::Begin("Vision Settings", &show_vision, ImGuiWindowFlags_AlwaysAutoResize);
+	static ImVec4 colorTarget = ImColor(114, 144, 154, 255);
+	static ImVec4 colorReplacement = ImColor(114, 144, 154, 255);
+
+	static bool alpha_preview = true;
+	static bool alpha_half_preview = false;
+	static bool drag_and_drop = true;
+	static bool options_menu = true;
+	ImGui::Checkbox("With Alpha Preview", &alpha_preview);
+	ImGui::Checkbox("With Half Alpha Preview", &alpha_half_preview);
+	ImGui::Checkbox("With Drag and Drop", &drag_and_drop);
+	ImGui::Checkbox("With Options Menu", &options_menu);
+	int misc_flags = (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | (alpha_half_preview ? ImGuiColorEditFlags_AlphaPreviewHalf : (alpha_preview ? ImGuiColorEditFlags_AlphaPreview : 0)) | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);
+
+	ImGui::Text("Color target 01:");
+	ImGui::SameLine(); ShowHelpMarker("Click on the colored square to open a color picker.\n");
+	ImGui::ColorEdit4("MyColor##1", (float*)&colorTarget, ImGuiColorEditFlags_RGB| misc_flags);
+
+	ImGui::Text("Color replacement 01:");
+	ImGui::SameLine(); ShowHelpMarker("Click on the colored square to open a color picker.\n");
+	ImGui::ColorEdit4("MyColor##2", (float*)&colorReplacement, ImGuiColorEditFlags_RGB | misc_flags);
+
 
 	ImGui::End();
+}
+
+void ctRender::ShowHelpMarker(const char* desc)
+{
+	ImGui::TextDisabled("(?)");
+	if (ImGui::IsItemHovered())
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted(desc);
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
 }
 
 void ctRender::DrawCognitive() // TODOG
@@ -658,7 +692,7 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 	rect.x = (int)(camera.x * speed) + x * scale;
 	rect.y = (int)(camera.y * speed) + y * scale;
 
-	//SDL_SetTextureColorMod(texture, 255, 64, 64); //TODOG OJO
+	SDL_SetTextureColorMod(texture, 500, 500, 200); //TODOG OJO
 	if (blendMode != SDL_BLENDMODE_INVALID) {
 		SDL_SetTextureBlendMode(texture, blendMode);
 		SDL_SetSurfaceBlendMode(surface, blendMode);
@@ -692,13 +726,14 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 	void* mPixels;
 	int mPitch;
 
+	SDL_UpdateTexture(texture, NULL, surface->pixels, surface->pitch);
 	//Lock texture for manipulation
 	//Texture is already locked
-	
-		if (SDL_LockTexture(texture, NULL, &mPixels, &mPitch) != 0)
-		{
-			LOG("Unable to lock texture! %s\n", SDL_GetError());
-		}
+	/*
+	if (SDL_LockTexture(texture, NULL, &mPixels, &mPitch) != 0)
+	{
+		LOG("Unable to lock texture! %s\n", SDL_GetError());
+	}
 		
 
 	//Copy loaded/formatted surface pixels
@@ -735,12 +770,11 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 
 	}
 	
-
 	//Unlock texture to update
 	SDL_UnlockTexture(texture);
 	mPixels = NULL;
 	SDL_FreeFormat(mappingFormat);
-	
+	*/
 
 
 	SDL_Point* p = NULL;

@@ -52,6 +52,8 @@ public:
 	void DrawInput();
 	void DrawAbout();
 	void DrawCognitive();
+
+	void ShowHelpMarker(const char* desc);
 public:
 	bool debug = false;
 	SDL_Renderer*	renderer = nullptr;
