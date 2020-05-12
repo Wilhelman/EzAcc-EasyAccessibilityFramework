@@ -170,16 +170,16 @@ bool ctKenStageScene::Update(float dt)
 		foreground_pos += 0.02f;
 	
 	// Draw everything --------------------------------------
-	App->render->Blit(SDL_BLENDMODE_NONE, atlas_tex, 0, 0, &background, 0.75f); // sea and sky
-	App->render->Blit(SDL_BLENDMODE_BLEND, atlas_tex, 560, 8, &(flag.GetCurrentFrame()), 0.75f); // flag animation
-	App->render->Blit(SDL_BLENDMODE_BLEND, atlas_tex, 0, (int)foreground_pos, &foreground, 0.92f);// ship
-	App->render->Blit(SDL_BLENDMODE_BLEND, atlas_tex, 192, 104 + (int)foreground_pos, &(girl.GetCurrentFrame()), 0.92f); // girl animation
-	App->render->Blit(SDL_BLENDMODE_BLEND, atlas_tex, 128, 96 + (int)foreground_pos, &(two_guys.GetCurrentFrame()), 0.92f); // two_guys animation
-	App->render->Blit(SDL_BLENDMODE_BLEND, atlas_tex, 224, 104 + (int)foreground_pos, &(green_guy.GetCurrentFrame()), 0.92f); // green_guy animation
-	App->render->Blit(SDL_BLENDMODE_BLEND, atlas_tex, 288, 96 + (int)foreground_pos, &(blue_guy.GetCurrentFrame()), 0.92f); // blue_guy animation
-	App->render->Blit(SDL_BLENDMODE_BLEND, atlas_tex, 86, 24 + (int)foreground_pos, &(fedora_guy.GetCurrentFrame()), 0.92f); // fedora_guy animation
-	App->render->Blit(SDL_BLENDMODE_BLEND, atlas_tex, 130, 24 + (int)foreground_pos, &(pink_guy.GetCurrentFrame()), 0.92f); // pink_guy animation
-	App->render->Blit(SDL_BLENDMODE_BLEND, atlas_tex, 0, 170, &ground); //ground
+	App->render->Blit(SDL_BLENDMODE_NONE, backgroundSurface, atlas_tex, 0, 0, &background, 0.75f); // sea and sky
+	App->render->Blit(SDL_BLENDMODE_BLEND, backgroundSurface, atlas_tex, 560, 8, &(flag.GetCurrentFrame()), 0.75f); // flag animation
+	App->render->Blit(SDL_BLENDMODE_BLEND, backgroundSurface, atlas_tex, 0, (int)foreground_pos, &foreground, 0.92f);// ship
+	App->render->Blit(SDL_BLENDMODE_BLEND, backgroundSurface, atlas_tex, 192, 104 + (int)foreground_pos, &(girl.GetCurrentFrame()), 0.92f); // girl animation
+	App->render->Blit(SDL_BLENDMODE_BLEND, backgroundSurface, atlas_tex, 128, 96 + (int)foreground_pos, &(two_guys.GetCurrentFrame()), 0.92f); // two_guys animation
+	App->render->Blit(SDL_BLENDMODE_BLEND, backgroundSurface, atlas_tex, 224, 104 + (int)foreground_pos, &(green_guy.GetCurrentFrame()), 0.92f); // green_guy animation
+	App->render->Blit(SDL_BLENDMODE_BLEND, backgroundSurface, atlas_tex, 288, 96 + (int)foreground_pos, &(blue_guy.GetCurrentFrame()), 0.92f); // blue_guy animation
+	App->render->Blit(SDL_BLENDMODE_BLEND, backgroundSurface, atlas_tex, 86, 24 + (int)foreground_pos, &(fedora_guy.GetCurrentFrame()), 0.92f); // fedora_guy animation
+	App->render->Blit(SDL_BLENDMODE_BLEND, backgroundSurface, atlas_tex, 130, 24 + (int)foreground_pos, &(pink_guy.GetCurrentFrame()), 0.92f); // pink_guy animation
+	App->render->Blit(SDL_BLENDMODE_BLEND, backgroundSurface, atlas_tex, 0, 170, &ground); //ground
 					  
 	list<InputEvent*> tmp_chain = App->input_combo->GetEventChain();
 

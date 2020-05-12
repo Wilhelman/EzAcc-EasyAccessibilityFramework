@@ -64,7 +64,7 @@ SDL_Texture* const ctTextures::Load(const char* path, SDL_Surface** formattedSur
 	SDL_Texture* texture = nullptr;
 	SDL_Surface* surface = IMG_Load(path);
 	
-	*formattedSurface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA8888,0);
+	*formattedSurface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_ARGB8888,0);
 	if (formattedSurface == NULL)
 	{
 		printf("Unable to convert loaded surface to display format! SDL Error: %s\n", SDL_GetError());
@@ -106,7 +106,7 @@ SDL_Texture* const ctTextures::LoadSurface(SDL_Surface* surface)
 {
 	//SDL_PIXELFORMAT_RGBA8888 SDL_TEXTUREACCESS_TARGET
 	//SDL_GetWindowPixelFormat(App->win->window) SDL_TEXTUREACCESS_STREAMING
-	SDL_Texture* texture = SDL_CreateTexture(App->render->renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, surface->w, surface->h);
+	SDL_Texture* texture = SDL_CreateTexture(App->render->renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, surface->w, surface->h);
 	//SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
 
 	if (texture == NULL)

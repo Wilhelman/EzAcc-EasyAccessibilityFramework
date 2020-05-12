@@ -650,7 +650,7 @@ void ctRender::ResetViewPort()
 }
 
 // Blit to screen
-bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
+bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -661,7 +661,7 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Texture* texture, int x, int y,
 	//SDL_SetTextureColorMod(texture, 255, 64, 64); //TODOG OJO
 	if (blendMode != SDL_BLENDMODE_INVALID) {
 		SDL_SetTextureBlendMode(texture, blendMode);
-		SDL_SetSurfaceBlendMode(App->ken_stage_scene->backgroundSurface, blendMode);
+		SDL_SetSurfaceBlendMode(surface, blendMode);
 		SDL_SetRenderDrawBlendMode(renderer, blendMode);
 	}
 	/*SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
@@ -691,52 +691,57 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Texture* texture, int x, int y,
 	
 	void* mPixels;
 	int mPitch;
-	if (App->ken_stage_scene->atlas_tex == texture) {
-		//Lock texture for manipulation
-		//Texture is already locked
+
+	//Lock texture for manipulation
+	//Texture is already locked
 	
-			if (SDL_LockTexture(texture, NULL, &mPixels, &mPitch) != 0)
-			{
-				LOG("Unable to lock texture! %s\n", SDL_GetError());
-			}
+		if (SDL_LockTexture(texture, NULL, &mPixels, &mPitch) != 0)
+		{
+			LOG("Unable to lock texture! %s\n", SDL_GetError());
+		}
 		
 
-		//Copy loaded/formatted surface pixels
-		memcpy(mPixels, App->ken_stage_scene->backgroundSurface->pixels, App->ken_stage_scene->backgroundSurface->pitch * App->ken_stage_scene->backgroundSurface->h);
+	//Copy loaded/formatted surface pixels
+	memcpy(mPixels, surface->pixels, surface->pitch * surface->h);
+	
+	//Allocate format from window
+	Uint32 format = SDL_PIXELFORMAT_ARGB8888; // SDL_GetWindowPixelFormat(App->win->window);
+	SDL_PixelFormat* mappingFormat = SDL_AllocFormat(format);
 
-		//Allocate format from window
-		Uint32 format = SDL_PIXELFORMAT_RGBA8888; // SDL_GetWindowPixelFormat(App->win->window);
-		SDL_PixelFormat* mappingFormat = SDL_AllocFormat(format);
+	//Get pixel data
+	Uint32* pixels = (Uint32*)mPixels;
+	int pixelCount = (mPitch / 4) * surface->h; //TODOG puede que App->ken_stage_scene->backgroundSurface->h
 
-		//Get pixel data
-		Uint32* pixels = (Uint32*)mPixels;
-		int pixelCount = (mPitch / 4) * App->ken_stage_scene->backgroundSurface->h; //TODOG puede que App->ken_stage_scene->backgroundSurface->h
+	Uint32 colorKey = SDL_MapRGBA(mappingFormat,248, 0, 0,255);
+	Uint32 colorKey2 = SDL_MapRGBA(mappingFormat, 184, 0, 0, 255);
+	Uint32 transparent = SDL_MapRGBA(mappingFormat, 0, 0, 248, 255);
+	Uint32 transparent2 = SDL_MapRGBA(mappingFormat, 0, 0, 184, 255);
 
-		Uint32 colorKey = SDL_MapRGBA(mappingFormat,128, 5, 50,255);
-		Uint32 transparent = SDL_MapRGBA(mappingFormat, 0, 0, 255, 50);
-
-		//Color key pixels
-		for (int i = 0; i < pixelCount; ++i)
-		{
-			Uint32 pixel = pixels[i];
-			SDL_Color rgb;
-			SDL_GetRGBA(pixels[i], mappingFormat, &rgb.r, &rgb.g, &rgb.b, &rgb.a);
+	//Color key pixels
+	for (int i = 0; i < pixelCount; ++i)
+	{
+		Uint32 pixel = pixels[i];
+		SDL_Color rgb;
+		SDL_GetRGBA(pixels[i], mappingFormat, &rgb.r, &rgb.g, &rgb.b, &rgb.a);
 			
-			if (pixels[i] == colorKey)
-			{
-				pixels[i] = transparent;
-			}
-
+		if (pixels[i] == colorKey)
+		{
+			pixels[i] = transparent;
+		}
+		if (pixels[i] == colorKey2)
+		{
+			pixels[i] = transparent2;
 		}
 
-
-		//Unlock texture to update
-		SDL_UnlockTexture(texture);
-		mPixels = NULL;
-		SDL_FreeFormat(mappingFormat);
 	}
-
 	
+
+	//Unlock texture to update
+	SDL_UnlockTexture(texture);
+	mPixels = NULL;
+	SDL_FreeFormat(mappingFormat);
+	
+
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;

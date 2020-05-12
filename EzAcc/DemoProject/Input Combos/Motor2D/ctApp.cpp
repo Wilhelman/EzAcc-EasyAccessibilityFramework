@@ -166,8 +166,6 @@ bool ctApp::Update()
 	if (input->GetWindowEvent(WE_QUIT) == true)
 		ret = false;
 
-	if (EzAcc_GetKey(SDL_SCANCODE_RIGHT) == EzAcc_KeyState::EZACC_KEY_DOWN)
-		ret = false;
 
 	if (ret == true) {
 		ret = PreUpdate();

@@ -6,6 +6,7 @@
 #include "ctEntities.h"
 
 struct SDL_Texture;
+struct SDL_Surface;
 
 class Entity
 {
@@ -23,7 +24,7 @@ public:
 	virtual ~Entity();
 
 	virtual void Update(float dt) {};
-	virtual void Draw(SDL_Texture* sprites);
+	virtual void Draw(SDL_Texture* sprites, SDL_Surface* surface);
 	virtual void SetEntitiesSpeed(float dt) {};
 
 	virtual void LoadAnimation(pugi::xml_node animation_node, ctAnimation* animation) {};

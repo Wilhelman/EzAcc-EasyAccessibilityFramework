@@ -71,7 +71,7 @@ bool ctEntities::Update(float dt)
 		if (entities.at(i) != nullptr) entities[i]->Update(dt);
 
 	for (int i = 0; i < entities.capacity(); i++)
-		if (entities.at(i) != nullptr) entities[i]->Draw(entity_sprites);
+		if (entities.at(i) != nullptr) entities[i]->Draw(entity_sprites, ryuSurface);
 
 	return true;
 }
