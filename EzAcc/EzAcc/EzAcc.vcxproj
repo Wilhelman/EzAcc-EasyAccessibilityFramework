@@ -161,7 +161,6 @@
     <ClInclude Include="EzAcc_AudioModule.h" />
     <ClInclude Include="EzAcc_Core.h" />
     <ClInclude Include="EzAcc_Defines.h" />
-    <ClInclude Include="EzAcc_Input.h" />
     <ClInclude Include="EzAcc_InputModule.h" />
     <ClInclude Include="EzAcc_Log.h" />
     <ClInclude Include="EzAcc_Module.h" />

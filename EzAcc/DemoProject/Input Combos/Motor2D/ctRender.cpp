@@ -692,7 +692,7 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 	rect.x = (int)(camera.x * speed) + x * scale;
 	rect.y = (int)(camera.y * speed) + y * scale;
 
-	SDL_SetTextureColorMod(texture, 500, 500, 200); //TODOG OJO
+	//SDL_SetTextureColorMod(texture, 500, 500, 200); //TODOG OJO
 	if (blendMode != SDL_BLENDMODE_INVALID) {
 		SDL_SetTextureBlendMode(texture, blendMode);
 		SDL_SetSurfaceBlendMode(surface, blendMode);

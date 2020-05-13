@@ -124,9 +124,6 @@ extern "C"
 	*/
 	DECLDIR bool EzAcc_PerformRumble(float rumble_power, int rumble_time);
 
-	
-	//TODOG VIBRACION
-
 
 	// ---------------- Cognitive (Memory/Information Processing) ---------------- //
 	/*

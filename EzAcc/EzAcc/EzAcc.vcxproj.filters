@@ -39,9 +39,6 @@
     <ClInclude Include="EzAcc_Defines.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="EzAcc_Input.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="EzAcc_Log.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
