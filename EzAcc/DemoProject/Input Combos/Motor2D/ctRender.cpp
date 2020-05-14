@@ -337,8 +337,16 @@ void ctRender::DrawHearing() // TODOG
 void ctRender::DrawVision() // TODOG
 {
 	ImGui::Begin("Vision Settings", &show_vision, ImGuiWindowFlags_AlwaysAutoResize);
-	static ImVec4 colorTarget = ImColor(114, 144, 154, 255);
-	static ImVec4 colorReplacement = ImColor(114, 144, 154, 255);
+	ImGui::Text("Read EzAcc_Vision settings in the readme to learn more about all the function calls");
+	ImGui::SameLine();
+	if (ImGui::Button("Readme##READMEInput3"))
+		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
+
+	
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc color picker settings");
+	static ImVec4 colorTarget = ImColor(250, 0, 0, 255);
+	static ImVec4 colorReplacement = ImColor(0, 0, 250, 255);
+	static ImVec4 colorModulation = ImColor(114, 255, 50, 255);
 
 	static bool alpha_preview = true;
 	static bool alpha_half_preview = false;
@@ -349,7 +357,9 @@ void ctRender::DrawVision() // TODOG
 	ImGui::Checkbox("With Drag and Drop", &drag_and_drop);
 	ImGui::Checkbox("With Options Menu", &options_menu);
 	int misc_flags = (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | (alpha_half_preview ? ImGuiColorEditFlags_AlphaPreviewHalf : (alpha_preview ? ImGuiColorEditFlags_AlphaPreview : 0)) | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);
+	ImGui::Separator();
 
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc pixel color replacement");
 	ImGui::Text("Color target 01:");
 	ImGui::SameLine(); ShowHelpMarker("Click on the colored square to open a color picker.\n");
 	ImGui::ColorEdit4("MyColor##1", (float*)&colorTarget, ImGuiColorEditFlags_RGB| misc_flags);
@@ -358,6 +368,21 @@ void ctRender::DrawVision() // TODOG
 	ImGui::SameLine(); ShowHelpMarker("Click on the colored square to open a color picker.\n");
 	ImGui::ColorEdit4("MyColor##2", (float*)&colorReplacement, ImGuiColorEditFlags_RGB | misc_flags);
 
+	ImGui::Separator();
+
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc modulate texture color");
+	ImGui::Text("Modulation color:");
+	ImGui::SameLine(); ShowHelpMarker("Click on the colored square to open a color picker.\n");
+	ImGui::ColorEdit4("MyColor##3", (float*)&colorModulation, ImGuiColorEditFlags_RGB | misc_flags);
+	ImGui::Text("Time:");
+	ImGui::SameLine();
+	static int time_between_inputs = 0;
+	if (ImGui::SliderInt("##TIMEBETWEENINPUTS2", &time_between_inputs, 0, 5000))
+		EzAcc_SetTimeBetweenInputs(time_between_inputs);
+	ImGui::SameLine();
+	ImGui::Text("ms");
+
+	ImGui::Separator();
 
 	ImGui::End();
 }
@@ -385,7 +410,7 @@ void ctRender::DrawCognitive() // TODOG
 		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
 	
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc framework clocks");
-	ImGui::Text("Current DT value: %.2f", EzAcc_GetDT());
+	ImGui::Text("Current DT value: %.2f", App->dt);
 	ImGui::Separator();
 	ImGui::Text("Real time clock: %.2f sec", EzAcc_GetRealtime());
 	ImGui::Text("Real time clock (hour format): %02d : %02d : %02d",

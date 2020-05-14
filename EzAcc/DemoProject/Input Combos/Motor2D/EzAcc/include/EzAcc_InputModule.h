@@ -104,6 +104,8 @@ public:
 
 	int BindKey();
 
+	bool PerformRumble(float rumble_power, int rumble_time);
+
 	// Check key states (includes mouse and joy buttons)
 	EzAcc_KeyState GetKey(int id)
 	{
@@ -119,8 +121,7 @@ public:
 		return keyboard[id];
 	}
 
-
-
+	
 	EzAcc_KeyState GetMouseButtonDown(int id) const
 	{
 		return mouse_buttons[id - 1];
@@ -135,6 +136,8 @@ public:
 	void buttonForGamepad();
 
 	int SetMacroForKey(EzAcc_Macro new_macro);
+
+	bool RemoveMacro(int index_to_remove);
 
 private:
 	bool			windowEvents[EZACC_WE_COUNT];

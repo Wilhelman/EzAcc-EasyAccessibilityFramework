@@ -22,14 +22,40 @@
 */
 
 
-#ifndef _EZACC_INPUT_H_
-#define _EZACC_INPUT_H_
+#ifndef _EZACC_VISIONMODULE_H_
+#define _EZACC_VISIONMODULE_H_
 
 #include "EzAcc_Defines.h"
+#include "EzAcc_Module.h"
 
-extern "C"
+
+class EzAcc_VisionModule : public EzAcc_Module
 {
-	
-}
+
+public:
+
+	EzAcc_VisionModule();
+
+	// Destructor
+	virtual ~EzAcc_VisionModule();
+
+	// Called before render is available
+	bool Awake(pugi::xml_node&);
+
+	// Called before the first frame
+	bool Start();
+
+	// Called each loop iteration
+	bool PreUpdate();
+
+	bool PostUpdate();
+
+	// Called before quitting
+	bool CleanUp();
+
+
+private:
+
+};
 
 #endif

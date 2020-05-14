@@ -26,7 +26,6 @@
 #define _EZACC_H_
 
 #include "EzAcc_Defines.h"
-#include "EzAcc_Input.h"
 #include "EzAcc_Log.h"
 #include "EzAcc_Core.h"
 
@@ -34,6 +33,8 @@
 #include "EzAcc_Module.h"
 #include "EzAcc_InputModule.h"
 #include "EzAcc_TimeModule.h"
+#include "EzAcc_VisionModule.h"
+#include "EzAcc_AudioModule.h"
 
 static EzAcc_Core* core;
 
@@ -108,6 +109,19 @@ extern "C"
 	TODOG
 	*/
 	DECLDIR int EzAcc_GenerateNewMacro(EzAcc_Macro new_macro);
+
+	/*
+	EzAcc_InputModule RemoveMacro
+	int = index macro
+	TODOG
+	*/
+	DECLDIR bool EzAcc_RemoveMacro(int index);
+
+	/*
+	EzAcc_InputModule RemoveMacro
+	RumblePlay info :0.0f - 1.0f % of power | time : ms p.e. 500 = 0.5 sec of rumble
+	*/
+	DECLDIR bool EzAcc_PerformRumble(float rumble_power, int rumble_time);
 
 
 	// ---------------- Cognitive (Memory/Information Processing) ---------------- //
