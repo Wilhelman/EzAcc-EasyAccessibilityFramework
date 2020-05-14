@@ -362,18 +362,18 @@ void ctRender::DrawVision() // TODOG
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc pixel color replacement");
 	ImGui::Text("Color target 01:");
 	ImGui::SameLine(); ShowHelpMarker("Click on the colored square to open a color picker.\n");
-	ImGui::ColorEdit4("MyColor##1", (float*)&colorTarget, ImGuiColorEditFlags_RGB| misc_flags);
+	ImGui::ColorEdit4("Target Color##1", (float*)&colorTarget, ImGuiColorEditFlags_RGB| misc_flags);
 
 	ImGui::Text("Color replacement 01:");
 	ImGui::SameLine(); ShowHelpMarker("Click on the colored square to open a color picker.\n");
-	ImGui::ColorEdit4("MyColor##2", (float*)&colorReplacement, ImGuiColorEditFlags_RGB | misc_flags);
+	ImGui::ColorEdit4("Replacement Color##2", (float*)&colorReplacement, ImGuiColorEditFlags_RGB | misc_flags);
 
 	ImGui::Separator();
 
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc modulate texture color");
 	ImGui::Text("Modulation color:");
 	ImGui::SameLine(); ShowHelpMarker("Click on the colored square to open a color picker.\n");
-	ImGui::ColorEdit4("MyColor##3", (float*)&colorModulation, ImGuiColorEditFlags_RGB | misc_flags);
+	ImGui::ColorEdit4("Modulated color##3", (float*)&colorModulation, ImGuiColorEditFlags_RGB | misc_flags);
 	ImGui::Text("Time:");
 	ImGui::SameLine();
 	static int time_between_inputs = 0;
@@ -448,9 +448,7 @@ void ctRender::DrawInput() // TODOG
 	ImGui::Separator();
 
 	ImGuiIO& io = ImGui::GetIO();
-	ImGui::Text("TODOG : GET KEY INFO WHAT RETURNS ETC ETC");
-	ImGui::Separator();
-
+	
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "Basic input info");
 	if (ImGui::IsMousePosValid())
 		ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
@@ -564,6 +562,25 @@ void ctRender::DrawInput() // TODOG
 		macroTest.key_effects.clear();
 	}
 
+	ImGui::Separator();
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "Perform Rumble");
+	ImGui::Text("Rumble power:");
+	ImGui::SameLine();
+	static float rumb_power = 1.0f;
+	if (ImGui::SliderFloat("##RUMBLEPOWER", &rumb_power, 0.0f, 1.0f))
+		int a = 1; //todog
+	ImGui::SameLine();
+	ImGui::Text("\%"); ImGui::SameLine(); ShowHelpMarker("For example: 0.5f equals 50% of the gamepad rumble.\nNote that the gamepad have to be compatible with SDL v2.0+.\n");
+
+	ImGui::Text("Rumble time:");
+	ImGui::SameLine();
+	static int rumb_time = 0;
+	if (ImGui::SliderInt("##RUMBLETIME", &rumb_time, 0, 5000))
+		int a = 2;
+	ImGui::SameLine();
+	ImGui::Text("ms");
+	if (ImGui::Button("Perform rumble##rumble"))
+		int b = 3;
 	ImGui::End();
 }
 
@@ -717,7 +734,9 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 	rect.x = (int)(camera.x * speed) + x * scale;
 	rect.y = (int)(camera.y * speed) + y * scale;
 
-	//SDL_SetTextureColorMod(texture, 500, 500, 200); //TODOG OJO
+	//if(surface == App->ken_stage_scene->backgroundSurface)
+		//SDL_SetTextureColorMod(texture, 70, 255, 70);
+
 	if (blendMode != SDL_BLENDMODE_INVALID) {
 		SDL_SetTextureBlendMode(texture, blendMode);
 		SDL_SetSurfaceBlendMode(surface, blendMode);
