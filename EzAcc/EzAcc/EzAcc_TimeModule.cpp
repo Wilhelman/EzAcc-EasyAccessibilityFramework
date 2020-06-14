@@ -53,10 +53,10 @@ bool EzAcc_TimeModule::PostUpdate()
 	dt = (float)perf_timer.ReadMs() / 1000.f;
 
 	real_time = last_frame_ms / 1000.0f;
-	real_time_secs = real_time;
+	real_time_secs += real_time;
 	// Modify DT with user time scale ...
 	game_time = real_time * time_scale;
-	game_time_secs = game_time;
+	game_time_secs += game_time;
 
 	return true;
 }

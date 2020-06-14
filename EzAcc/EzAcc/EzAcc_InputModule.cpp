@@ -117,7 +117,7 @@ EzAcc_InputModule::~EzAcc_InputModule()
 		 if (tmp_macro->key == keys[i]) {
 			 for (int j = 0; j < tmp_macro->key_effects.size(); j++)
 			 {
-				 keys[tmp_macro->key_effects[j]] = 1;
+				 keys[tmp_macro->key_effects[j]] = 1; // EZACC_KEY_DOWN
 			 }
 		 }
 	 }
@@ -226,7 +226,7 @@ EzAcc_InputModule::~EzAcc_InputModule()
 			 switch (Event.type)
 			 {
 			 case SDL_KEYDOWN:
-				 LOG("Keybound to num: %i", Event.key.keysym.sym);
+				 LOG("EzAcc - KeyBind: Keybound to num: %i", Event.key.keysym.sym);
 				 return Event.key.keysym.sym;
 				 break;
 			 };

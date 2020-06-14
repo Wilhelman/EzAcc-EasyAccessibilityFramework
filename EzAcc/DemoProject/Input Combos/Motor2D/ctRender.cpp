@@ -771,15 +771,13 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 	int mPitch;
 
 	SDL_UpdateTexture(texture, NULL, surface->pixels, surface->pitch);
+	/*
 	//Lock texture for manipulation
 	//Texture is already locked
-	/*
 	if (SDL_LockTexture(texture, NULL, &mPixels, &mPitch) != 0)
 	{
 		LOG("Unable to lock texture! %s\n", SDL_GetError());
 	}
-		
-
 	//Copy loaded/formatted surface pixels
 	memcpy(mPixels, surface->pixels, surface->pitch * surface->h);
 	
@@ -789,12 +787,17 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 
 	//Get pixel data
 	Uint32* pixels = (Uint32*)mPixels;
-	int pixelCount = (mPitch / 4) * surface->h; //TODOG puede que App->ken_stage_scene->backgroundSurface->h
+	int pixelCount = (mPitch / 4) * surface->h;
+
+	//Unlock texture to update
+	SDL_UnlockTexture(texture);
+	mPixels = NULL;
+	SDL_FreeFormat(mappingFormat);
 
 	Uint32 colorKey = SDL_MapRGBA(mappingFormat,248, 0, 0,255);
 	Uint32 colorKey2 = SDL_MapRGBA(mappingFormat, 184, 0, 0, 255);
-	Uint32 transparent = SDL_MapRGBA(mappingFormat, 0, 0, 248, 255);
-	Uint32 transparent2 = SDL_MapRGBA(mappingFormat, 0, 0, 184, 255);
+	Uint32 newColor1 = SDL_MapRGBA(mappingFormat, 0, 0, 248, 255);
+	Uint32 newColor2 = SDL_MapRGBA(mappingFormat, 0, 0, 184, 255);
 
 	//Color key pixels
 	for (int i = 0; i < pixelCount; ++i)
@@ -805,19 +808,16 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 			
 		if (pixels[i] == colorKey)
 		{
-			pixels[i] = transparent;
+			pixels[i] = newColor1;
 		}
 		if (pixels[i] == colorKey2)
 		{
-			pixels[i] = transparent2;
+			pixels[i] = newColor2;
 		}
 
 	}
 	
-	//Unlock texture to update
-	SDL_UnlockTexture(texture);
-	mPixels = NULL;
-	SDL_FreeFormat(mappingFormat);
+	
 	*/
 
 

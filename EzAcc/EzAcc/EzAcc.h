@@ -42,27 +42,31 @@ extern "C"
 {
 	// ---------------- CORE ---------------- //
 	/*EzAcc Init
-	Initialise TODOG .....
+	An instance of the Core module is generated. Initializing the library.
 	*/
 	DECLDIR bool EzAcc_Init();
 	/*EzAcc Awake
-	TODOG
+	This call starts the serialization system, reading the last saved data from the configuration file. 
+	It is also responsible for calling the rest of the modules, passing each of their last saved settings 
+	through parameters so that they are initialized correctly.
 	*/
 	DECLDIR bool EzAcc_Awake();
 	/*EzAcc Start
-	TODOG
+	This function will initialize some extra functions, variables or libraries in some of the modules. 
+	P.e. in the input module we will initialize the SDL library.
 	*/
 	DECLDIR bool EzAcc_Start();
 	/*EzAcc PreUpdate
-	TODOG
+	It is responsible for calling the PreUpdate function of the rest of the modules. 
+	For example, user input is collected in the PreUpdate of the Input module. 
+	In this way there may be ordered logic later. (In the Update and PostUpdate methods)
 	*/
 	DECLDIR bool EzAcc_PreUpdate();
 	/*EzAcc Update
-	TODOG
 	*/
 	DECLDIR bool EzAcc_Update();
 	/*EzAcc AllUpdate
-	TODOG
+	It is responsible for calling the Update function of the other modules.
 	*/
 	DECLDIR bool EzAcc_AllUpdate();
 	/*EzAcc PostUpdate

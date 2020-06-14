@@ -12,17 +12,17 @@
 // Constructor
 EzAcc_Core::EzAcc_Core()
 {
-	
+	// Ordered for awake / Start / Update
 	input = new EzAcc_InputModule();
 	time = new EzAcc_TimeModule();
 	vision = new EzAcc_VisionModule();
 	audio = new EzAcc_AudioModule();
-	// Ordered for awake / Start / Update
+	
 	// Reverse order of CleanUp
 	AddModule(input);
-	AddModule(time);
 	AddModule(vision);
 	AddModule(audio);
+	AddModule(time);
 }
 
 // Destructor
@@ -120,7 +120,6 @@ bool EzAcc_Core::AllUpdate()
 	if (ret == true)
 		ret = PostUpdate();
 
-	//FinishUpdate();
 	return ret;
 }
 
