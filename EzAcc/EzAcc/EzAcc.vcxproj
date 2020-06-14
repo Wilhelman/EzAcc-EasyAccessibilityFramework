@@ -162,11 +162,14 @@
     <ClInclude Include="EzAcc_Core.h" />
     <ClInclude Include="EzAcc_Defines.h" />
     <ClInclude Include="EzAcc_InputModule.h" />
+    <ClInclude Include="EzAcc_LanguageModule.h" />
     <ClInclude Include="EzAcc_Log.h" />
     <ClInclude Include="EzAcc_Module.h" />
     <ClInclude Include="EzAcc_TimeModule.h" />
     <ClInclude Include="EzAcc_VisionModule.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="p2DynArray.h" />
+    <ClInclude Include="p2SString.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="pugiconfig.hpp" />
     <ClInclude Include="pugixml.hpp" />
@@ -179,6 +182,7 @@
     <ClCompile Include="EzAcc_AudioModule.cpp" />
     <ClCompile Include="EzAcc_Core.cpp" />
     <ClCompile Include="EzAcc_InputModule.cpp" />
+    <ClCompile Include="EzAcc_LanguageModule.cpp" />
     <ClCompile Include="EzAcc_Log.cpp" />
     <ClCompile Include="EzAcc_TimeModule.cpp" />
     <ClCompile Include="EzAcc_VisionModule.cpp" />

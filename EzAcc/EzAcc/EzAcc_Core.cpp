@@ -222,7 +222,7 @@ pugi::xml_node EzAcc_Core::LoadConfig(pugi::xml_document& config_file) const
 {
 	pugi::xml_node ret;
 
-	pugi::xml_parse_result result = config_file.load_file("config.xml");
+	pugi::xml_parse_result result = config_file.load_file("ezacc_config.xml");
 
 	if (result == NULL)
 		LOG("Could not load xml file config.xml. pugi error: %s", result.description());
@@ -230,3 +230,9 @@ pugi::xml_node EzAcc_Core::LoadConfig(pugi::xml_document& config_file) const
 		ret = config_file.child("config");
 	return ret;
 }
+
+void EzAcc_Core::SaveConfig() const
+{
+
+}
+

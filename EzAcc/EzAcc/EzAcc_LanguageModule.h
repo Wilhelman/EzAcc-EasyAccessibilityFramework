@@ -22,88 +22,73 @@
 */
 
 
-#ifndef _EZACC_CORE_H_
-#define _EZACC_CORE_H_
+#ifndef _EZACC_LANGUAGEMODULE_H_
+#define _EZACC_LANGUAGEMODULE_H_
 
-#include <list>
+#include "EzAcc_Defines.h"
 #include "EzAcc_Module.h"
-#include "pugixml.hpp"
 
-// Modules
-class EzAcc_InputModule;
-class EzAcc_TimeModule;
-class EzAcc_VisionModule;
-class EzAcc_AudioModule;
+#include "p2SString.h"
+#include "p2DynArray.h"
 
-class EzAcc_Core
+
+struct EzAcc_Dictionary
 {
+	p2SString press_space_btn;
+	p2SString new_game_btn;
+	p2SString continue_btn;
+	p2SString credits_btn;
+	p2SString music_volume;
+	p2SString fx_volume;
+	p2SString cap_to;
+	p2SString language_option;
+
+	p2SString quit_lan;
+	p2SString save_lan;
+	p2SString load_lan;
+	p2SString main_menu_lan;
+};
+
+class EzAcc_LanguageModule : public EzAcc_Module
+{
+
 public:
 
-	// Constructor
-	EzAcc_Core();
+	EzAcc_LanguageModule();
 
 	// Destructor
-	virtual ~EzAcc_Core();
+	virtual ~EzAcc_LanguageModule();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();
 
 	// Called each loop iteration
-	bool AllUpdate();
+	bool PreUpdate();
+
+	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
 
-	// Add a new module to handle
-	void AddModule(EzAcc_Module* module);
+	// Load languages file
+	pugi::xml_node LoadLanguages(pugi::xml_document&) const;
 
-	// Load config file
-	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
-	// Save config file
-	void SaveConfig() const;
+	void ChangeCurrentLanguage(p2SString new_language);
 
-	// Call modules before each loop iteration
-	bool PreUpdate();
-
-	// Call modules on each loop iteration
-	bool Update();
-
-	// Call modules after each loop iteration
-	bool PostUpdate();
-
-	// Call modules before each loop iteration
-	void FinishUpdate();
-
-private:
-
-	// Call modules before each loop iteration
-	void PrepareUpdate();
-
-	
-
-	
+	EzAcc_Dictionary GetDictionary()const;
 
 public:
-
-	// Modules
-	EzAcc_InputModule* input = nullptr;
-	EzAcc_TimeModule* time = nullptr;
-	EzAcc_VisionModule* vision = nullptr;
-	EzAcc_AudioModule* audio = nullptr;
+	p2SString current_language;
+	p2DynArray<p2SString> posible_languages;
 
 private:
-
-	std::list<EzAcc_Module*>	modules;
-	bool				all_modules_loaded = false;
-
-	
-
+	EzAcc_Dictionary dictionary;
 };
-
-extern EzAcc_Core* Core;
 
 #endif

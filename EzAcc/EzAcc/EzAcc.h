@@ -171,6 +171,12 @@ extern "C"
 	*/
 	DECLDIR EzAcc_FormatHour EzAcc_GetRealtimeHourFormat();
 
+
+	// ---------------- Audio (Music/Fx and extra info about sounds (Descriptive labels)) ---------------- //
+
+
+
+	
 	DECLDIR void Function(void);
 }
 

@@ -25,9 +25,16 @@
 #ifndef _EZACC_AUDIOMODULE_H_
 #define _EZACC_AUDIOMODULE_H_
 
+#define EZACC_DEFAULT_MUSIC_FADE_TIME 2.0f
+#define EZACC_MAX_FX 200
+
 #include "EzAcc_Defines.h"
 #include "EzAcc_Module.h"
 
+#include "SDL_mixer\include\SDL_mixer.h"
+
+struct _Mix_Music;
+struct Mix_Chunk;
 
 class EzAcc_AudioModule : public EzAcc_Module
 {
@@ -48,13 +55,32 @@ public:
 	// Called each loop iteration
 	bool PreUpdate();
 
+	bool Update(float dt);
+
 	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
 
+	// Play a music file
+	bool PlayMusic(const char* path, float fade_time = EZACC_DEFAULT_MUSIC_FADE_TIME);
+	bool StopMusic();
+
+	// Load a WAV in memory
+	unsigned int LoadFx(const char* path);
+
+	// Play a previously loaded WAV
+	bool PlayFx(unsigned int fx, int repeat = 0);
+
+	// UnLoad WAV
+	bool UnLoadFx(uint id);
 
 private:
+
+	_Mix_Music* music = nullptr;
+	Mix_Chunk* fx[EZACC_MAX_FX];
+
+	uint				last_fx = 1;
 
 };
 
