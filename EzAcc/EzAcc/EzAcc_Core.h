@@ -34,6 +34,7 @@ class EzAcc_InputModule;
 class EzAcc_TimeModule;
 class EzAcc_VisionModule;
 class EzAcc_AudioModule;
+class EzAcc_LanguageModule;
 
 class EzAcc_Core
 {
@@ -88,7 +89,7 @@ private:
 	
 
 public:
-
+	// TODOG TERMINA DE INTEGRAR LANGUAGE
 	// Modules
 	EzAcc_InputModule* input = nullptr;
 	EzAcc_TimeModule* time = nullptr;
