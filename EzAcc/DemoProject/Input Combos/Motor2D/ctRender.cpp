@@ -201,6 +201,17 @@ bool ctRender::Start()
 
 	macroTest.key = -1;
 
+	console_available = true;
+
+	active = true;
+
+	std::vector<std::string>::iterator it = init_logs.begin();
+	while (it != init_logs.end())
+	{
+		this->AddLogToConsole((*it).c_str());
+		it++;
+	}
+
 	return true;
 }
 
@@ -273,6 +284,9 @@ bool ctRender::Update(float dt)
 
 				if (ImGui::MenuItem("Hearing", "4"))
 					show_hearing = !show_hearing;
+
+				if (ImGui::MenuItem("Console", "5"))
+					show_console = !show_console;
 			
 				if (ImGui::MenuItem("Show/Hide UI Configuration", "F1"))
 					change_debug = true;
@@ -319,6 +333,9 @@ bool ctRender::Update(float dt)
 		}
 		if (show_about) {
 			DrawAbout();
+		}
+		if (show_console) {
+			DrawConsole();
 		}
 	} // end debug
 
@@ -400,6 +417,20 @@ void ctRender::ShowHelpMarker(const char* desc)
 	}
 }
 
+void ctRender::Log(const char* new_log)
+{
+	if (console_available)
+		this->AddLogToConsole(new_log);
+	else
+		init_logs.push_back(new_log);
+}
+
+void ctRender::AddLogToConsole(const char* log)
+{
+	text_buffer.empty() ? text_buffer.appendf(log) : text_buffer.appendf("\n%s", log);
+	have_to_scroll = true;
+}
+
 void ctRender::DrawCognitive() // TODOG
 {
 	ImGui::Begin("Cognitive (Memory/Information Processing) Settings", &show_cognitive, ImGuiWindowFlags_AlwaysAutoResize);
@@ -433,6 +464,24 @@ void ctRender::DrawCognitive() // TODOG
 	static float dt_scale = 1.0f;
 	if (ImGui::SliderFloat("##TIMEBETWEENINPUTS", &dt_scale, 0.0f, 2.0f))
 		EzAcc_SetDTTimeScale(dt_scale);
+
+	ImGui::End();
+}
+
+void ctRender::DrawConsole()
+{
+
+	//ImGui::SetNextWindowPos(ImVec2(App->win-> / 2.f, App->window->GetHeight() - 200.f));
+	ImGui::SetNextWindowSize(ImVec2(300.f, 200.f));
+	ImGui::Begin("Console", &show_console, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoCollapse
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_NoFocusOnAppearing);
+
+	ImGui::TextUnformatted(text_buffer.begin());
+
+	if (have_to_scroll)
+		ImGui::SetScrollHere(1.0f);
+
+	have_to_scroll = false;
 
 	ImGui::End();
 }

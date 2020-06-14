@@ -5,6 +5,8 @@
 #include "ctPoint.h"
 #include "ctModule.h"
 #include <string>
+#include <vector>
+#include "ImGui/imgui.h"
 #include "EzAcc/include/EzAcc.h"
 
 class ctRender : public ctModule
@@ -52,8 +54,13 @@ public:
 	void DrawInput();
 	void DrawAbout();
 	void DrawCognitive();
+	void DrawConsole();
 
 	void ShowHelpMarker(const char* desc);
+
+	void Log(const char* new_log);
+	void AddLogToConsole(const char* log);
+
 public:
 	bool debug = false;
 	SDL_Renderer*	renderer = nullptr;
@@ -64,6 +71,8 @@ public:
 	SDL_Color		background = { 0, 0, 0, 0 };
 	bool			vsync_state = false;
 
+	bool console_available = false;
+
 private:
 	bool show_demo_window = false;
 	bool show_about = false;
@@ -71,6 +80,7 @@ private:
 	bool show_hearing = false;
 	bool show_input = false;
 	bool show_cognitive = false;
+	bool show_console = false;
 	bool change_debug = false;
 
 	char tmp_name[100];
@@ -85,6 +95,12 @@ private:
 	bool bindingMacroKey = false;
 	bool bindingMacroKeyValue1 = false;
 	bool bindingMacroKeyValue2 = false;
+
+	
+
+	std::vector<std::string> init_logs;
+	ImGuiTextBuffer text_buffer;
+	bool have_to_scroll = false;
 };
 
 #endif // __j1RENDER_H__
