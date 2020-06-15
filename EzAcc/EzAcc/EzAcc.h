@@ -26,7 +26,7 @@
 #define _EZACC_H_
 
 #include "EzAcc_Defines.h"
-#include "EzAcc_Log.h"
+
 #include "EzAcc_Core.h"
 
 // Modules
@@ -35,6 +35,7 @@
 #include "EzAcc_TimeModule.h"
 #include "EzAcc_VisionModule.h"
 #include "EzAcc_AudioModule.h"
+#include "EzAcc_LanguageModule.h"
 
 static EzAcc_Core* core;
 

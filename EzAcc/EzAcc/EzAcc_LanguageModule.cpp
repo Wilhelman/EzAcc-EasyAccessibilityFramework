@@ -6,7 +6,7 @@
 
 EzAcc_LanguageModule::EzAcc_LanguageModule()
 {
-	LOG("EzAcc: Generating EzAcc_LanguageModule ...");
+	EZACC_LOG("EzAcc: Generating EzAcc_LanguageModule ...");
 }
 
 // Destructor
@@ -18,7 +18,7 @@ EzAcc_LanguageModule::~EzAcc_LanguageModule()
 // Called before render is available
 bool EzAcc_LanguageModule::Awake(pugi::xml_node& config)
 {
-	LOG("Loading Languages");
+	EZACC_LOG("Loading Languages");
 	bool ret = true;
 
 	pugi::xml_document	language_file;
@@ -79,7 +79,7 @@ pugi::xml_node EzAcc_LanguageModule::LoadLanguages(pugi::xml_document& language_
 	pugi::xml_parse_result result = language_file.load_file("ezacc_languages");
 
 	if (result == NULL)
-		LOG("Could not load xml file config.xml. pugi error: %s", result.description());
+		EZACC_LOG("Could not load xml file config.xml. pugi error: %s", result.description());
 	else
 		ret = language_file.child("languages");
 	return ret;

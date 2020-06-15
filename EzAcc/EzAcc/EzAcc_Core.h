@@ -89,12 +89,13 @@ private:
 	
 
 public:
-	// TODOG TERMINA DE INTEGRAR LANGUAGE
+
 	// Modules
 	EzAcc_InputModule* input = nullptr;
 	EzAcc_TimeModule* time = nullptr;
 	EzAcc_VisionModule* vision = nullptr;
 	EzAcc_AudioModule* audio = nullptr;
+	EzAcc_LanguageModule* language = nullptr;
 
 private:
 

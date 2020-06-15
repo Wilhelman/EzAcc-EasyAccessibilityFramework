@@ -34,6 +34,7 @@ class EzAcc_InputModule;
 class EzAcc_TimeModule;
 class EzAcc_VisionModule;
 class EzAcc_AudioModule;
+class EzAcc_LanguageModule;
 
 class EzAcc_Core
 {
@@ -63,6 +64,9 @@ public:
 	// Load config file
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 
+	// Save config file
+	void SaveConfig() const;
+
 	// Call modules before each loop iteration
 	bool PreUpdate();
 
@@ -91,6 +95,7 @@ public:
 	EzAcc_TimeModule* time = nullptr;
 	EzAcc_VisionModule* vision = nullptr;
 	EzAcc_AudioModule* audio = nullptr;
+	EzAcc_LanguageModule* language = nullptr;
 
 private:
 

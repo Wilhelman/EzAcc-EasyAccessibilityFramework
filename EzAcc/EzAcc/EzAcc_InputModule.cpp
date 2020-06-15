@@ -7,7 +7,7 @@
 
 EzAcc_InputModule::EzAcc_InputModule()
 {
-	LOG("EzAcc: Generating EzAcc_InputModule ...");
+	EZACC_LOG("EzAcc: Generating EzAcc_InputModule ...");
 	keyboard = new EzAcc_KeyState[EZACC_MAX_KEYS];
 	memset(keyboard, EZACC_KEY_IDLE, sizeof(EzAcc_KeyState) * EZACC_MAX_KEYS);
 	memset(mouse_buttons, EZACC_KEY_IDLE, sizeof(EzAcc_KeyState) * EZACC_NUM_MOUSE_BUTTONS);
@@ -22,23 +22,23 @@ EzAcc_InputModule::~EzAcc_InputModule()
 // Called before render is available
  bool EzAcc_InputModule::Awake(pugi::xml_node&)
 {
-	LOG("Init SDL input event system");
+	EZACC_LOG("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
 
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
-		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
+		EZACC_LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 
 	if (SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER) < 0)
 	{
-		LOG("SDL_GAMECONTROLLER could not initialize! SDL_Error: %s\n", SDL_GetError());
+		EZACC_LOG("SDL_GAMECONTROLLER could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 
-	LOG("EzAcc: Init the controller (search and asign)");
+	EZACC_LOG("EzAcc: Init the controller (search and asign)");
 	controller = nullptr;
 	for (int i = 0; i < SDL_NumJoysticks(); i++)
 	{
@@ -67,19 +67,19 @@ EzAcc_InputModule::~EzAcc_InputModule()
 	// test
 		//Load joystick
 	SDL_Joystick* gGameController = SDL_JoystickOpen(0);
-	LOG("EzAcc : 01");
+	EZACC_LOG("EzAcc : 01");
 	if (gGameController == NULL)
 	{
-		LOG("EzAcc - Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
+		EZACC_LOG("EzAcc - Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
 	}
 	else
 	{
-		LOG("EzAcc : 02");
+		EZACC_LOG("EzAcc : 02");
 		//Get controller haptic device
 		controllerHaptic = SDL_HapticOpenFromJoystick(gGameController);
 		if (controllerHaptic == NULL)
 		{
-			LOG("EzAcc - Warning: Controller does not support haptics! SDL Error: %s\n", SDL_GetError());
+			EZACC_LOG("EzAcc - Warning: Controller does not support haptics! SDL Error: %s\n", SDL_GetError());
 		}
 		else
 		{
@@ -87,12 +87,12 @@ EzAcc_InputModule::~EzAcc_InputModule()
 			int haptic_init_state = SDL_HapticRumbleInit(controllerHaptic);
 			if (haptic_init_state < 0)
 			{
-				LOG("EzAcc - Warning: Unable to initialize rumble! SDL Error: %s\n", SDL_GetError());
+				EZACC_LOG("EzAcc - Warning: Unable to initialize rumble! SDL Error: %s\n", SDL_GetError());
 			}
-			LOG("EzAcc : haptic_init_state %i", haptic_init_state);
+			EZACC_LOG("EzAcc : haptic_init_state %i", haptic_init_state);
 		}
 	}
-	LOG("EzAcc : 04");
+	EZACC_LOG("EzAcc : 04");
 
 	return ret;
 }
@@ -206,7 +206,7 @@ EzAcc_InputModule::~EzAcc_InputModule()
 
  bool EzAcc_InputModule::CleanUp()
  {
-	 LOG("EzAcc: Quitting SDL event subsystem");
+	 EZACC_LOG("EzAcc: Quitting SDL event subsystem");
 	 SDL_HapticClose(controllerHaptic);
 	 SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	 return true;
@@ -226,7 +226,7 @@ EzAcc_InputModule::~EzAcc_InputModule()
 			 switch (Event.type)
 			 {
 			 case SDL_KEYDOWN:
-				 LOG("EzAcc - KeyBind: Keybound to num: %i", Event.key.keysym.sym);
+				 EZACC_LOG("EzAcc - KeyBind: Keybound to num: %i", Event.key.keysym.sym);
 				 return Event.key.keysym.sym;
 				 break;
 			 };
@@ -252,7 +252,7 @@ EzAcc_InputModule::~EzAcc_InputModule()
 	 
 	 if (haptic_state != 0)
 	 {
-		 LOG("EzAcc Warning: Unable to play rumble! %s\n", SDL_GetError());
+		 EZACC_LOG("EzAcc Warning: Unable to play rumble! %s\n", SDL_GetError());
 		 return false;
 	 }
 	 return true;
@@ -419,7 +419,7 @@ EzAcc_InputModule::~EzAcc_InputModule()
 	 
 	 macros.push_back(tmp_macro);
 	 int index_to_return = macros.size() - 1;
-	 LOG("EzAcc: SetMacroForKey - Returning index: %i", index_to_return);
+	 EZACC_LOG("EzAcc: SetMacroForKey - Returning index: %i", index_to_return);
 	 return index_to_return;
  }
 

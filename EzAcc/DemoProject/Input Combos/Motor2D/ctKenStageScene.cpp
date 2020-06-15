@@ -142,11 +142,6 @@ bool ctKenStageScene::PreUpdate()
 // Called each loop iteration
 bool ctKenStageScene::Update(float dt)
 {
-	
-	
-	
-
-
 	if (dt > 0)
 	{
 		if (!key_speed)

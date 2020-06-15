@@ -6,7 +6,7 @@
 
 EzAcc_TimeModule::EzAcc_TimeModule()
 {
-	LOG("EzAcc: Generating EzAcc_TimeModule ...");
+	EZACC_LOG("EzAcc: Generating EzAcc_TimeModule ...");
 }
 
 // Destructor

@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<config>
+	<app framerate_cap="30">
+		<title>Temple Escape</title>
+		<organization>UPC</organization>
+	</app>
+	<renderer>
+		<vsync value="false" />
+	</renderer>
+	<font>
+		<default_font file="fonts/FritzQuadrata Regular.ttf" size="12" />
+	</font>
+	<ui>
+		<atlas file="textures/ui/ui_atlas.png" />
+		<button>
+			<fx pressed="audio/fx/pressed_btn.wav" released="audio/fx/released_btn.wav" hover="audio/fx/hover_btn.wav" />
+		</button>
+	</ui>
+	<language current="ENG" />
+	<window>
+		<resolution width="1024" height="768" scale="3" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+	</window>
+	<music fx="100" music="6">
+		<lvlMusic name="textures/source_spritesheet.png" />
+	</music>
+	<entities>
+		<spritesheetSource name="textures/source_spritesheet.png" />
+		<player>
+			<fxPlayerDead name="audio/fx/dead_fx.wav" />
+			<fxPlayerJump name="audio/fx/jump_fx.wav" />
+			<fxPlayerLifeReward name="audio/fx/player_life_reward_fx.wav" />
+			<animations>
+				<animation name="right_idle" speed="1.0" loop="true">
+					<frame x="17" y="18" width="14" height="14" />
+					<frame x="33" y="18" width="14" height="14" />
+				</animation>
+				<animation name="left_idle" speed="1.0" loop="true">
+					<frame x="88" y="163" width="14" height="14" />
+					<frame x="105" y="163" width="14" height="14" />
+				</animation>
+				<animation name="right_run" speed="3.0" loop="true">
+					<frame x="1" y="1" width="14" height="15" />
+					<frame x="20" y="1" width="14" height="15" />
+					<frame x="37" y="1" width="14" height="15" />
+				</animation>
+				<animation name="left_run" speed="3.0" loop="true">
+					<frame x="121" y="146" width="14" height="15" />
+					<frame x="102" y="146" width="14" height="15" />
+					<frame x="85" y="146" width="14" height="15" />
+				</animation>
+				<animation name="right_jump" speed="2.0" loop="false">
+					<frame x="2" y="16" width="14" height="14" />
+				</animation>
+				<animation name="left_jump" speed="2.0" loop="false">
+					<frame x="122" y="161" width="14" height="14" />
+				</animation>
+				<animation name="left_dead" speed="3.0" loop="true">
+					<frame x="105" y="180" width="13" height="8" />
+					<frame x="121" y="180" width="13" height="8" />
+					<frame x="105" y="180" width="13" height="8" />
+					<frame x="121" y="180" width="13" height="8" />
+					<frame x="105" y="180" width="13" height="8" />
+					<frame x="121" y="180" width="13" height="8" />
+					<frame x="105" y="180" width="13" height="8" />
+					<frame x="121" y="180" width="13" height="8" />
+				</animation>
+				<animation name="right_dead" speed="3.0" loop="true">
+					<frame x="2" y="35" width="13" height="8" />
+					<frame x="105" y="180" width="13" height="8" />
+					<frame x="2" y="35" width="13" height="8" />
+					<frame x="105" y="180" width="13" height="8" />
+					<frame x="2" y="35" width="13" height="8" />
+					<frame x="105" y="180" width="13" height="8" />
+					<frame x="2" y="35" width="13" height="8" />
+					<frame x="105" y="180" width="13" height="8" />
+				</animation>
+				<animation name="right_shoot" speed="2.0" loop="true">
+					<frame x="58" y="2" width="14" height="14" />
+				</animation>
+				<animation name="left_shoot" speed="2.0" loop="true">
+					<frame x="64" y="147" width="14" height="14" />
+				</animation>
+				<animation name="dust_double_jump" speed="1.0" loop="false">
+					<frame x="1" y="129" width="28" height="11" />
+					<frame x="32" y="129" width="28" height="11" />
+					<frame x="63" y="129" width="28" height="11" />
+					<frame x="94" y="129" width="28" height="11" />
+				</animation>
+			</animations>
+		</player>
+		<bat>
+			<fxBatDead name="audio/fx/bat_dead.wav" />
+			<fxBatHit name="audio/fx/bat_hit.wav" />
+			<animations>
+				<animation name="bat_fly_right" speed="3.0" loop="true">
+					<frame x="76" y="35" width="16" height="12" />
+					<frame x="92" y="35" width="16" height="12" />
+					<frame x="109" y="35" width="16" height="12" />
+				</animation>
+				<animation name="bat_fly_left" speed="3.0" loop="true">
+					<frame x="47" y="182" width="16" height="12" />
+					<frame x="31" y="182" width="16" height="12" />
+					<frame x="14" y="182" width="16" height="12" />
+				</animation>
+			</animations>
+		</bat>
+		<slime>
+			<fxSlimeDead name="audio/fx/slime_dead.wav" />
+			<fxSlimeHit name="audio/fx/slime_hit.wav" />
+			<animations>
+				<animation name="slime_right_idle" speed="5.0" loop="true">
+					<frame x="124" y="45" width="16" height="16" />
+					<frame x="140" y="45" width="16" height="16" />
+				</animation>
+				<animation name="slime_left_idle" speed="5.0" loop="true">
+					<frame x="76" y="45" width="16" height="16" />
+					<frame x="92" y="45" width="16" height="16" />
+				</animation>
+				<animation name="slime_right_jump" speed="8.0" loop="true">
+					<frame x="139" y="96" width="16" height="16" />
+					<frame x="123" y="96" width="16" height="16" />
+					<frame x="107" y="96" width="16" height="16" />
+					<frame x="91" y="96" width="16" height="16" />
+					<frame x="75" y="96" width="16" height="16" />
+				</animation>
+				<animation name="slime_left_jump" speed="8.0" loop="true">
+					<frame x="75" y="67" width="16" height="16" />
+					<frame x="91" y="67" width="16" height="16" />
+					<frame x="107" y="67" width="16" height="16" />
+					<frame x="123" y="67" width="16" height="16" />
+					<frame x="139" y="67" width="16" height="16" />
+				</animation>
+			</animations>
+		</slime>
+		<coin>
+			<fxCoinCollect name="audio/fx/coin_collect.wav" />
+			<animations>
+				<animation name="idle" speed="0.1" loop="true">
+					<frame x="0" y="62" width="16" height="16" />
+					<frame x="16" y="62" width="16" height="16" />
+					<frame x="32" y="62" width="16" height="16" />
+					<frame x="49" y="62" width="16" height="16" />
+					<frame x="32" y="62" width="16" height="16" />
+					<frame x="16" y="62" width="16" height="16" />
+				</animation>
+			</animations>
+		</coin>
+	</entities>
+	<particles>
+		<fxPlayerBasicShot name="audio/fx/player_basic_shot_fx.wav" />
+		<spritesheetSource name="textures/source_spritesheet.png">
+			<particle name="player_basic_shot" speed="3" life_time="3000">
+				<animation name="player_basic_shot_right" speed_x="60" speed_y="0.0" loop="true">
+					<frame x="4" y="83" width="9" height="5" />
+					<frame x="18" y="83" width="9" height="5" />
+					<frame x="34" y="83" width="9" height="5" />
+				</animation>
+				<animation name="player_basic_shot_left" speed_x="-60" speed_y="0.0" loop="true">
+					<frame x="34" y="115" width="9" height="5" />
+					<frame x="20" y="115" width="9" height="5" />
+					<frame x="4" y="115" width="9" height="5" />
+				</animation>
+				<animation name="player_jump_animation" speed_x="0.0" speed_y="0.0" loop="true">
+					<frame x="1" y="129" width="28" height="11" />
+					<frame x="32" y="129" width="28" height="11" />
+					<frame x="63" y="129" width="28" height="11" />
+					<frame x="94" y="129" width="28" height="11" />
+				</animation>
+			</particle>
+		</spritesheetSource>
+	</particles>
+	<file_system>
+		<path>data.zip</path>
+	</file_system>
+	<map>
+		<folder>maps/</folder>
+		<spritesheetSource name="maps/enviroment-tiles.png">
+			<animation name="lava_waterfall" speed="0.01" loop="true">
+				<frame x="144" y="32" width="16" height="16" />
+				<frame x="160" y="32" width="16" height="16" />
+				<frame x="176" y="32" width="16" height="16" />
+			</animation>
+			<animation name="waterfall" speed="0.01" loop="true">
+				<frame x="192" y="32" width="16" height="16" />
+				<frame x="208" y="32" width="16" height="16" />
+				<frame x="224" y="32" width="16" height="16" />
+			</animation>
+			<animation name="lava_animation" speed="0.01" loop="true">
+				<frame x="144" y="0" width="32" height="32" />
+				<frame x="176" y="0" width="32" height="32" />
+				<frame x="208" y="0" width="32" height="32" />
+			</animation>
+			<animation name="water_animation" speed="0.01" loop="true">
+				<frame x="240" y="0" width="32" height="29" />
+				<frame x="272" y="0" width="32" height="29" />
+				<frame x="304" y="0" width="32" height="29" />
+			</animation>
+		</spritesheetSource>
+		<main_menu />
+		<scene>
+			<data name="main_menu.tmx" start="true" currentLvl="false" />
+			<data name="lvl1.tmx" start="false" currentLvl="true" />
+			<data name="lvl2.tmx" start="false" currentLvl="false" />
+			<animations>
+				<animation name="heart_reward_anim" speed="0.12" loop="true">
+					<frame x="81" y="419" width="5" height="13" />
+					<frame x="86" y="419" width="5" height="13" />
+					<frame x="91" y="419" width="5" height="13" />
+					<frame x="96" y="419" width="5" height="13" />
+					<frame x="101" y="419" width="5" height="13" />
+				</animation>
+				<animation name="coin_reward_anim" speed="0.5" loop="true">
+					<frame x="0" y="433" width="10" height="14" />
+					<frame x="32" y="433" width="10" height="14" />
+					<frame x="64" y="433" width="10" height="14" />
+					<frame x="98" y="433" width="10" height="14" />
+				</animation>
+				<animation name="one_life_anim" speed="0.1" loop="true">
+					<frame x="78" y="366" width="13" height="13" />
+					<frame x="99" y="367" width="13" height="13" />
+				</animation>
+			</animations>
+		</scene>
+	</map>
+</config>

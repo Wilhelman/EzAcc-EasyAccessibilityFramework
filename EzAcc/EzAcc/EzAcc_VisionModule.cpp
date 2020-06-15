@@ -8,7 +8,7 @@
 
 EzAcc_VisionModule::EzAcc_VisionModule()
 {
-	LOG("EzAcc: Generating EzAcc_VisionModule ...");
+	EZACC_LOG("EzAcc: Generating EzAcc_VisionModule ...");
 }
 
 // Destructor

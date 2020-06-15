@@ -89,9 +89,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="EzAcc_Log.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="EzAcc_InputModule.cpp">
       <Filter>Archivos de origen\Core</Filter>
     </ClCompile>
@@ -121,6 +118,9 @@
     </ClCompile>
     <ClCompile Include="EzAcc_LanguageModule.cpp">
       <Filter>Archivos de origen\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="EzAcc_Log.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

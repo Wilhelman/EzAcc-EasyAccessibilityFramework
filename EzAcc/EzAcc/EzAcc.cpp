@@ -3,6 +3,7 @@
 #define DLL_EXPORT 
 
 #include "EzAcc.h"
+#include "EzAcc_Log.h"
 
 DECLDIR bool EzAcc_Init()
 {
@@ -58,7 +59,7 @@ DECLDIR void EzAcc_SetTimeBetweenInputs(unsigned int new_time)
 		core->input->time_between_inputs = new_time;
 	}
 	else {
-		LOG("EzAcc: ERROR using input module, did you used \"EzAcc_Init\" to initialise the module?");
+		EZACC_LOG("EzAcc: ERROR using input module, did you used \"EzAcc_Init\" to initialise the module?");
 	}
 }
 
@@ -68,7 +69,7 @@ DECLDIR unsigned int EzAcc_GetTimeBetweenInputs()
 		return core->input->time_between_inputs;
 	}
 	else {
-		LOG("EzAcc: ERROR using input module, did you used \"EzAcc_Init\" to initialise the module?");
+		EZACC_LOG("EzAcc: ERROR using input module, did you used \"EzAcc_Init\" to initialise the module?");
 	}
 }
 
@@ -78,7 +79,7 @@ DECLDIR int EzAcc_BindKey()
 		return core->input->BindKey();
 	}
 	else {
-		LOG("EzAcc: ERROR using input module, did you used \"EzAcc_Init\" to initialise the module?");
+		EZACC_LOG("EzAcc: ERROR using input module, did you used \"EzAcc_Init\" to initialise the module?");
 	}
 }
 

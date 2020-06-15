@@ -275,5 +275,11 @@
     <ClInclude Include="EzAcc\include\EzAccTimer.h">
       <Filter>Utilities\Tools\EzAcc</Filter>
     </ClInclude>
+    <ClInclude Include="EzAcc\include\p2DynArray.h">
+      <Filter>Utilities\Tools\EzAcc</Filter>
+    </ClInclude>
+    <ClInclude Include="EzAcc\include\p2SString.h">
+      <Filter>Utilities\Tools\EzAcc</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

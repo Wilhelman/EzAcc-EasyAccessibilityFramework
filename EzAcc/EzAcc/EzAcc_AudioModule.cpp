@@ -9,7 +9,7 @@
 EzAcc_AudioModule::EzAcc_AudioModule()
 {
 	music = NULL;
-	LOG("EzAcc: Generating EzAcc_AudioModule ...");
+	EZACC_LOG("EzAcc: Generating EzAcc_AudioModule ...");
 }
 
 // Destructor
@@ -21,13 +21,13 @@ EzAcc_AudioModule::~EzAcc_AudioModule()
 // Called before render is available
 bool EzAcc_AudioModule::Awake(pugi::xml_node& save)
 {
-	LOG("Awake Audio Mixer");
+	EZACC_LOG("Awake Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
 
 	if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
-		LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
+		EZACC_LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		active = false;
 		ret = true;
 	}
@@ -37,7 +37,7 @@ bool EzAcc_AudioModule::Awake(pugi::xml_node& save)
 
 	if ((init & flags) != flags)
 	{
-		LOG("Could not initialize Mixer lib. Mix_Init: %s", Mix_GetError());
+		EZACC_LOG("Could not initialize Mixer lib. Mix_Init: %s", Mix_GetError());
 		active = false;
 		ret = true;
 	}
@@ -45,7 +45,7 @@ bool EzAcc_AudioModule::Awake(pugi::xml_node& save)
 	//Initialize SDL_mixer
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
-		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+		EZACC_LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		active = false;
 		ret = true;
 	}
@@ -93,7 +93,7 @@ bool EzAcc_AudioModule::PostUpdate()
 
 bool EzAcc_AudioModule::CleanUp()
 {
-	LOG("Freeing music, closing Mixer and Audio subsystem");
+	EZACC_LOG("Freeing music, closing Mixer and Audio subsystem");
 
 	if (music != NULL)
 	{
@@ -133,7 +133,7 @@ bool EzAcc_AudioModule::PlayMusic(const char* path, float fade_time)
 
 	if (music == NULL)
 	{
-		LOG("Cannot load music %s. Mix_GetError(): %s\n", path, Mix_GetError());
+		EZACC_LOG("Cannot load music %s. Mix_GetError(): %s\n", path, Mix_GetError());
 		ret = false;
 	}
 	else
@@ -142,7 +142,7 @@ bool EzAcc_AudioModule::PlayMusic(const char* path, float fade_time)
 		{
 			if (Mix_FadeInMusic(music, -1, (int)(fade_time * 1000.0f)) < 0)
 			{
-				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
+				EZACC_LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
 			}
 		}
@@ -150,13 +150,13 @@ bool EzAcc_AudioModule::PlayMusic(const char* path, float fade_time)
 		{
 			if (Mix_PlayMusic(music, -1) < 0)
 			{
-				LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
+				EZACC_LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
 			}
 		}
 	}
 
-	LOG("Successfully playing %s", path);
+	EZACC_LOG("Successfully playing %s", path);
 	return ret;
 }
 
@@ -175,7 +175,7 @@ unsigned int EzAcc_AudioModule::LoadFx(const char* path)
 
 	if (chunk == nullptr)
 	{
-		LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
+		EZACC_LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
 	}
 	else
 	{

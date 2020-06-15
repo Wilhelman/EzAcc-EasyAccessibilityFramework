@@ -7,6 +7,7 @@
 #include "EzAcc_TimeModule.h"
 #include "EzAcc_VisionModule.h"
 #include "EzAcc_AudioModule.h"
+#include "EzAcc_LanguageModule.h"
 #include "EzAcc_Log.h"
 
 // Constructor
@@ -17,12 +18,14 @@ EzAcc_Core::EzAcc_Core()
 	time = new EzAcc_TimeModule();
 	vision = new EzAcc_VisionModule();
 	audio = new EzAcc_AudioModule();
+	language = new EzAcc_LanguageModule();
 	
 	// Reverse order of CleanUp
 	AddModule(input);
 	AddModule(vision);
 	AddModule(audio);
 	AddModule(time);
+	AddModule(language);
 }
 
 // Destructor
@@ -225,9 +228,12 @@ pugi::xml_node EzAcc_Core::LoadConfig(pugi::xml_document& config_file) const
 	pugi::xml_parse_result result = config_file.load_file("ezacc_config.xml");
 
 	if (result == NULL)
-		LOG("Could not load xml file config.xml. pugi error: %s", result.description());
-	else
+		EZACC_LOG("EzAcc: Could not load xml file config.xml. pugi error: %s", result.description());
+	else {
+		EZACC_LOG("EzAcc: ezacc_config.xml loaded correctly!");
 		ret = config_file.child("config");
+	}
+		
 	return ret;
 }
 
