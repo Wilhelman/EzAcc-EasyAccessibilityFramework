@@ -168,7 +168,7 @@ bool EzAcc_AudioModule::StopMusic()
 	return true;
 }
 
-unsigned int EzAcc_AudioModule::LoadFx(const char* path)
+unsigned int EzAcc_AudioModule::LoadFx(const char* path, const char* new_embedded_language)
 {
 	uint ret = 0;
 	Mix_Chunk* chunk = Mix_LoadWAV(path);
@@ -179,6 +179,9 @@ unsigned int EzAcc_AudioModule::LoadFx(const char* path)
 	}
 	else
 	{
+		p2SString tmp_string;
+		tmp_string.create(new_embedded_language);
+		embedded_languages.PushBack(tmp_string);
 		fx[last_fx] = chunk;
 		ret = last_fx++;
 		if (last_fx == EZACC_MAX_FX) {
@@ -190,17 +193,19 @@ unsigned int EzAcc_AudioModule::LoadFx(const char* path)
 	return ret;
 }
 
-bool EzAcc_AudioModule::PlayFx(unsigned int id, int repeat)
+p2SString EzAcc_AudioModule::PlayFx(unsigned int id, int repeat)
 {
-	bool ret = false;
+	p2SString null_ret;
+	null_ret.create("");
 
 	if (fx[id] != nullptr)
 	{
 		Mix_PlayChannel(-1, fx[id], repeat);
-		ret = true;
+		p2SString embedded_lang = embedded_languages[id-1];
+		return embedded_lang;
 	}
 
-	return ret;
+	return null_ret;
 }
 
 bool EzAcc_AudioModule::UnLoadFx(uint id)

@@ -127,6 +127,27 @@ void EzAcc_LanguageModule::ChangeCurrentLanguage(p2SString new_language)
 	dictionary.credits_btn.create(node->child("credits_btn").attribute("string").as_string());
 }
 
+p2SString EzAcc_LanguageModule::GetWordFromKey(p2SString key)
+{
+	bool ret = true;
+
+	pugi::xml_document	language_file;
+	pugi::xml_node* node = &this->LoadLanguages(language_file);
+
+	for (pugi::xml_node languages = node->first_child(); languages && ret; languages = languages.next_sibling())
+	{
+		p2SString tmp_language;
+		tmp_language.create(languages.name());
+		posible_languages.PushBack(tmp_language);
+	}
+
+	node = &node->child(current_language.GetString());
+
+	p2SString wordToReturn;
+	wordToReturn.create(node->child(key.GetString()).attribute("string").as_string());
+	return wordToReturn;
+}
+
 EzAcc_Dictionary EzAcc_LanguageModule::GetDictionary() const
 {
 	return dictionary;

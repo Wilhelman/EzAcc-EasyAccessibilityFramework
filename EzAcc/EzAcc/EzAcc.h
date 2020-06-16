@@ -174,8 +174,48 @@ extern "C"
 
 
 	// ---------------- Audio (Music/Fx and extra info about sounds (Descriptive labels)) ---------------- //
+	/*
+	EzAcc_AudioModule PlayMusic
+	TODOG
+	*/
+	DECLDIR bool EzAcc_PlayMusic(const char* path, float fade_time = EZACC_DEFAULT_MUSIC_FADE_TIME);
 
+	/*
+	EzAcc_AudioModule StopMusic
+	TODOG
+	*/
+	DECLDIR bool EzAcc_StopMusic();
 
+	/*
+	EzAcc_AudioModule LoadFx
+	TODOG
+	*/
+	DECLDIR unsigned int EzAcc_LoadFx(const char* path, const char* new_embedded_language);
+
+	/*
+	EzAcc_AudioModule PlayFx
+	TODOG
+	*/
+	DECLDIR p2SString EzAcc_PlayFx(unsigned int fx, int repeat = 0);
+
+	// ---------------- Language ---------------- //
+	/*
+	EzAcc_LanguageModule GetDictionary
+	TODOG
+	*/
+	DECLDIR EzAcc_Dictionary EzAcc_GetDictionary();
+
+	/*
+	EzAcc_LanguageModule ChangeLanguage
+	TODOG
+	*/
+	DECLDIR void EzAcc_ChangeLanguage(p2SString new_language);
+
+	/*
+	EzAcc_LanguageModule ChangeLanguage
+	TODOG
+	*/
+	DECLDIR p2SString EzAcc_GetWordFromKey(p2SString key);
 
 	
 	DECLDIR void Function(void);

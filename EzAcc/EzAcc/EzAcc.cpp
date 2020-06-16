@@ -128,6 +128,41 @@ DECLDIR EzAcc_FormatHour EzAcc_GetRealtimeHourFormat()
 	return core->time->GetRealTimeFormatHour();
 }
 
+DECLDIR bool EzAcc_PlayMusic(const char* path, float fade_time)
+{
+	return core->audio->PlayMusic(path, fade_time);
+}
+
+DECLDIR bool EzAcc_StopMusic()
+{
+	return core->audio->StopMusic();
+}
+
+DECLDIR unsigned int EzAcc_LoadFx(const char* path, const char* new_embedded_language)
+{
+	return core->audio->LoadFx(path, new_embedded_language);
+}
+
+DECLDIR p2SString EzAcc_PlayFx(unsigned int fx, int repeat)
+{
+	return core->audio->PlayFx(fx, repeat);
+}
+
+DECLDIR EzAcc_Dictionary EzAcc_GetDictionary()
+{
+	return core->language->GetDictionary();
+}
+
+DECLDIR void EzAcc_ChangeLanguage(p2SString new_language)
+{
+	core->language->ChangeCurrentLanguage(new_language);
+}
+
+DECLDIR p2SString EzAcc_GetWordFromKey(p2SString key)
+{
+	return core->language->GetWordFromKey(key);
+}
+
 DECLDIR void Function(void)
 {
 
