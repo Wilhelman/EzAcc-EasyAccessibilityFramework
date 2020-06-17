@@ -128,6 +128,21 @@ DECLDIR EzAcc_FormatHour EzAcc_GetRealtimeHourFormat()
 	return core->time->GetRealTimeFormatHour();
 }
 
+DECLDIR void EzAcc_PerformPixelModification(bool pixel_mod_active)
+{
+	core->vision->PerformPixelModification(pixel_mod_active);
+}
+
+DECLDIR void EzAcc_ModulateTextureColor(SDL_Texture* texture, SDL_Color color)
+{
+	core->vision->ModulateTextureColor(texture, color);
+}
+
+DECLDIR void EzAcc_ProcessTexture(SDL_Texture* texture, SDL_Surface* surface, ExAcc_PixelModificator pixelMod01, ExAcc_PixelModificator pixelMod02)
+{
+	core->vision->ProcessTexture(texture, surface, pixelMod01, pixelMod02);
+}
+
 DECLDIR bool EzAcc_PlayMusic(const char* path, float fade_time)
 {
 	return core->audio->PlayMusic(path, fade_time);

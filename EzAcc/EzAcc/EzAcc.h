@@ -173,6 +173,28 @@ extern "C"
 	DECLDIR EzAcc_FormatHour EzAcc_GetRealtimeHourFormat();
 
 
+	// ---------------- Vision (Pixel / texture modification) ---------------- //
+
+	/*
+	EzAcc_VisionModule PerformPixelModification
+	TODOG
+	*/
+	DECLDIR void EzAcc_PerformPixelModification(bool pixel_mod_active);
+
+	/*
+	EzAcc_VisionModule ModulateTextureColor
+	TODOG
+	*/
+	DECLDIR void EzAcc_ModulateTextureColor(SDL_Texture* texture, SDL_Color color);
+
+	/*
+	EzAcc_VisionModule ProcessTexture
+	TODOG
+	*/
+	DECLDIR void EzAcc_ProcessTexture(SDL_Texture* texture, SDL_Surface* surface,
+		ExAcc_PixelModificator pixelMod01, ExAcc_PixelModificator pixelMod02);
+
+
 	// ---------------- Audio (Music/Fx and extra info about sounds (Descriptive labels)) ---------------- //
 	/*
 	EzAcc_AudioModule PlayMusic
@@ -210,7 +232,7 @@ extern "C"
 	*/
 	DECLDIR void EzAcc_SetFXVolume(int new_volume);
 
-	// ---------------- Language ---------------- //
+	// -------------------------------- Language -------------------------------- //
 	/*
 	EzAcc_LanguageModule GetDictionary
 	TODOG
