@@ -774,6 +774,10 @@ void ctRender::ResetViewPort()
 	SDL_RenderSetViewport(renderer, &viewport);
 }
 
+void ctRender::ProcessTextureWithSurface(SDL_Texture* texture, SDL_Surface* surface) {
+
+}
+
 // Blit to screen
 bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
 {
@@ -818,7 +822,7 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 	
 	void* mPixels;
 	int mPitch;
-
+	
 	SDL_UpdateTexture(texture, NULL, surface->pixels, surface->pitch);
 	/*
 	//Lock texture for manipulation

@@ -198,6 +198,18 @@ extern "C"
 	*/
 	DECLDIR p2SString EzAcc_PlayFx(unsigned int fx, int repeat = 0);
 
+	/*
+	EzAcc_AudioModule SetMusicVolume
+	TODOG
+	*/
+	DECLDIR void EzAcc_SetMusicVolume(int new_volume);
+
+	/*
+	EzAcc_AudioModule SetFXVolume
+	TODOG
+	*/
+	DECLDIR void EzAcc_SetFXVolume(int new_volume);
+
 	// ---------------- Language ---------------- //
 	/*
 	EzAcc_LanguageModule GetDictionary

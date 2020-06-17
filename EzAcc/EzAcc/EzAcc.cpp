@@ -148,6 +148,16 @@ DECLDIR p2SString EzAcc_PlayFx(unsigned int fx, int repeat)
 	return core->audio->PlayFx(fx, repeat);
 }
 
+DECLDIR void EzAcc_SetMusicVolume(int new_volume)
+{
+	core->audio->SetMusicVolume(new_volume);
+}
+
+DECLDIR void EzAcc_SetFXVolume(int new_volume)
+{
+	core->audio->SetFXVolume(new_volume);
+}
+
 DECLDIR EzAcc_Dictionary EzAcc_GetDictionary()
 {
 	return core->language->GetDictionary();

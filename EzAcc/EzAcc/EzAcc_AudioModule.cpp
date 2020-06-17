@@ -222,3 +222,13 @@ bool EzAcc_AudioModule::UnLoadFx(uint id)
 
 	return ret;
 }
+
+void EzAcc_AudioModule::SetMusicVolume(int value)
+{
+	Mix_VolumeMusic(128 * value / 100);
+}
+
+void EzAcc_AudioModule::SetFXVolume(int value)
+{
+	Mix_Volume(-1, 128 * value / 100);
+}

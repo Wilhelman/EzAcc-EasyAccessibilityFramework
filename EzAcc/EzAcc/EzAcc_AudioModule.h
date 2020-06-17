@@ -78,6 +78,9 @@ public:
 	// UnLoad WAV
 	bool UnLoadFx(uint id);
 
+	void SetMusicVolume(int value);
+	void SetFXVolume(int value);
+
 private:
 
 	_Mix_Music* music = nullptr;
