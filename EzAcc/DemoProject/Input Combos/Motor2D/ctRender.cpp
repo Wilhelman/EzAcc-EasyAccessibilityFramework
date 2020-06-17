@@ -774,12 +774,66 @@ void ctRender::ResetViewPort()
 	SDL_RenderSetViewport(renderer, &viewport);
 }
 
-void ctRender::ProcessTextureWithSurface(SDL_Texture* texture, SDL_Surface* surface) {
+void ctRender::ModulateTextureColor(SDL_Texture* texture, SDL_Color color) {
+	SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
+}
 
+void ctRender::ProcessTextureWithSurface(SDL_Texture* texture, SDL_Surface* surface, SDL_Color keyColor1, SDL_Color newColor1, SDL_Color keyColor2, SDL_Color newColor2) {
+	if (true) {
+		SDL_UpdateTexture(texture, NULL, surface->pixels, surface->pitch);
+	}
+	else {
+		void* mPixels;
+		int mPitch;
+		//Lock texture for manipulation
+		//Texture is already locked
+		if (SDL_LockTexture(texture, NULL, &mPixels, &mPitch) != 0)
+		{
+			LOG("Unable to lock texture! %s\n", SDL_GetError());
+		}
+		//Copy loaded/formatted surface pixels
+		memcpy(mPixels, surface->pixels, surface->pitch * surface->h);
+
+		//Allocate format from window
+		Uint32 format = SDL_PIXELFORMAT_ARGB8888; // SDL_GetWindowPixelFormat(App->win->window);
+		SDL_PixelFormat* mappingFormat = SDL_AllocFormat(format);
+
+		//Get pixel data
+		Uint32* pixels = (Uint32*)mPixels;
+		int pixelCount = (mPitch / 4) * surface->h;
+
+		//Unlock texture to update
+		SDL_UnlockTexture(texture);
+		mPixels = NULL;
+		SDL_FreeFormat(mappingFormat);
+
+		Uint32 colorKey = SDL_MapRGBA(mappingFormat, keyColor1.r, keyColor1.g, keyColor1.b, keyColor1.a);
+		Uint32 colorKey2 = SDL_MapRGBA(mappingFormat, keyColor2.r, keyColor2.g, keyColor2.b, keyColor2.a);
+		Uint32 newColor1key = SDL_MapRGBA(mappingFormat, newColor1.r, newColor1.g, newColor1.b, newColor1.a);
+		Uint32 newColor2key = SDL_MapRGBA(mappingFormat, newColor2.r, newColor2.g, newColor2.b, newColor2.a);
+
+		//Color key pixels
+		for (int i = 0; i < pixelCount; ++i)
+		{
+			Uint32 pixel = pixels[i];
+			SDL_Color rgb;
+			SDL_GetRGBA(pixels[i], mappingFormat, &rgb.r, &rgb.g, &rgb.b, &rgb.a);
+
+			if (pixels[i] == colorKey)
+			{
+				pixels[i] = newColor1key;
+			}
+			if (pixels[i] == colorKey2)
+			{
+				pixels[i] = newColor2key;
+			}
+
+		}
+	}
 }
 
 // Blit to screen
-bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
+bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y)
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -787,8 +841,14 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 	rect.x = (int)(camera.x * speed) + x * scale;
 	rect.y = (int)(camera.y * speed) + y * scale;
 
-	//if(surface == App->ken_stage_scene->backgroundSurface)
-		//SDL_SetTextureColorMod(texture, 70, 255, 70);
+	if (surface == App->ken_stage_scene->backgroundSurface) {
+		SDL_Color modColor;
+		modColor.r = 70;
+		modColor.g = 255;
+		modColor.b = 70;
+		ModulateTextureColor(texture, modColor);
+	}
+		
 
 	if (blendMode != SDL_BLENDMODE_INVALID) {
 		SDL_SetTextureBlendMode(texture, blendMode);
@@ -820,60 +880,28 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 	rect.w *= scale;
 	rect.h *= scale;
 	
-	void* mPixels;
-	int mPitch;
+	SDL_Color keyColor1;
+	keyColor1.r = 248;
+	keyColor1.g = 0;
+	keyColor1.b = 0;
+	keyColor1.a = 255;
+	SDL_Color newColor1;
+	newColor1.r = 0;
+	newColor1.g = 0;
+	newColor1.b = 248;
+	newColor1.a = 255;
+	SDL_Color keyColor2;
+	keyColor2.r = 184;
+	keyColor2.g = 0;
+	keyColor2.b = 0;
+	keyColor2.a = 255;
+	SDL_Color newColor2;
+	newColor2.r = 0;
+	newColor2.g = 0;
+	newColor2.b = 184;
+	newColor2.a = 255;
+	ProcessTextureWithSurface(texture, surface,keyColor1,newColor1,keyColor2,newColor2);
 	
-	SDL_UpdateTexture(texture, NULL, surface->pixels, surface->pitch);
-	/*
-	//Lock texture for manipulation
-	//Texture is already locked
-	if (SDL_LockTexture(texture, NULL, &mPixels, &mPitch) != 0)
-	{
-		LOG("Unable to lock texture! %s\n", SDL_GetError());
-	}
-	//Copy loaded/formatted surface pixels
-	memcpy(mPixels, surface->pixels, surface->pitch * surface->h);
-	
-	//Allocate format from window
-	Uint32 format = SDL_PIXELFORMAT_ARGB8888; // SDL_GetWindowPixelFormat(App->win->window);
-	SDL_PixelFormat* mappingFormat = SDL_AllocFormat(format);
-
-	//Get pixel data
-	Uint32* pixels = (Uint32*)mPixels;
-	int pixelCount = (mPitch / 4) * surface->h;
-
-	//Unlock texture to update
-	SDL_UnlockTexture(texture);
-	mPixels = NULL;
-	SDL_FreeFormat(mappingFormat);
-
-	Uint32 colorKey = SDL_MapRGBA(mappingFormat,248, 0, 0,255);
-	Uint32 colorKey2 = SDL_MapRGBA(mappingFormat, 184, 0, 0, 255);
-	Uint32 newColor1 = SDL_MapRGBA(mappingFormat, 0, 0, 248, 255);
-	Uint32 newColor2 = SDL_MapRGBA(mappingFormat, 0, 0, 184, 255);
-
-	//Color key pixels
-	for (int i = 0; i < pixelCount; ++i)
-	{
-		Uint32 pixel = pixels[i];
-		SDL_Color rgb;
-		SDL_GetRGBA(pixels[i], mappingFormat, &rgb.r, &rgb.g, &rgb.b, &rgb.a);
-			
-		if (pixels[i] == colorKey)
-		{
-			pixels[i] = newColor1;
-		}
-		if (pixels[i] == colorKey2)
-		{
-			pixels[i] = newColor2;
-		}
-
-	}
-	
-	
-	*/
-
-
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
 

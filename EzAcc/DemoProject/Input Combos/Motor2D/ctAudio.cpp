@@ -108,7 +108,8 @@ bool ctAudio::CleanUp()
 
 	if (music != NULL)
 	{
-		Mix_FreeMusic(music);
+		//Mix_FreeMusic(music);
+		// Already implemented in EzAcc library, no need to free twice ...
 	}
 
 	Mix_CloseAudio();
