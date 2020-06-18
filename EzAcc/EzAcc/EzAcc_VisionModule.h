@@ -29,8 +29,9 @@
 #include "EzAcc_Module.h"
 
 #include "SDL/include/SDL.h"
+#include <vector>
 
-struct ExAcc_PixelModificator {
+struct EzAcc_PixelModificator {
 	SDL_Color pixel_to_mod;
 	SDL_Color final_pixel;
 };
@@ -59,11 +60,13 @@ public:
 
 	void ModulateTextureColor(SDL_Texture* texture, SDL_Color color);
 
-	// TODO: Make this easier with a vector for example ...
-	void ProcessTexture(SDL_Texture* texture, SDL_Surface* surface,
-		ExAcc_PixelModificator pixelMod01, ExAcc_PixelModificator pixelMod02);
+	void ProcessTexture(SDL_Texture* texture, SDL_Surface* surface);
 	
 	void PerformPixelModification(bool pixel_mod_active);
+
+	void AddNewPixelMod(EzAcc_PixelModificator new_pixel_mod);
+
+	void ClearPixelMods();
 
 	// Called before quitting
 	bool CleanUp();
@@ -71,7 +74,7 @@ public:
 
 private:
 	bool pixel_modification = false;
-
+	std::vector<EzAcc_PixelModificator> pixel_modificators;
 };
 
 #endif

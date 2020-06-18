@@ -31,6 +31,9 @@
 #include "EzAcc_Defines.h"
 #include "EzAcc_Module.h"
 
+#include "p2DynArray.h"
+#include "p2SString.h"
+
 #include "SDL_mixer\include\SDL_mixer.h"
 
 struct _Mix_Music;
@@ -67,18 +70,22 @@ public:
 	bool StopMusic();
 
 	// Load a WAV in memory
-	unsigned int LoadFx(const char* path);
+	unsigned int LoadFx(const char* path, const char* new_embedded_language);
 
 	// Play a previously loaded WAV
-	bool PlayFx(unsigned int fx, int repeat = 0);
+	p2SString PlayFx(unsigned int fx, int repeat = 0);
 
 	// UnLoad WAV
 	bool UnLoadFx(uint id);
+
+	void SetMusicVolume(int value);
+	void SetFXVolume(int value);
 
 private:
 
 	_Mix_Music* music = nullptr;
 	Mix_Chunk* fx[EZACC_MAX_FX];
+	p2DynArray<p2SString> embedded_languages;
 
 	uint				last_fx = 1;
 

@@ -191,9 +191,19 @@ extern "C"
 	EzAcc_VisionModule ProcessTexture
 	TODOG
 	*/
-	DECLDIR void EzAcc_ProcessTexture(SDL_Texture* texture, SDL_Surface* surface,
-		ExAcc_PixelModificator pixelMod01, ExAcc_PixelModificator pixelMod02);
+	DECLDIR void EzAcc_ProcessTexture(SDL_Texture* texture, SDL_Surface* surface);
 
+	/*
+	EzAcc_VisionModule AddNewPixelMod
+	TODOG
+	*/
+	DECLDIR void EzAcc_AddNewPixelMod(EzAcc_PixelModificator new_pixel_mod);
+
+	/*
+	EzAcc_VisionModule ClearPixelMods
+	TODOG
+	*/
+	DECLDIR void EzAcc_ClearPixelMods();
 
 	// ---------------- Audio (Music/Fx and extra info about sounds (Descriptive labels)) ---------------- //
 	/*

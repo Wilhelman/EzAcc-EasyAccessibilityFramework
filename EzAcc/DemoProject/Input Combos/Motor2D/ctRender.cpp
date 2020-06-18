@@ -212,6 +212,41 @@ bool ctRender::Start()
 		it++;
 	}
 
+	SDL_Color keyColor1;
+	keyColor1.r = 248;
+	keyColor1.g = 0;
+	keyColor1.b = 0;
+	keyColor1.a = 255;
+	SDL_Color newColor1;
+	newColor1.r = 0;
+	newColor1.g = 0;
+	newColor1.b = 248;
+	newColor1.a = 255;
+	SDL_Color keyColor2;
+	keyColor2.r = 184;
+	keyColor2.g = 0;
+	keyColor2.b = 0;
+	keyColor2.a = 255;
+	SDL_Color newColor2;
+	newColor2.r = 0;
+	newColor2.g = 0;
+	newColor2.b = 184;
+	newColor2.a = 255;
+	EzAcc_PixelModificator pix;
+	pix.pixel_to_mod = keyColor1;
+	pix.final_pixel = newColor1;
+	EzAcc_PixelModificator pix2;
+	pix2.pixel_to_mod = keyColor2;
+	pix2.final_pixel = newColor2;
+	EzAcc_PerformPixelModification(false);
+	EzAcc_AddNewPixelMod(pix);
+	EzAcc_AddNewPixelMod(pix2);
+
+
+	modColor;
+	modColor.r = 70;
+	modColor.g = 255;
+	modColor.b = 70;
 	return true;
 }
 
@@ -279,13 +314,16 @@ bool ctRender::Update(float dt)
 				if (ImGui::MenuItem("Cognitive (Memory/Information Processing)", "2"))
 					show_cognitive = !show_cognitive;
 
-				if (ImGui::MenuItem("Vision", "3"))
+				if (ImGui::MenuItem("Vision (Pixel / Texture modification)", "3"))
 					show_vision = !show_vision;
 
-				if (ImGui::MenuItem("Hearing", "4"))
+				if (ImGui::MenuItem("Audio (Volume settings / Descriptive labels)", "4"))
 					show_hearing = !show_hearing;
 
-				if (ImGui::MenuItem("Console", "5"))
+				if (ImGui::MenuItem("Language", "5"))
+					show_language= !show_language;
+
+				if (ImGui::MenuItem("Console", "6"))
 					show_console = !show_console;
 			
 				if (ImGui::MenuItem("Show/Hide UI Configuration", "F1"))
@@ -337,6 +375,9 @@ bool ctRender::Update(float dt)
 		if (show_console) {
 			DrawConsole();
 		}
+		if (show_language) {
+			DrawLanguage();
+		}
 	} // end debug
 
 	
@@ -344,9 +385,16 @@ bool ctRender::Update(float dt)
 	return true;
 }
 
+void ctRender::DrawLanguage() // TODOG
+{
+	ImGui::Begin("Language Window", &show_language, ImGuiWindowFlags_AlwaysAutoResize);
+
+	ImGui::End();
+}
+
 void ctRender::DrawHearing() // TODOG
 {
-	ImGui::Begin("Hearing Settings", &show_hearing, ImGuiWindowFlags_AlwaysAutoResize);
+	ImGui::Begin("Audio Settings", &show_hearing, ImGuiWindowFlags_AlwaysAutoResize);
 
 	ImGui::End();
 }
@@ -391,13 +439,9 @@ void ctRender::DrawVision() // TODOG
 	ImGui::Text("Modulation color:");
 	ImGui::SameLine(); ShowHelpMarker("Click on the colored square to open a color picker.\n");
 	ImGui::ColorEdit4("Modulated color##3", (float*)&colorModulation, ImGuiColorEditFlags_RGB | misc_flags);
-	ImGui::Text("Time:");
-	ImGui::SameLine();
-	static int time_between_inputs = 0;
-	if (ImGui::SliderInt("##TIMEBETWEENINPUTS2", &time_between_inputs, 0, 5000))
-		EzAcc_SetTimeBetweenInputs(time_between_inputs);
-	ImGui::SameLine();
-	ImGui::Text("ms");
+	modColor.r = colorModulation.x *255;
+	modColor.g = colorModulation.y*255;
+	modColor.b = colorModulation.z*255;
 
 	ImGui::Separator();
 
@@ -472,7 +516,7 @@ void ctRender::DrawConsole()
 {
 
 	//ImGui::SetNextWindowPos(ImVec2(App->win-> / 2.f, App->window->GetHeight() - 200.f));
-	ImGui::SetNextWindowSize(ImVec2(300.f, 200.f));
+	//ImGui::SetNextWindowSize(ImVec2(300.f, 200.f));
 	ImGui::Begin("Console", &show_console, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoCollapse
 		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_NoFocusOnAppearing);
 
@@ -842,11 +886,8 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 	rect.y = (int)(camera.y * speed) + y * scale;
 
 	if (surface == App->ken_stage_scene->backgroundSurface) {
-		SDL_Color modColor;
-		modColor.r = 70;
-		modColor.g = 255;
-		modColor.b = 70;
-		ModulateTextureColor(texture, modColor);
+		//ModulateTextureColor(texture, modColor);
+		EzAcc_ModulateTextureColor(texture, modColor);
 	}
 		
 
@@ -880,28 +921,9 @@ bool ctRender::Blit(SDL_BlendMode blendMode, SDL_Surface* surface, SDL_Texture* 
 	rect.w *= scale;
 	rect.h *= scale;
 	
-	SDL_Color keyColor1;
-	keyColor1.r = 248;
-	keyColor1.g = 0;
-	keyColor1.b = 0;
-	keyColor1.a = 255;
-	SDL_Color newColor1;
-	newColor1.r = 0;
-	newColor1.g = 0;
-	newColor1.b = 248;
-	newColor1.a = 255;
-	SDL_Color keyColor2;
-	keyColor2.r = 184;
-	keyColor2.g = 0;
-	keyColor2.b = 0;
-	keyColor2.a = 255;
-	SDL_Color newColor2;
-	newColor2.r = 0;
-	newColor2.g = 0;
-	newColor2.b = 184;
-	newColor2.a = 255;
-	ProcessTextureWithSurface(texture, surface,keyColor1,newColor1,keyColor2,newColor2);
 	
+	EzAcc_ProcessTexture(texture, surface);
+
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
 

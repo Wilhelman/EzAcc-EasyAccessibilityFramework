@@ -56,6 +56,7 @@ public:
 	void DrawInput();
 	void DrawAbout();
 	void DrawCognitive();
+	void DrawLanguage();
 	void DrawConsole();
 
 	void ShowHelpMarker(const char* desc);
@@ -82,6 +83,7 @@ private:
 	bool show_hearing = false;
 	bool show_input = false;
 	bool show_cognitive = false;
+	bool show_language = false;
 	bool show_console = false;
 	bool change_debug = false;
 
@@ -92,6 +94,7 @@ private:
 	bool binding = false;
 	int lastBindedKey = -1;
 
+	SDL_Color modColor;
 	EzAcc_Macro macroTest;
 	int macroTestIndex = -1;
 	bool bindingMacroKey = false;

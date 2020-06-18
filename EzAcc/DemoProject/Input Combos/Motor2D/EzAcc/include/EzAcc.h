@@ -173,9 +173,93 @@ extern "C"
 	DECLDIR EzAcc_FormatHour EzAcc_GetRealtimeHourFormat();
 
 
+	// ---------------- Vision (Pixel / texture modification) ---------------- //
+
+	/*
+	EzAcc_VisionModule PerformPixelModification
+	TODOG
+	*/
+	DECLDIR void EzAcc_PerformPixelModification(bool pixel_mod_active);
+
+	/*
+	EzAcc_VisionModule ModulateTextureColor
+	TODOG
+	*/
+	DECLDIR void EzAcc_ModulateTextureColor(SDL_Texture* texture, SDL_Color color);
+
+	/*
+	EzAcc_VisionModule ProcessTexture
+	TODOG
+	*/
+	DECLDIR void EzAcc_ProcessTexture(SDL_Texture* texture, SDL_Surface* surface);
+
+	/*
+	EzAcc_VisionModule AddNewPixelMod
+	TODOG
+	*/
+	DECLDIR void EzAcc_AddNewPixelMod(EzAcc_PixelModificator new_pixel_mod);
+
+	/*
+	EzAcc_VisionModule ClearPixelMods
+	TODOG
+	*/
+	DECLDIR void EzAcc_ClearPixelMods();
+
 	// ---------------- Audio (Music/Fx and extra info about sounds (Descriptive labels)) ---------------- //
+	/*
+	EzAcc_AudioModule PlayMusic
+	TODOG
+	*/
+	DECLDIR bool EzAcc_PlayMusic(const char* path, float fade_time = EZACC_DEFAULT_MUSIC_FADE_TIME);
 
+	/*
+	EzAcc_AudioModule StopMusic
+	TODOG
+	*/
+	DECLDIR bool EzAcc_StopMusic();
 
+	/*
+	EzAcc_AudioModule LoadFx
+	TODOG
+	*/
+	DECLDIR unsigned int EzAcc_LoadFx(const char* path, const char* new_embedded_language);
+
+	/*
+	EzAcc_AudioModule PlayFx
+	TODOG
+	*/
+	DECLDIR p2SString EzAcc_PlayFx(unsigned int fx, int repeat = 0);
+
+	/*
+	EzAcc_AudioModule SetMusicVolume
+	TODOG
+	*/
+	DECLDIR void EzAcc_SetMusicVolume(int new_volume);
+
+	/*
+	EzAcc_AudioModule SetFXVolume
+	TODOG
+	*/
+	DECLDIR void EzAcc_SetFXVolume(int new_volume);
+
+	// -------------------------------- Language -------------------------------- //
+	/*
+	EzAcc_LanguageModule GetDictionary
+	TODOG
+	*/
+	DECLDIR EzAcc_Dictionary EzAcc_GetDictionary();
+
+	/*
+	EzAcc_LanguageModule ChangeLanguage
+	TODOG
+	*/
+	DECLDIR void EzAcc_ChangeLanguage(p2SString new_language);
+
+	/*
+	EzAcc_LanguageModule ChangeLanguage
+	TODOG
+	*/
+	DECLDIR p2SString EzAcc_GetWordFromKey(p2SString key);
 
 	
 	DECLDIR void Function(void);

@@ -138,9 +138,19 @@ DECLDIR void EzAcc_ModulateTextureColor(SDL_Texture* texture, SDL_Color color)
 	core->vision->ModulateTextureColor(texture, color);
 }
 
-DECLDIR void EzAcc_ProcessTexture(SDL_Texture* texture, SDL_Surface* surface, ExAcc_PixelModificator pixelMod01, ExAcc_PixelModificator pixelMod02)
+DECLDIR void EzAcc_ProcessTexture(SDL_Texture* texture, SDL_Surface* surface)
 {
-	core->vision->ProcessTexture(texture, surface, pixelMod01, pixelMod02);
+	core->vision->ProcessTexture(texture, surface);
+}
+
+DECLDIR void EzAcc_AddNewPixelMod(EzAcc_PixelModificator new_pixel_mod)
+{
+	core->vision->AddNewPixelMod(new_pixel_mod);
+}
+
+DECLDIR void EzAcc_ClearPixelMods()
+{
+	core->vision->ClearPixelMods();
 }
 
 DECLDIR bool EzAcc_PlayMusic(const char* path, float fade_time)

@@ -38,7 +38,7 @@ void EzAcc_VisionModule::ModulateTextureColor(SDL_Texture* texture, SDL_Color co
 	SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
 }
 
-void EzAcc_VisionModule::ProcessTexture(SDL_Texture* texture, SDL_Surface* surface, ExAcc_PixelModificator pixelMod01, ExAcc_PixelModificator pixelMod02)
+void EzAcc_VisionModule::ProcessTexture(SDL_Texture* texture, SDL_Surface* surface)
 {
 	if (!pixel_modification) {
 		SDL_UpdateTexture(texture, NULL, surface->pixels, surface->pitch);
@@ -68,11 +68,19 @@ void EzAcc_VisionModule::ProcessTexture(SDL_Texture* texture, SDL_Surface* surfa
 		mPixels = NULL;
 		SDL_FreeFormat(mappingFormat);
 
-		Uint32 colorKey = SDL_MapRGBA(mappingFormat, pixelMod01.pixel_to_mod.r, pixelMod01.pixel_to_mod.g, pixelMod01.pixel_to_mod.b, pixelMod01.pixel_to_mod.a);
-		Uint32 colorKey2 = SDL_MapRGBA(mappingFormat, pixelMod02.pixel_to_mod.r, pixelMod02.pixel_to_mod.g, pixelMod02.pixel_to_mod.b, pixelMod02.pixel_to_mod.a);
-		Uint32 newColor1key = SDL_MapRGBA(mappingFormat, pixelMod01.final_pixel.r, pixelMod01.final_pixel.g, pixelMod01.final_pixel.b, pixelMod01.final_pixel.a);
-		Uint32 newColor2key = SDL_MapRGBA(mappingFormat, pixelMod02.final_pixel.r, pixelMod02.final_pixel.g, pixelMod02.final_pixel.b, pixelMod02.final_pixel.a);
+		if (pixel_modificators.size() < 2)
+			return;
 
+		// Testing pixel mod with the first 2
+		Uint32 colorKey = SDL_MapRGBA(mappingFormat, pixel_modificators[0].pixel_to_mod.r, pixel_modificators[0].pixel_to_mod.g,
+			pixel_modificators[0].pixel_to_mod.b, pixel_modificators[0].pixel_to_mod.a);
+		Uint32 colorKey2 = SDL_MapRGBA(mappingFormat, pixel_modificators[1].pixel_to_mod.r, pixel_modificators[1].pixel_to_mod.g,
+			pixel_modificators[1].pixel_to_mod.b, pixel_modificators[1].pixel_to_mod.a);
+		Uint32 newColor1key = SDL_MapRGBA(mappingFormat, pixel_modificators[0].final_pixel.r, pixel_modificators[0].final_pixel.g,
+			pixel_modificators[0].final_pixel.b, pixel_modificators[0].final_pixel.a);
+		Uint32 newColor2key = SDL_MapRGBA(mappingFormat, pixel_modificators[1].final_pixel.r, pixel_modificators[1].final_pixel.g,
+			pixel_modificators[1].final_pixel.b, pixel_modificators[1].final_pixel.a);
+		
 		//Color key pixels
 		for (int i = 0; i < pixelCount; ++i)
 		{
@@ -96,6 +104,16 @@ void EzAcc_VisionModule::ProcessTexture(SDL_Texture* texture, SDL_Surface* surfa
 void EzAcc_VisionModule::PerformPixelModification(bool pixel_mod_active)
 {
 	pixel_modification = pixel_mod_active;
+}
+
+void EzAcc_VisionModule::AddNewPixelMod(EzAcc_PixelModificator new_pixel_mod)
+{
+	pixel_modificators.push_back(new_pixel_mod);
+}
+
+void EzAcc_VisionModule::ClearPixelMods()
+{
+	pixel_modificators.clear();
 }
 
 bool EzAcc_VisionModule::CleanUp()

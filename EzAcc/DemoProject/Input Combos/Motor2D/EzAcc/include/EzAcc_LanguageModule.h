@@ -81,6 +81,8 @@ public:
 
 	void ChangeCurrentLanguage(p2SString new_language);
 
+	p2SString GetWordFromKey(p2SString key);
+
 	EzAcc_Dictionary GetDictionary()const;
 
 public:
