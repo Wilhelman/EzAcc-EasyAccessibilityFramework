@@ -526,8 +526,20 @@ void ctRender::DrawHearing() // TODOG
 			current_value = EzAcc_GetWordFromKey((char*)current_key.GetString());
 			ImGui::Text("Descriptive label value: %s", current_value.GetString());
 		}
-
 	}
+
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc Music / FX Volume");
+	ImGui::Text("Music volume:");
+	ImGui::SameLine();
+	static float music_volume = 25.0f;
+	if (ImGui::SliderFloat("##volume", &music_volume, 0.0f, 100.0f))
+		EzAcc_SetMusicVolume((int)music_volume);
+	ImGui::Text("FX volume:");
+	ImGui::SameLine();
+	static float fx_volume = 100.0f;
+	if (ImGui::SliderFloat("##fx", &fx_volume, 0.0f, 100.0f))
+		EzAcc_SetFXVolume((int)fx_volume);
+
 		
 	ImGui::End();
 }
