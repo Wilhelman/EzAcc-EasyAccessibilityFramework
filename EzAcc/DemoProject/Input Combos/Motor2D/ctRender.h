@@ -106,6 +106,8 @@ private:
 	std::vector<std::string> init_logs;
 	ImGuiTextBuffer text_buffer;
 	bool have_to_scroll = false;
+
+	int language_selector = 0;
 };
 
 #endif // __j1RENDER_H__

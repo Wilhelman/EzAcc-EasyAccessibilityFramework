@@ -400,12 +400,64 @@ void ctRender::DrawLanguage() // TODOG
 		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
 
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc language selection");
-	ImGui::Text("Current language: ");
-	ImGui::SameLine();
+	
+	if (ImGui::Button("Previous Language##Prev1")) {
+		language_selector--;
+		if (language_selector < 0)
+			language_selector = 2;
 
+		switch (language_selector)
+		{
+		case 0:
+			EzAcc_ChangeLanguage("ENG");
+			break;
+		case 1:
+			EzAcc_ChangeLanguage("CAT");
+			break;
+		case 2:
+			EzAcc_ChangeLanguage("ESP");
+			break;
+		default:
+			break;
+		}
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Next Language##Next1")) {
+		language_selector++;
+		if (language_selector > 2)
+			language_selector = 0;
+
+		switch (language_selector)
+		{
+		case 0:
+			EzAcc_ChangeLanguage("ENG");
+			break;
+		case 1:
+			EzAcc_ChangeLanguage("CAT");
+			break;
+		case 2:
+			EzAcc_ChangeLanguage("ESP");
+			break;
+		default:
+			break;
+		}
+	}
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc Current Language");
 	p2SString curr_lang = EzAcc_GetCurrentLanguage();
 	ImGui::Text(curr_lang.GetString());
+
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc Dictionary Key - Value (Added as example in ezacc_language.xml file)");
 	EzAcc_Dictionary* dic = EzAcc_GetDictionary();
+	ImGui::Text("Key: 'new_game_btn' | Value: %s",dic->new_game_btn.GetString());
+	ImGui::Text("Key: 'continue_btn' | Value: %s", dic->continue_btn.GetString());
+	ImGui::Text("Key: 'press_space' | Value: %s", dic->press_space_btn.GetString());
+	ImGui::Text("Key: 'music_volume' | Value: %s", dic->music_volume.GetString());
+	ImGui::Text("Key: 'fx_volume' | Value: %s", dic->fx_volume.GetString());
+	ImGui::Text("Key: 'language_option' | Value: %s", dic->language_option.GetString());
+	ImGui::Text("Key: 'main_menu_lan' | Value: %s", dic->main_menu_lan.GetString());
+	ImGui::Text("Key: 'credits_btn' | Value: %s", dic->credits_btn.GetString());
+	ImGui::Text("Key: 'quit_lan' | Value: %s", dic->quit_lan.GetString());
+
 	ImGui::End();
 }
 
