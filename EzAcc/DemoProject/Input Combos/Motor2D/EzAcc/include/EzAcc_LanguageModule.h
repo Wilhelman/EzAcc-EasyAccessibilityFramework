@@ -79,18 +79,19 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	void ChangeCurrentLanguage(p2SString new_language);
+	void ChangeCurrentLanguage(char* new_language);
 
 	p2SString GetWordFromKey(p2SString key);
 
-	EzAcc_Dictionary GetDictionary()const;
+	EzAcc_Dictionary* GetDictionary();
 
+	const char* GetCurrentLanguage();
 public:
 	p2SString current_language;
 	p2DynArray<p2SString> posible_languages;
 
 private:
-	EzAcc_Dictionary dictionary;
+	EzAcc_Dictionary* dictionary;
 };
 
 #endif

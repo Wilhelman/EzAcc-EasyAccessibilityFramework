@@ -247,19 +247,25 @@ extern "C"
 	EzAcc_LanguageModule GetDictionary
 	TODOG
 	*/
-	DECLDIR EzAcc_Dictionary EzAcc_GetDictionary();
+	DECLDIR EzAcc_Dictionary* EzAcc_GetDictionary();
 
 	/*
 	EzAcc_LanguageModule ChangeLanguage
 	TODOG
 	*/
-	DECLDIR void EzAcc_ChangeLanguage(p2SString new_language);
+	DECLDIR void EzAcc_ChangeLanguage(char* new_language);
 
 	/*
-	EzAcc_LanguageModule ChangeLanguage
+	EzAcc_LanguageModule GetWordFromKey
 	TODOG
 	*/
 	DECLDIR p2SString EzAcc_GetWordFromKey(p2SString key);
+
+	/*
+	EzAcc_LanguageModule GetCurrentLanguage
+	TODOG
+	*/
+	DECLDIR const char* EzAcc_GetCurrentLanguage();
 
 	
 	DECLDIR void Function(void);

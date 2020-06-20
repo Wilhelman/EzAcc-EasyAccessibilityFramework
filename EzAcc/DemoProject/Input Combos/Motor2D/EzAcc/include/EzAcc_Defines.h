@@ -87,5 +87,4 @@ template <class VALUE_TYPE> void SWAP(VALUE_TYPE& a, VALUE_TYPE& b)
 #define MID_STR		255
 #define HUGE_STR	8192
 
-
 #endif

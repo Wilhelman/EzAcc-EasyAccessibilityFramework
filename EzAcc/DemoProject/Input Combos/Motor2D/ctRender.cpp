@@ -247,6 +247,12 @@ bool ctRender::Start()
 	modColor.r = 70;
 	modColor.g = 255;
 	modColor.b = 70;
+
+	//p2SString new_language;
+	//new_language.create("ESP");
+	//EzAcc_ChangeLanguage("ESP");
+	//EzAcc_Dictionary dic = EzAcc_GetDictionary();
+
 	return true;
 }
 
@@ -388,13 +394,28 @@ bool ctRender::Update(float dt)
 void ctRender::DrawLanguage() // TODOG
 {
 	ImGui::Begin("Language Window", &show_language, ImGuiWindowFlags_AlwaysAutoResize);
+	ImGui::Text("Read EzAcc_LanguageModule settings in the readme to learn more about all the function calls");
+	ImGui::SameLine();
+	if (ImGui::Button("Readme##READMEInput3"))
+		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
 
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc language selection");
+	ImGui::Text("Current language: ");
+	ImGui::SameLine();
+
+	p2SString curr_lang = EzAcc_GetCurrentLanguage();
+	ImGui::Text(curr_lang.GetString());
+	EzAcc_Dictionary* dic = EzAcc_GetDictionary();
 	ImGui::End();
 }
 
 void ctRender::DrawHearing() // TODOG
 {
 	ImGui::Begin("Audio Settings", &show_hearing, ImGuiWindowFlags_AlwaysAutoResize);
+	ImGui::Text("Read EzAcc_AudioModule settings in the readme to learn more about all the function calls");
+	ImGui::SameLine();
+	if (ImGui::Button("Readme##READMEInput3"))
+		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
 
 	ImGui::End();
 }
@@ -402,7 +423,7 @@ void ctRender::DrawHearing() // TODOG
 void ctRender::DrawVision() // TODOG
 {
 	ImGui::Begin("Vision Settings", &show_vision, ImGuiWindowFlags_AlwaysAutoResize);
-	ImGui::Text("Read EzAcc_Vision settings in the readme to learn more about all the function calls");
+	ImGui::Text("Read EzAcc_VisionModule settings in the readme to learn more about all the function calls");
 	ImGui::SameLine();
 	if (ImGui::Button("Readme##READMEInput3"))
 		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
@@ -479,7 +500,7 @@ void ctRender::DrawCognitive() // TODOG
 {
 	ImGui::Begin("Cognitive (Memory/Information Processing) Settings", &show_cognitive, ImGuiWindowFlags_AlwaysAutoResize);
 
-	ImGui::Text("Read EzAcc_Core settings in the readme to learn more about all the function calls");
+	ImGui::Text("Read EzAcc_Core / EzAcc_TimeModule settings in the readme to learn more about all the function calls");
 	ImGui::SameLine();
 	if (ImGui::Button("Readme##READMEInput"))
 		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");

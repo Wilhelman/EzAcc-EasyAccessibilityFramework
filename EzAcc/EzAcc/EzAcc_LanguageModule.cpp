@@ -7,6 +7,7 @@
 EzAcc_LanguageModule::EzAcc_LanguageModule()
 {
 	EZACC_LOG("EzAcc: Generating EzAcc_LanguageModule ...");
+	name = "language";
 }
 
 // Destructor
@@ -34,18 +35,20 @@ bool EzAcc_LanguageModule::Awake(pugi::xml_node& config)
 
 	node = &node->child(current_language.GetString());
 
-	dictionary.press_space_btn.create(node->child("press_space").attribute("string").as_string());
-	dictionary.new_game_btn.create(node->child("new_game_btn").attribute("string").as_string());
-	dictionary.continue_btn.create(node->child("continue_btn").attribute("string").as_string());
-	dictionary.music_volume.create(node->child("music_volume").attribute("string").as_string());
-	dictionary.fx_volume.create(node->child("fx_volume").attribute("string").as_string());
-	dictionary.cap_to.create(node->child("cap_to").attribute("string").as_string());
-	dictionary.language_option.create(node->child("language_option").attribute("string").as_string());
-	dictionary.quit_lan.create(node->child("quit_lan").attribute("string").as_string());
-	dictionary.save_lan.create(node->child("save_lan").attribute("string").as_string());
-	dictionary.load_lan.create(node->child("load_lan").attribute("string").as_string());
-	dictionary.main_menu_lan.create(node->child("main_menu_lan").attribute("string").as_string());
-	dictionary.credits_btn.create(node->child("credits_btn").attribute("string").as_string());
+	dictionary = new EzAcc_Dictionary();
+
+	dictionary->press_space_btn.create(node->child("press_space").attribute("string").as_string());
+	dictionary->new_game_btn.create(node->child("new_game_btn").attribute("string").as_string());
+	dictionary->continue_btn.create(node->child("continue_btn").attribute("string").as_string());
+	dictionary->music_volume.create(node->child("music_volume").attribute("string").as_string());
+	dictionary->fx_volume.create(node->child("fx_volume").attribute("string").as_string());
+	dictionary->cap_to.create(node->child("cap_to").attribute("string").as_string());
+	dictionary->language_option.create(node->child("language_option").attribute("string").as_string());
+	dictionary->quit_lan.create(node->child("quit_lan").attribute("string").as_string());
+	dictionary->save_lan.create(node->child("save_lan").attribute("string").as_string());
+	dictionary->load_lan.create(node->child("load_lan").attribute("string").as_string());
+	dictionary->main_menu_lan.create(node->child("main_menu_lan").attribute("string").as_string());
+	dictionary->credits_btn.create(node->child("credits_btn").attribute("string").as_string());
 
 	return ret;
 }
@@ -95,9 +98,9 @@ bool EzAcc_LanguageModule::Save(pugi::xml_node&) const
 	return false;
 }
 
-void EzAcc_LanguageModule::ChangeCurrentLanguage(p2SString new_language)
+void EzAcc_LanguageModule::ChangeCurrentLanguage(char* new_language)
 {
-	current_language = new_language;
+	current_language.create(new_language);
 
 	bool ret = true;
 
@@ -113,18 +116,18 @@ void EzAcc_LanguageModule::ChangeCurrentLanguage(p2SString new_language)
 
 	node = &node->child(current_language.GetString());
 
-	dictionary.press_space_btn.create(node->child("press_space").attribute("string").as_string());
-	dictionary.new_game_btn.create(node->child("new_game_btn").attribute("string").as_string());
-	dictionary.continue_btn.create(node->child("continue_btn").attribute("string").as_string());
-	dictionary.music_volume.create(node->child("music_volume").attribute("string").as_string());
-	dictionary.fx_volume.create(node->child("fx_volume").attribute("string").as_string());
-	dictionary.cap_to.create(node->child("cap_to").attribute("string").as_string());
-	dictionary.language_option.create(node->child("language_option").attribute("string").as_string());
-	dictionary.quit_lan.create(node->child("quit_lan").attribute("string").as_string());
-	dictionary.save_lan.create(node->child("save_lan").attribute("string").as_string());
-	dictionary.load_lan.create(node->child("load_lan").attribute("string").as_string());
-	dictionary.main_menu_lan.create(node->child("main_menu_lan").attribute("string").as_string());
-	dictionary.credits_btn.create(node->child("credits_btn").attribute("string").as_string());
+	dictionary->press_space_btn.create(node->child("press_space").attribute("string").as_string());
+	dictionary->new_game_btn.create(node->child("new_game_btn").attribute("string").as_string());
+	dictionary->continue_btn.create(node->child("continue_btn").attribute("string").as_string());
+	dictionary->music_volume.create(node->child("music_volume").attribute("string").as_string());
+	dictionary->fx_volume.create(node->child("fx_volume").attribute("string").as_string());
+	dictionary->cap_to.create(node->child("cap_to").attribute("string").as_string());
+	dictionary->language_option.create(node->child("language_option").attribute("string").as_string());
+	dictionary->quit_lan.create(node->child("quit_lan").attribute("string").as_string());
+	dictionary->save_lan.create(node->child("save_lan").attribute("string").as_string());
+	dictionary->load_lan.create(node->child("load_lan").attribute("string").as_string());
+	dictionary->main_menu_lan.create(node->child("main_menu_lan").attribute("string").as_string());
+	dictionary->credits_btn.create(node->child("credits_btn").attribute("string").as_string());
 }
 
 p2SString EzAcc_LanguageModule::GetWordFromKey(p2SString key)
@@ -148,7 +151,12 @@ p2SString EzAcc_LanguageModule::GetWordFromKey(p2SString key)
 	return wordToReturn;
 }
 
-EzAcc_Dictionary EzAcc_LanguageModule::GetDictionary() const
+EzAcc_Dictionary* EzAcc_LanguageModule::GetDictionary()
 {
 	return dictionary;
+}
+
+const char* EzAcc_LanguageModule::GetCurrentLanguage()
+{
+	return current_language.GetString();
 }

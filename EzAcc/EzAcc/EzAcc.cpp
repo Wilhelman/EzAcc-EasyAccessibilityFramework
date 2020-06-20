@@ -183,12 +183,12 @@ DECLDIR void EzAcc_SetFXVolume(int new_volume)
 	core->audio->SetFXVolume(new_volume);
 }
 
-DECLDIR EzAcc_Dictionary EzAcc_GetDictionary()
+DECLDIR EzAcc_Dictionary* EzAcc_GetDictionary()
 {
 	return core->language->GetDictionary();
 }
 
-DECLDIR void EzAcc_ChangeLanguage(p2SString new_language)
+DECLDIR void EzAcc_ChangeLanguage(char* new_language)
 {
 	core->language->ChangeCurrentLanguage(new_language);
 }
@@ -196,6 +196,11 @@ DECLDIR void EzAcc_ChangeLanguage(p2SString new_language)
 DECLDIR p2SString EzAcc_GetWordFromKey(p2SString key)
 {
 	return core->language->GetWordFromKey(key);
+}
+
+DECLDIR const char* EzAcc_GetCurrentLanguage()
+{
+	return core->language->GetCurrentLanguage();
 }
 
 DECLDIR void Function(void)
