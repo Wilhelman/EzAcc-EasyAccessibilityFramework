@@ -73,7 +73,7 @@ public:
 	unsigned int LoadFx(const char* path, const char* new_embedded_language);
 
 	// Play a previously loaded WAV
-	p2SString PlayFx(unsigned int fx, int repeat = 0);
+	const char* PlayFx(unsigned int fx, int repeat = 0);
 
 	// UnLoad WAV
 	bool UnLoadFx(uint id);

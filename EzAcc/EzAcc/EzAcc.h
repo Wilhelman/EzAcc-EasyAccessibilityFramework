@@ -228,7 +228,7 @@ extern "C"
 	EzAcc_AudioModule PlayFx
 	TODOG
 	*/
-	DECLDIR p2SString EzAcc_PlayFx(unsigned int fx, int repeat = 0);
+	DECLDIR const char* EzAcc_PlayFx(unsigned int fx, int repeat = 0);
 
 	/*
 	EzAcc_AudioModule SetMusicVolume
@@ -259,7 +259,7 @@ extern "C"
 	EzAcc_LanguageModule GetWordFromKey
 	TODOG
 	*/
-	DECLDIR p2SString EzAcc_GetWordFromKey(p2SString key);
+	DECLDIR const char* EzAcc_GetWordFromKey(char* key);
 
 	/*
 	EzAcc_LanguageModule GetCurrentLanguage

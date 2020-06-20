@@ -130,7 +130,7 @@ void EzAcc_LanguageModule::ChangeCurrentLanguage(char* new_language)
 	dictionary->credits_btn.create(node->child("credits_btn").attribute("string").as_string());
 }
 
-p2SString EzAcc_LanguageModule::GetWordFromKey(p2SString key)
+const char* EzAcc_LanguageModule::GetWordFromKey(char* key)
 {
 	bool ret = true;
 
@@ -145,10 +145,9 @@ p2SString EzAcc_LanguageModule::GetWordFromKey(p2SString key)
 	}
 
 	node = &node->child(current_language.GetString());
-
-	p2SString wordToReturn;
-	wordToReturn.create(node->child(key.GetString()).attribute("string").as_string());
-	return wordToReturn;
+	last_word.create(node->child(key).attribute("string").as_string());
+	EZACC_LOG("EzAcc: about to return value %s", last_word.GetString());
+	return last_word.GetString();
 }
 
 EzAcc_Dictionary* EzAcc_LanguageModule::GetDictionary()

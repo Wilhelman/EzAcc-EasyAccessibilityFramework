@@ -492,11 +492,19 @@ void ctRender::DrawHearing() // TODOG
 		}
 	}
 	else {
+		static bool played_once = false;
+		static p2SString current_key = "";
 		ImGui::Text("audio/fx/coin_street_fighter.wav | LOADED ID: %i",coin_fx); ImGui::SameLine();
 		if (ImGui::Button("Play##pppla")) {
-			p2SString value = EzAcc_PlayFx(coin_fx);
-			ImGui::Text("Descriptive label value: %s", value.GetString());
+			current_key = EzAcc_PlayFx(coin_fx);
+			played_once = true;
 		}
+		if (played_once) {
+			p2SString current_value = "";
+			current_value = EzAcc_GetWordFromKey((char*)current_key.GetString());
+			ImGui::Text("Descriptive label value: %s", current_value.GetString());
+		}
+			
 	}
 
 	//shoryuken_fx = EzAcc_LoadFx("audio/fx/shoryuken_street_fighter.wav", "cap_to");

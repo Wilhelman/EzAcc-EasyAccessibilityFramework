@@ -81,13 +81,14 @@ public:
 
 	void ChangeCurrentLanguage(char* new_language);
 
-	p2SString GetWordFromKey(p2SString key);
+	const char* GetWordFromKey(char* key);
 
 	EzAcc_Dictionary* GetDictionary();
 
 	const char* GetCurrentLanguage();
 public:
 	p2SString current_language;
+	p2SString last_word;
 	p2DynArray<p2SString> posible_languages;
 
 private:

@@ -193,19 +193,21 @@ unsigned int EzAcc_AudioModule::LoadFx(const char* path, const char* new_embedde
 	return ret;
 }
 
-p2SString EzAcc_AudioModule::PlayFx(unsigned int id, int repeat)
+const char* EzAcc_AudioModule::PlayFx(unsigned int id, int repeat)
 {
 	p2SString null_ret;
 	null_ret.create("");
 
 	if (fx[id] != nullptr)
 	{
+		p2SString embedded_lang = embedded_languages[id - 1];
+		EZACC_LOG("EzAcc: returning embedded lang : ");
+		EZACC_LOG(embedded_lang.GetString());
 		Mix_PlayChannel(-1, fx[id], repeat);
-		p2SString embedded_lang = embedded_languages[id-1];
-		return embedded_lang;
+		return embedded_languages[id - 1].GetString();
 	}
 
-	return null_ret;
+	return "";
 }
 
 bool EzAcc_AudioModule::UnLoadFx(uint id)

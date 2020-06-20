@@ -168,7 +168,7 @@ DECLDIR unsigned int EzAcc_LoadFx(const char* path, const char* new_embedded_lan
 	return core->audio->LoadFx(path, new_embedded_language);
 }
 
-DECLDIR p2SString EzAcc_PlayFx(unsigned int fx, int repeat)
+DECLDIR const char* EzAcc_PlayFx(unsigned int fx, int repeat)
 {
 	return core->audio->PlayFx(fx, repeat);
 }
@@ -193,7 +193,7 @@ DECLDIR void EzAcc_ChangeLanguage(char* new_language)
 	core->language->ChangeCurrentLanguage(new_language);
 }
 
-DECLDIR p2SString EzAcc_GetWordFromKey(p2SString key)
+DECLDIR const char* EzAcc_GetWordFromKey(char* key)
 {
 	return core->language->GetWordFromKey(key);
 }
