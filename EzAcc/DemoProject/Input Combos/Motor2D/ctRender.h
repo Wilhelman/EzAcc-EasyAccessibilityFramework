@@ -108,6 +108,8 @@ private:
 	bool have_to_scroll = false;
 
 	int language_selector = 0;
+	int coin_fx = 0;
+	int shoryuken_fx = 0;
 };
 
 #endif // __j1RENDER_H__

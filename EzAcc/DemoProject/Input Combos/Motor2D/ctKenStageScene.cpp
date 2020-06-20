@@ -100,10 +100,14 @@ bool ctKenStageScene::Start()
 
 	LOG("KEN STAGE start!");
 
-	if (!App->audio->PlayMusic("audio/music/ken.ogg")) {
+	/*if (!App->audio->PlayMusic("audio/music/ken.ogg")) {
 		ret = false;
 		LOG("Error playing music in ctKenStageScene Start");
-	}
+	}*/
+	
+	// TODO EZACC foto
+
+	
 
 	atlas_tex = App->tex->Load(atlas_name.c_str(), &backgroundSurface);
 	

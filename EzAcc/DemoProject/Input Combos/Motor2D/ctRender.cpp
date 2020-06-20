@@ -238,6 +238,7 @@ bool ctRender::Start()
 	EzAcc_PixelModificator pix2;
 	pix2.pixel_to_mod = keyColor2;
 	pix2.final_pixel = newColor2;
+	// todo g ezacc
 	EzAcc_PerformPixelModification(false);
 	EzAcc_AddNewPixelMod(pix);
 	EzAcc_AddNewPixelMod(pix2);
@@ -252,6 +253,9 @@ bool ctRender::Start()
 	//new_language.create("ESP");
 	//EzAcc_ChangeLanguage("ESP");
 	//EzAcc_Dictionary dic = EzAcc_GetDictionary();
+
+	//shoryuken_street_fighter
+	
 
 	return true;
 }
@@ -396,7 +400,7 @@ void ctRender::DrawLanguage() // TODOG
 	ImGui::Begin("Language Window", &show_language, ImGuiWindowFlags_AlwaysAutoResize);
 	ImGui::Text("Read EzAcc_LanguageModule settings in the readme to learn more about all the function calls");
 	ImGui::SameLine();
-	if (ImGui::Button("Readme##READMEInput3"))
+	if (ImGui::Button("Readme##READMEInput3541"))
 		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
 
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc language selection");
@@ -466,9 +470,37 @@ void ctRender::DrawHearing() // TODOG
 	ImGui::Begin("Audio Settings", &show_hearing, ImGuiWindowFlags_AlwaysAutoResize);
 	ImGui::Text("Read EzAcc_AudioModule settings in the readme to learn more about all the function calls");
 	ImGui::SameLine();
-	if (ImGui::Button("Readme##READMEInput3"))
+	if (ImGui::Button("Readme##READMEInpu123t3"))
 		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
 
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc Play Music");
+	ImGui::Text("audio/music/ken.ogg"); ImGui::SameLine();
+	if (ImGui::Button("Play##READMEInput23")) {
+		if (!EzAcc_PlayMusic("audio/music/ken.ogg")) {
+			LOG("EzAcc: Error playing music in ctKenStageScene Start");
+		}
+		else {
+			LOG("EzAcc: Playing 'ken.ogg' ...");
+		}
+	}
+
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc Load FX");
+	if (coin_fx == 0) {
+		ImGui::Text("audio/fx/coin_street_fighter.wav"); ImGui::SameLine();
+		if (ImGui::Button("Load##llooo")) {
+			coin_fx = EzAcc_LoadFx("audio/fx/coin_street_fighter.wav", "cap_to");
+		}
+	}
+	else {
+		ImGui::Text("audio/fx/coin_street_fighter.wav | LOADED ID: %i",coin_fx); ImGui::SameLine();
+		if (ImGui::Button("Play##pppla")) {
+			p2SString value = EzAcc_PlayFx(coin_fx);
+			ImGui::Text("Descriptive label value: %s", value.GetString());
+		}
+	}
+
+	//shoryuken_fx = EzAcc_LoadFx("audio/fx/shoryuken_street_fighter.wav", "cap_to");
+		
 	ImGui::End();
 }
 
@@ -477,7 +509,7 @@ void ctRender::DrawVision() // TODOG
 	ImGui::Begin("Vision Settings", &show_vision, ImGuiWindowFlags_AlwaysAutoResize);
 	ImGui::Text("Read EzAcc_VisionModule settings in the readme to learn more about all the function calls");
 	ImGui::SameLine();
-	if (ImGui::Button("Readme##READMEInput3"))
+	if (ImGui::Button("Readme##READMEInpuawt3"))
 		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
 
 	
@@ -554,7 +586,7 @@ void ctRender::DrawCognitive() // TODOG
 
 	ImGui::Text("Read EzAcc_Core / EzAcc_TimeModule settings in the readme to learn more about all the function calls");
 	ImGui::SameLine();
-	if (ImGui::Button("Readme##READMEInput"))
+	if (ImGui::Button("Readme##READMEIdasdnput"))
 		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
 	
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc framework clocks");
@@ -609,7 +641,7 @@ void ctRender::DrawInput() // TODOG
 
 	ImGui::Text("Read EzAcc_InputModule settings in the readme to learn more about all the function calls");
 	ImGui::SameLine();
-	if (ImGui::Button("Readme##READMEInput"))
+	if (ImGui::Button("Readme##READMEInpzxcut"))
 		App->RequestBrowser("https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework/blob/master/README.md");
 	ImGui::Separator();
 
