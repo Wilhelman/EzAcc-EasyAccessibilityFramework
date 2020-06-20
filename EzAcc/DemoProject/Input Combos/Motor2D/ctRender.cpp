@@ -488,7 +488,7 @@ void ctRender::DrawHearing() // TODOG
 	if (coin_fx == 0) {
 		ImGui::Text("audio/fx/coin_street_fighter.wav"); ImGui::SameLine();
 		if (ImGui::Button("Load##llooo")) {
-			coin_fx = EzAcc_LoadFx("audio/fx/coin_street_fighter.wav", "cap_to");
+			coin_fx = EzAcc_LoadFx("audio/fx/coin_street_fighter.wav", "coin_fx");
 		}
 	}
 	else {
@@ -507,7 +507,27 @@ void ctRender::DrawHearing() // TODOG
 			
 	}
 
-	//shoryuken_fx = EzAcc_LoadFx("audio/fx/shoryuken_street_fighter.wav", "cap_to");
+	if (shoryuken_fx == 0) {
+		ImGui::Text("audio/fx/shoryuken_street_fighter.wav"); ImGui::SameLine();
+		if (ImGui::Button("Load##llooweo")) {
+			shoryuken_fx = EzAcc_LoadFx("audio/fx/shoryuken_street_fighter.wav", "shoryuken_fx");
+		}
+	}
+	else {
+		static bool played_once = false;
+		static p2SString current_key = "";
+		ImGui::Text("audio/fx/shoryuken_street_fighter.wav | LOADED ID: %i", shoryuken_fx); ImGui::SameLine();
+		if (ImGui::Button("Play##ppplaqq")) {
+			current_key = EzAcc_PlayFx(shoryuken_fx);
+			played_once = true;
+		}
+		if (played_once) {
+			p2SString current_value = "";
+			current_value = EzAcc_GetWordFromKey((char*)current_key.GetString());
+			ImGui::Text("Descriptive label value: %s", current_value.GetString());
+		}
+
+	}
 		
 	ImGui::End();
 }
