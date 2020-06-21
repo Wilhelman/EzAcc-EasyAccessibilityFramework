@@ -245,9 +245,9 @@ bool ctRender::Start()
 
 
 	modColor;
-	modColor.r = 70;
+	modColor.r = 255;
 	modColor.g = 255;
-	modColor.b = 70;
+	modColor.b = 255;
 
 	//p2SString new_language;
 	//new_language.create("ESP");
@@ -556,7 +556,7 @@ void ctRender::DrawVision() // TODOG
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc color picker settings");
 	static ImVec4 colorTarget = ImColor(250, 0, 0, 255);
 	static ImVec4 colorReplacement = ImColor(0, 0, 250, 255);
-	static ImVec4 colorModulation = ImColor(114, 255, 50, 255);
+	static ImVec4 colorModulation = ImColor(modColor.r, modColor.g, modColor.b, 255);
 
 	static bool alpha_preview = true;
 	static bool alpha_half_preview = false;

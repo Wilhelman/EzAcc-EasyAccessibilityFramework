@@ -3,6 +3,7 @@
 #include "ctApp.h"
 #include "ctTextures.h"
 #include "ctFonts.h"
+#include "ctGui.h"
 
 #include "SDL\include\SDL.h"
 #include "SDL_TTF\include\SDL_ttf.h"
@@ -76,16 +77,16 @@ TTF_Font* const ctFonts::Load(const char* path, int size)
 SDL_Texture* ctFonts::Print(const char* text, SDL_Color color, TTF_Font* font)
 {
 	SDL_Texture* ret = NULL;
-	SDL_Surface* surface = TTF_RenderText_Blended((font) ? font : default, text, color);
-
-	if (surface == NULL)
+	
+	App->gui->uiSurface = new SDL_Surface(*TTF_RenderText_Blended((font) ? font : default, text, color));
+	if (App->gui->uiSurface == NULL)
 	{
 		LOG("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
 	}
 	else
 	{
-		ret = App->tex->LoadSurface(surface);
-		SDL_FreeSurface(surface);
+		ret = App->tex->LoadSurface(App->gui->uiSurface);
+		//SDL_FreeSurface(surface);
 	}
 
 	return ret;

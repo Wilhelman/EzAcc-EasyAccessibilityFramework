@@ -103,8 +103,6 @@ void UIElement::Update()
 
 void UIElement::Draw(SDL_Texture* sprites)
 {
-	// TODOG UI
-	return;
 	if (current_rect.w > 0 && current_rect.h > 0) 
 	{
 		switch (this->type)
@@ -114,7 +112,7 @@ void UIElement::Draw(SDL_Texture* sprites)
 			App->render->Blit(SDL_BLENDMODE_INVALID, nullptr, sprites, screen_position.x, screen_position.y, &current_rect);
 				break;
 		case LABEL:
-			App->render->Blit(SDL_BLENDMODE_INVALID, nullptr, texture, screen_position.x, screen_position.y, &current_rect);
+			App->render->Blit(SDL_BLENDMODE_BLEND , App->gui->uiSurface, texture, screen_position.x, screen_position.y, &current_rect);
 			break;
 		default:
 			break;

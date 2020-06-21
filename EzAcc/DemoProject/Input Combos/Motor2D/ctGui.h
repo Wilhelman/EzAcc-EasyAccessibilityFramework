@@ -4,7 +4,7 @@
 #include "ctModule.h"
 #include <vector>
 #include <string>
-
+struct SDL_Surface;
 struct SDL_Texture;
 struct SDL_Rect;
 class UIElement;
@@ -65,6 +65,8 @@ private:
 
 	SDL_Texture* atlas;
 	std::string atlas_file_name;
+public:
+	SDL_Surface* uiSurface;
 };
 
 #endif // __j1GUI_H__
