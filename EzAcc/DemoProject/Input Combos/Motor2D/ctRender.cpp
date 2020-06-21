@@ -256,6 +256,7 @@ bool ctRender::Start()
 
 	//shoryuken_street_fighter
 	
+	
 
 	return true;
 }
@@ -263,6 +264,7 @@ bool ctRender::Start()
 // Called each loop iteration
 bool ctRender::PreUpdate()
 {
+	
 	if(!debug)
 		SDL_RenderClear(renderer);
 	if (debug) {
@@ -271,7 +273,6 @@ bool ctRender::PreUpdate()
 		ImGui_ImplSDL2_NewFrame(App->win->window);
 		ImGui::NewFrame();
 	}
-	
 	return true;
 }
 
@@ -282,7 +283,6 @@ bool ctRender::Update(float dt)
 
 	App->win->GetWindowSize(winWidth, winHeight);
 
-	
 	/*
 	int speed = 3;
 
@@ -923,7 +923,31 @@ bool ctRender::PostUpdate()
 	if (EzAcc_GetKey(SDL_SCANCODE_F1) == EzAcc_KeyState::EZACC_KEY_DOWN || change_debug) {
 		change_debug = false;
 		debug = !debug;
+		if (!debug) {
+			SDL_Surface* surface = SDL_LoadBMP("textures/cursor.bmp");
+			if (!surface) {
+
+			}
+
+			SDL_Cursor* cursor = NULL;
+
+			cursor = SDL_CreateColorCursor(surface, 20, 20);
+			if (cursor != NULL) {
+				SDL_SetCursor(cursor);
+			}
+			else
+			{
+				LOG(SDL_GetError());
+			}
+
+			SDL_SetCursor(cursor);
+			SDL_ShowCursor(1);
+		}
+			
+		else
+			SDL_ShowCursor(0);
 	}
+	
 	return true;
 }
 

@@ -117,15 +117,10 @@ bool EzAcc_AudioModule::PlayMusic(const char* path, float fade_time)
 	if (music != NULL)
 	{
 		if (fade_time > 0.0f)
-		{
 			Mix_FadeOutMusic(int(fade_time * 1000.0f));
-		}
 		else
-		{
 			Mix_HaltMusic();
-		}
-
-		// this call blocks until fade out is done
+		
 		Mix_FreeMusic(music);
 	}
 
@@ -133,7 +128,7 @@ bool EzAcc_AudioModule::PlayMusic(const char* path, float fade_time)
 
 	if (music == NULL)
 	{
-		EZACC_LOG("Cannot load music %s. Mix_GetError(): %s\n", path, Mix_GetError());
+		EZACC_LOG("EzAcc: Cannot load music %s. Mix_GetError(): %s\n", path, Mix_GetError());
 		ret = false;
 	}
 	else
@@ -142,7 +137,7 @@ bool EzAcc_AudioModule::PlayMusic(const char* path, float fade_time)
 		{
 			if (Mix_FadeInMusic(music, -1, (int)(fade_time * 1000.0f)) < 0)
 			{
-				EZACC_LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
+				EZACC_LOG("EzAcc: Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
 			}
 		}
@@ -150,12 +145,11 @@ bool EzAcc_AudioModule::PlayMusic(const char* path, float fade_time)
 		{
 			if (Mix_PlayMusic(music, -1) < 0)
 			{
-				EZACC_LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
+				EZACC_LOG("EzAcc: Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
 			}
 		}
 	}
-
 	EZACC_LOG("Successfully playing %s", path);
 	return ret;
 }
@@ -175,7 +169,7 @@ unsigned int EzAcc_AudioModule::LoadFx(const char* path, const char* new_embedde
 
 	if (chunk == nullptr)
 	{
-		EZACC_LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
+		EZACC_LOG("EzAcc: Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
 	}
 	else
 	{
@@ -201,7 +195,7 @@ const char* EzAcc_AudioModule::PlayFx(unsigned int id, int repeat)
 	if (fx[id] != nullptr)
 	{
 		p2SString embedded_lang = embedded_languages[id - 1];
-		EZACC_LOG("EzAcc: returning embedded lang : ");
+		EZACC_LOG("EzAcc: returning embedded lang: ");
 		EZACC_LOG(embedded_lang.GetString());
 		Mix_PlayChannel(-1, fx[id], repeat);
 		return embedded_languages[id - 1].GetString();
