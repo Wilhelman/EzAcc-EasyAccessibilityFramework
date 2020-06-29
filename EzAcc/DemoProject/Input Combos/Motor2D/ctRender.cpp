@@ -446,10 +446,11 @@ void ctRender::DrawLanguage() // TODOG
 			break;
 		}
 	}
+	ImGui::Separator();
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc Current Language");
 	p2SString curr_lang = EzAcc_GetCurrentLanguage();
 	ImGui::Text(curr_lang.GetString());
-
+	ImGui::Separator();
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc Dictionary Key - Value (Added as example in ezacc_language.xml file)");
 	EzAcc_Dictionary* dic = EzAcc_GetDictionary();
 	ImGui::Text("Key: 'new_game_btn' | Value: %s",dic->new_game_btn.GetString());
@@ -483,7 +484,7 @@ void ctRender::DrawHearing() // TODOG
 			LOG("EzAcc: Playing 'ken.ogg' ...");
 		}
 	}
-
+	ImGui::Separator();
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc Load FX");
 	if (coin_fx == 0) {
 		ImGui::Text("audio/fx/coin_street_fighter.wav"); ImGui::SameLine();
@@ -527,7 +528,7 @@ void ctRender::DrawHearing() // TODOG
 			ImGui::Text("Descriptive label value: %s", current_value.GetString());
 		}
 	}
-
+	ImGui::Separator();
 	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc Music / FX Volume");
 	ImGui::Text("Music volume:");
 	ImGui::SameLine();
@@ -589,7 +590,11 @@ void ctRender::DrawVision() // TODOG
 	modColor.b = colorModulation.z*255;
 
 	ImGui::Separator();
-
+	ImGui::TextColored(ImVec4(0.f, 1.f, 1.f, 1.f), "EzAcc personalized cursor");
+	ImGui::Text("Current loaded cursor: \"/textures/cursor.bmp\"");
+	ImGui::Button("Activate##231");
+	ImGui::SameLine();
+	ImGui::Button("Deactivate##12s");
 	ImGui::End();
 }
 
@@ -918,32 +923,29 @@ bool ctRender::PostUpdate()
 		//SWAP BUFFERS
 		SDL_GL_SwapWindow(App->win->window);
 	}
-
+	char* path = "asd";
+	int hot_x = 0;
+	int hot_y = 1;
 	
 	if (EzAcc_GetKey(SDL_SCANCODE_F1) == EzAcc_KeyState::EZACC_KEY_DOWN || change_debug) {
 		change_debug = false;
 		debug = !debug;
 		if (!debug) {
-			SDL_Surface* surface = SDL_LoadBMP("textures/cursor.bmp");
+			SDL_Surface* surface = SDL_LoadBMP(path);
 			if (!surface) {
-
+				LOG(SDL_GetError());
 			}
 
 			SDL_Cursor* cursor = NULL;
-
-			cursor = SDL_CreateColorCursor(surface, 20, 20);
-			if (cursor != NULL) {
+			cursor = SDL_CreateColorCursor(surface, hot_x, hot_y);
+			if (cursor != NULL)
 				SDL_SetCursor(cursor);
-			}
 			else
-			{
 				LOG(SDL_GetError());
-			}
 
 			SDL_SetCursor(cursor);
 			SDL_ShowCursor(1);
 		}
-			
 		else
 			SDL_ShowCursor(0);
 	}
