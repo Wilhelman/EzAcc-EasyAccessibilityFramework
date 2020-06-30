@@ -3,7 +3,7 @@ An accessibility library from scratch in c++ with the ultimate goal of being use
 
 [Github repository](https://github.com/Wilhelman/EzAcc-EasyAccessibilityFramework)
 
-_Developed by [Guillermo García Subirana](https://github.com/Wilhelman)
+_Developed by [Guillermo García Subirana](https://github.com/Wilhelman)_
 
 ## Installation instructions (Framework)
 
