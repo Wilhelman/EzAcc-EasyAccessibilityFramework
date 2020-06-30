@@ -116,6 +116,29 @@ void EzAcc_VisionModule::ClearPixelMods()
 	pixel_modificators.clear();
 }
 
+void EzAcc_VisionModule::ActivateNewCursor(char* cursor_path, int hot_x, int hot_y)
+{
+	SDL_Surface* surface = SDL_LoadBMP(cursor_path);
+	if (!surface) {
+		EZACC_LOG(SDL_GetError());
+	}
+
+	SDL_Cursor* cursor = NULL;
+	cursor = SDL_CreateColorCursor(surface, hot_x, hot_y);
+	if (cursor != NULL)
+		SDL_SetCursor(cursor);
+	else
+		EZACC_LOG(SDL_GetError());
+
+	SDL_SetCursor(cursor);
+	SDL_ShowCursor(1);
+}
+
+void EzAcc_VisionModule::DeactivateCursor()
+{
+	SDL_ShowCursor(0);
+}
+
 bool EzAcc_VisionModule::CleanUp()
 {
 	return true;

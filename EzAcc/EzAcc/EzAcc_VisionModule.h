@@ -68,6 +68,10 @@ public:
 
 	void ClearPixelMods();
 
+	void ActivateNewCursor(char* cursor_path, int hot_x, int hot_y);
+
+	void DeactivateCursor();
+
 	// Called before quitting
 	bool CleanUp();
 

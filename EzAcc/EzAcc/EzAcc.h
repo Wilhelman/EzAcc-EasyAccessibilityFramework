@@ -71,11 +71,9 @@ extern "C"
 	*/
 	DECLDIR bool EzAcc_AllUpdate();
 	/*EzAcc PostUpdate
-	TODOG
 	*/
 	DECLDIR bool EzAcc_PostUpdate();
 	/*EzAcc CleanUp
-	TODOG
 	*/
 	DECLDIR bool EzAcc_CleanUp();
 
@@ -84,41 +82,34 @@ extern "C"
 
 	/*
 	EzAcc_InputModule GetKey
-	EzAcc_KeyState Inaccesible if that ...
-	TODOG
+	EzAcc_KeyState Inaccesible
 	*/
 	DECLDIR EzAcc_KeyState EzAcc_GetKey(int id);
 
 	/*
 	EzAcc_InputModule SetTimeBetweenInputs
-	TODOG
 	*/
 	DECLDIR void EzAcc_SetTimeBetweenInputs(unsigned int new_time);
 
 	/*
 	EzAcc_InputModule GetTimeBetweenInputs
-	TODOG
 	*/
 	DECLDIR unsigned int EzAcc_GetTimeBetweenInputs();
 
 	/*
 	EzAcc_InputModule BindKey
 	int = SDL_KeyCode
-	TODOG
 	*/
 	DECLDIR int EzAcc_BindKey();
 
 	/*
 	EzAcc_InputModule GenerateNewMacro
-	int = index macro
-	TODOG
 	*/
 	DECLDIR int EzAcc_GenerateNewMacro(EzAcc_Macro new_macro);
 
 	/*
 	EzAcc_InputModule RemoveMacro
 	int = index macro
-	TODOG
 	*/
 	DECLDIR bool EzAcc_RemoveMacro(int index);
 
@@ -132,43 +123,31 @@ extern "C"
 	// ---------------- Cognitive (Memory/Information Processing) ---------------- //
 	/*
 	EzAcc_Core SetDTTimeScale
-	int = index macro
-	TODOG
 	*/
 	DECLDIR void EzAcc_SetDTTimeScale(float timescale);
 
 	/*
 	EzAcc_Core GetDT
-	int = index macro
-	TODOG
 	*/
 	DECLDIR float EzAcc_GetDT();
 
 	/*
 	EzAcc_Core GetGameTime
-	int = index macro
-	TODOG
 	*/
 	DECLDIR float EzAcc_GetGameTime();
 
 	/*
 	EzAcc_Core GetGameTimeHourFormat
-	int = index macro
-	TODOG
 	*/
 	DECLDIR EzAcc_FormatHour EzAcc_GetGameTimeHourFormat();
 
 	/*
 	EzAcc_Core GetRealtime
-	int = index macro
-	TODOG
 	*/
 	DECLDIR float EzAcc_GetRealtime();
 
 	/*
 	EzAcc_Core GetRealtimeHourFormat
-	int = index macro
-	TODOG
 	*/
 	DECLDIR EzAcc_FormatHour EzAcc_GetRealtimeHourFormat();
 
@@ -177,93 +156,88 @@ extern "C"
 
 	/*
 	EzAcc_VisionModule PerformPixelModification
-	TODOG
 	*/
 	DECLDIR void EzAcc_PerformPixelModification(bool pixel_mod_active);
 
 	/*
 	EzAcc_VisionModule ModulateTextureColor
-	TODOG
 	*/
 	DECLDIR void EzAcc_ModulateTextureColor(SDL_Texture* texture, SDL_Color color);
 
 	/*
 	EzAcc_VisionModule ProcessTexture
-	TODOG
 	*/
 	DECLDIR void EzAcc_ProcessTexture(SDL_Texture* texture, SDL_Surface* surface);
 
 	/*
 	EzAcc_VisionModule AddNewPixelMod
-	TODOG
 	*/
 	DECLDIR void EzAcc_AddNewPixelMod(EzAcc_PixelModificator new_pixel_mod);
 
 	/*
 	EzAcc_VisionModule ClearPixelMods
-	TODOG
 	*/
 	DECLDIR void EzAcc_ClearPixelMods();
+
+	/*
+	EzAcc_VisionModule ActivateNewCursor
+	*/
+	DECLDIR void EzAcc_ActivateNewCursor(char* cursor_path, int hot_x, int hot_y);
+
+	/*
+	EzAcc_VisionModule DeactivateCursor
+	*/
+	DECLDIR void EzAcc_DeactivateCursor();
 
 	// ---------------- Audio (Music/Fx and extra info about sounds (Descriptive labels)) ---------------- //
 	/*
 	EzAcc_AudioModule PlayMusic
-	TODOG
 	*/
 	DECLDIR bool EzAcc_PlayMusic(const char* path, float fade_time = EZACC_DEFAULT_MUSIC_FADE_TIME);
 
 	/*
 	EzAcc_AudioModule StopMusic
-	TODOG
 	*/
 	DECLDIR bool EzAcc_StopMusic();
 
 	/*
 	EzAcc_AudioModule LoadFx
-	TODOG
 	*/
 	DECLDIR unsigned int EzAcc_LoadFx(const char* path, const char* new_embedded_language);
 
 	/*
 	EzAcc_AudioModule PlayFx
-	TODOG
 	*/
 	DECLDIR const char* EzAcc_PlayFx(unsigned int fx, int repeat = 0);
 
 	/*
 	EzAcc_AudioModule SetMusicVolume
-	TODOG
 	*/
 	DECLDIR void EzAcc_SetMusicVolume(int new_volume);
 
 	/*
 	EzAcc_AudioModule SetFXVolume
-	TODOG
 	*/
 	DECLDIR void EzAcc_SetFXVolume(int new_volume);
 
 	// -------------------------------- Language -------------------------------- //
 	/*
 	EzAcc_LanguageModule GetDictionary
-	TODOG
 	*/
 	DECLDIR EzAcc_Dictionary* EzAcc_GetDictionary();
 
 	/*
 	EzAcc_LanguageModule ChangeLanguage
-	TODOG
 	*/
 	DECLDIR void EzAcc_ChangeLanguage(char* new_language);
 
 	/*
 	EzAcc_LanguageModule GetWordFromKey
-	TODOG
 	*/
 	DECLDIR const char* EzAcc_GetWordFromKey(char* key);
 
 	/*
 	EzAcc_LanguageModule GetCurrentLanguage
-	TODOG
 	*/
 	DECLDIR const char* EzAcc_GetCurrentLanguage();
 

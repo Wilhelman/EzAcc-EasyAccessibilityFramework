@@ -153,6 +153,16 @@ DECLDIR void EzAcc_ClearPixelMods()
 	core->vision->ClearPixelMods();
 }
 
+DECLDIR void EzAcc_ActivateNewCursor(char* cursor_path, int hot_x, int hot_y)
+{
+	core->vision->ActivateNewCursor(cursor_path, hot_x, hot_y);
+}
+
+DECLDIR void EzAcc_DeactivateCursor()
+{
+	core->vision->DeactivateCursor();
+}
+
 DECLDIR bool EzAcc_PlayMusic(const char* path, float fade_time)
 {
 	return core->audio->PlayMusic(path, fade_time);
