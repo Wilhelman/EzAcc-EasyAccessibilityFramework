@@ -30,9 +30,10 @@ _IMPORTANT: do not modify, change or add any folder or file as you might not be 
 
 There are one main known case where the overall perfomance might decrease significantly:
 
-* **Perform pixel modification functionality** This feature has a high performance cost for two reasons:
+**Perform pixel modification functionality** This feature has a high performance cost for two reasons:
 * The calculations are done on the CPU instead of the GPU (as a shader calculation would do which is something left for future work).
 * Depending on the size of the texture to render, the iteration can overload the logical process.
+
 It is for these reasons that the use of this function is recommended in static elements of the screen, which require very few rendering updates. (E.g. interface or non-animated backgrounds)
 
 ## Tools used
