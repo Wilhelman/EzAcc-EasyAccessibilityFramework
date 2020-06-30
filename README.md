@@ -17,14 +17,6 @@ Download the zip file and unzip it. Open the folder, execute the .exe and enjoy!
 
 _IMPORTANT: do not modify, change or add any folder or file as you might not be able to execute the game engine._
 
-## **Notes on performance**
-
-There are one main known cases where the overall perfomance might decrease significantly:
-
-* **Only the first time** you execute the engine the app will "freeze" as it's importing all the assets and generating its corresponding resources. The time will vary depending in the number and sizes of files that are being imported.
-* If the z-buffer visualization is activated.
-* When an animated model is loaded on scene **(especially if its playing its animation)** the engine perfomance might drop a lot. That's because the skinning process of deforming the mesh to match the bones positions of the corresponding skeleton needs to do a lot of matrix related operations multiple times per frame. As we don't use shaders in this engine all these operations are sended to the CPU (instead of the GPU) which is not prepared to handle matrix operations as well as the GPU does. 
-
 ## Controls in the Demo Project
 
 * **Move Left:** Left keyboard arrow | gamepad
@@ -33,6 +25,15 @@ There are one main known cases where the overall perfomance might decrease signi
 * **Move Down:** Down keyboard arrow | gamepad
 * **Punch input:** 'P' key in keyboard | 'X' in gamepad
 * **Move Left:** 'K' key in keyboard | 'B' in gamepad
+
+## **Notes on performance**
+
+There are one main known case where the overall perfomance might decrease significantly:
+
+* **Perform pixel modification functionality** This feature has a high performance cost for two reasons:
+* The calculations are done on the CPU instead of the GPU (as a shader calculation would do which is something left for future work).
+* Depending on the size of the texture to render, the iteration can overload the logical process.
+It is for these reasons that the use of this function is recommended in static elements of the screen, which require very few rendering updates. (E.g. interface or non-animated backgrounds)
 
 ## Tools used
 * IDE: Microsoft Visual Studio 2019
